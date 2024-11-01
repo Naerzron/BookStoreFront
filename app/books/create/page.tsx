@@ -1,12 +1,9 @@
-"use client";
-
+"use client"
 import React, { useEffect, useState } from 'react'
 import { Book } from "@/types/Book";
-import { useParams } from 'next/navigation';
-import { Author } from '@/types/Author';
 import { Genre } from '@/types/Genre';
-
-export default function EditBook() {
+import { Author } from '@/types/Author';
+export default function CreateBook() {
 
     // Estado para el formulario
     const [formData, setFormData] = useState({
@@ -25,39 +22,13 @@ export default function EditBook() {
     const [authors, setAuthors] = useState<Author[]>([]);
     const [mensaje, setMensaje] = useState("");
 
-    const params = useParams(); // Aquí accedemos al parámetro "id" de la URL
-    const id = params.id; // Aquí accedemos al parámetro "id" de la URL
-    
-    useEffect(() => {
-        const fetchBooks = async () => {
-            try {
-                const response = await fetch(`http://localhost:5141/api/books/${id}`);
-                const book: Book = await response.json();
-                setFormData({
-                    title: book.title,
-                    publishedDate: book.publishedDate,
-                    stock: String(book.stock), 
-                    price: String(book.price),
-                    synopsis: book.synopsis,
-                    isbn: book.isbn,
-                    authorId: String(book.authorId),
-                    genreId: String(book.genreId)
-                })
-            } catch (error) {
-                console.error('Error fetching books: ', error);
-            }
-        };
-
-        fetchBooks();
-    }, [])
-
     // Manejar el envío del formulario
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         //Envio de datos
         try {
             const book: Book = {
-                id: Number(id),
+                id: 0,
                 title: formData.title,
                 publishedDate: formData.publishedDate,
                 stock: Number(formData.stock),
@@ -67,14 +38,14 @@ export default function EditBook() {
                 authorId: Number(formData.authorId),
                 genreId: Number(formData.genreId)
             }
-            const response = await fetch(`http://localhost:5141/api/books/${id}`,
+            const response = await fetch('http://localhost:5141/api/books',
                 {
-                    method: 'PUT',
+                    method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify(book)
-                })
+                });
             if (response.ok) {
                 setFormData({
                     title: '',
@@ -85,16 +56,15 @@ export default function EditBook() {
                     isbn: '',
                     authorId: '',
                     genreId: ''
-                })
-                setMensaje("Libro editado correctamente");
+                });
+                setMensaje("Libro creado correctamente");
             }
             else {
-                setMensaje("Error al editar libro");
+                setMensaje("Error al crear libro");
             }
-            console.log(response);
         } catch (error) {
             console.error("Error");
-            setMensaje("Error al editar libro");
+            setMensaje("Error al crear libro");
         }
     };
 
@@ -116,8 +86,8 @@ export default function EditBook() {
         fetchAuthors();
     }, []);
 
-     // Manejar el cambio en los campos
-     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // Manejar el cambio en los campos
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
@@ -277,7 +247,7 @@ export default function EditBook() {
                         type="submit"
                         className="w-full bg-blue-500 dark:bg-blue-600 text-white py-2 px-4 rounded-md shadow hover:bg-blue-600 dark:hover:bg-blue-700 focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-gray-800"
                     >
-                        Aplicar Cambios
+                        Crear Libro
                     </button>
                 </div>
             </form>
@@ -286,4 +256,4 @@ export default function EditBook() {
             <p className="mt-4 text-center">{mensaje}</p>
         </div>
     );
-}
+}    
