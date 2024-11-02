@@ -1,4 +1,4 @@
-import Navbar from "@/components/navbar"
+import MainNavbar from "@/components/main-navbar"
 
 interface MainLayoutProps {
     children: React.ReactNode
@@ -6,7 +6,8 @@ interface MainLayoutProps {
 
 export default function MainLayout({ children }: MainLayoutProps) {
     return (
-        <main>
+        <main className="relative w-full mx-auto lg:max-w-6xl">
+            <MainNavbar />
             {children}
         </main>
     )

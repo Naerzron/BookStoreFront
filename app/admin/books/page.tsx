@@ -118,10 +118,10 @@ export default function Books() {
                                         {book.stock}
                                     </td>
                                     <td className="px-6 py-4 flex space-x-4">
-                                        <Link href={`/books/detail/${book.id}`} className="flex items-center font-medium text-blue-600 dark:text-blue-500 hover:underline">
+                                        <Link href={`/admin/books/detail/${book.id}`} className="flex items-center font-medium text-blue-600 dark:text-blue-500 hover:underline">
                                             <DocumentMagnifyingGlassIcon className="w-5 h-5 mr-1" />Ver
                                         </Link>
-                                        <Link href={`/books/editar/${book.id}`} className="flex items-center font-medium text-blue-600 dark:text-blue-500 hover:underline">
+                                        <Link href={`/admin/books/editar/${book.id}`} className="flex items-center font-medium text-blue-600 dark:text-blue-500 hover:underline">
                                             <PencilIcon className="w-5 h-5 mr-1" />Editar
                                         </Link>
                                         <button onClick={() => deleteBook(book.id)} className="flex items-center font-medium text-blue-600 dark:text-blue-500 hover:underline">
