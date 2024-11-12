@@ -1,16 +1,11 @@
 "use client"
-import { Author } from "@/types/Author";
-import { Book } from "@/types/Book";
-import { Genre } from "@/types/Genre";
 import { DocumentMagnifyingGlassIcon, NewspaperIcon, PencilIcon, TrashIcon } from "@heroicons/react/16/solid";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export default function Books() {
 
-    const [books, setBooks] = useState<Book[]>([]);
-    const [genres, setGenres] = useState<Genre[]>([]);
-    const [authors, setAuthors] = useState<Author[]>([]);
+    const [books, setBooks] = useState<GetBookResponse[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     // Los hooks en react son funciones que te permiten ejecutar
     // codigo personalizado dentro del ciclo de vida de los componentes
@@ -20,40 +15,17 @@ export default function Books() {
     useEffect(() => {
         const fetchBooks = async () => {
             try {
-                const response = await fetch('http://localhost:5141/api/books');
-                const books: Book[] = await response.json();
+                const response = await fetch("http://localhost:5141/api/books");
+                const books: GetBookResponse[] = await response.json();
                 setBooks(books);
             } catch (error) {
-                console.error('Error fetching books: ', error);
-            }
-            finally {
+                console.error("Error fetching books: ", error);
+            } finally {
                 setIsLoading(false);
             }
         };
         fetchBooks();
     }, [])
-
-    useEffect(() => {
-        const fetchGenres = async () => {
-            for(const book of books) {
-                const response = await fetch(`http://localhost:5141/api/genres/${book.genreId}`);
-                const genre: Genre = await response.json();
-                setGenres((prevGenres) => [...prevGenres, genre]);
-            };                    
-        }
-        fetchGenres();
-    }, [books]);
-
-    useEffect(() => {
-        const fetchAuthors = async () => {
-            for(const book of books) {
-                const response = await fetch(`http://localhost:5141/api/authors/${book.authorId}`);
-                const author: Author = await response.json();
-                setAuthors((prevAuthors) => [...prevAuthors, author]);
-            };                    
-        }
-        fetchAuthors();
-    }, [books]);
 
     const deleteBook = async (id: Number) => {
         try {
@@ -106,13 +78,13 @@ export default function Books() {
                                         {book.title}
                                     </th>
                                     <td className="px-6 py-4">
-                                        {authors.find(a => a.id == book.authorId)?.name}
+                                        {book.authorName}
                                     </td>
                                     <td className="px-6 py-4">
                                         {book.price}
                                     </td>
                                     <td className="px-6 py-4">
-                                        {genres.find(g => g.id == book.genreId)?.name}
+                                        {book.genreName}
                                     </td>
                                     <td className="px-6 py-4">
                                         {book.stock}

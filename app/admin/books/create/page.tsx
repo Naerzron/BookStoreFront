@@ -1,12 +1,24 @@
 "use client"
 import React, { useEffect, useState } from 'react'
-import { Book } from "@/types/Book";
 import { Genre } from '@/types/Genre';
 import { Author } from '@/types/Author';
-export default function CreateBook() {
+import { CreateBookRequest } from '@/types/CreateBookRequest';
 
+type createBookForm = {
+    title: string,
+    publishedDate: string,
+    stock: string,
+    price: string,
+    synopsis: string,
+    isbn: string,
+    authorId: string,
+    genreId: string,
+    image: string
+};
+
+export default function CreateBook() {
     // Estado para el formulario
-    const [formData, setFormData] = useState({
+    const [formData, setFormData] = useState<createBookForm>({
         title: '',
         publishedDate: '',
         stock: '',
@@ -14,7 +26,8 @@ export default function CreateBook() {
         synopsis: '',
         isbn: '',
         authorId: '',
-        genreId: ''
+        genreId: '',
+        image: ''
     });
 
     //Estados del componente
@@ -27,8 +40,7 @@ export default function CreateBook() {
         e.preventDefault();
         //Envio de datos
         try {
-            const book: Book = {
-                id: 0,
+            const bookRequest: CreateBookRequest = {
                 title: formData.title,
                 publishedDate: formData.publishedDate,
                 stock: Number(formData.stock),
@@ -36,7 +48,8 @@ export default function CreateBook() {
                 synopsis: formData.synopsis,
                 isbn: formData.isbn,
                 authorId: Number(formData.authorId),
-                genreId: Number(formData.genreId)
+                genreId: Number(formData.genreId),
+                image: formData.image
             }
             const response = await fetch('http://localhost:5141/api/books',
                 {
@@ -44,7 +57,7 @@ export default function CreateBook() {
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify(book)
+                    body: JSON.stringify(bookRequest)
                 });
             if (response.ok) {
                 setFormData({
@@ -55,7 +68,8 @@ export default function CreateBook() {
                     synopsis: '',
                     isbn: '',
                     authorId: '',
-                    genreId: ''
+                    genreId: '',
+                    image: ''
                 });
                 setMensaje("Libro creado correctamente");
             }
@@ -239,6 +253,22 @@ export default function CreateBook() {
                             </option>
                         ))}
                     </select>
+                </div>
+
+                {/* Campo Image */}
+                <div className="mb-4">
+                    <label htmlFor="image" className="block text-sm font-medium text-gray-700 dark:text-gray-400">
+                        Portada
+                    </label>
+                    <input
+                        type="text"
+                        name="image"
+                        value={formData.image}
+                        onChange={handleInputChange}
+                        className="mt-1 block w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-300"
+                        placeholder="Portada del libro"
+                        required
+                    />
                 </div>
 
                 {/* Botón de enviar */}

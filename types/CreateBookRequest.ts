@@ -1,7 +1,6 @@
-export interface Book {
-    id: number;
+export interface CreateBookRequest {
     title: string;
-    publishedDate: string; // Utilizamos string en lugar de DateOnly para manejarlo en TypeScript
+    publishedDate: string;
     stock: number;
     price: number;
     synopsis: string;

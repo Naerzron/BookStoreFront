@@ -1,0 +1,183 @@
+INSERT INTO "Authors" ("Name", "BirthDay") VALUES 
+('Brandon Sanderson', '1975-12-19'),
+('Christopher Paolini', '1983-11-17'),
+('Tsutomu Nihei', '1971-02-21'),
+('Hideaki Anno', '1960-05-22');
+
+
+
+
+INSERT INTO "Books" (
+    "Title", "PublishedDate", "Stock", "Price", "Synopsis", "Isbn", "AuthorId", "GenreId", "Image"
+) VALUES (
+    'Palabras Radiantes',  -- title
+    '2014-03-04',  -- published_date
+    20,  -- stock
+    33.16,  -- price
+    'Los Caballeros Radiantes deben volver a alzarse.
+
+Los antiguos juramentos por fin se han pronunciado. Los hombres buscan lo que se perdió. Temo que la búsqueda los destruya.
+
+Es la naturaleza de la magia. Un alma rota tiene grietas donde puede colarse algo más. Las potencias, los poderes de la creación misma, pueden abrazar un alma rota, pero tambien pueden ampliar sus fisuras.
+
+El Corredor del Viento está perdido en una tierra quebrada, en equilibro entre la venganza y el honor. La Tejedora de Luz, lentamente consumida por su pasado, busca la mentira en la que debe convertirse. El Forjador de Vínculos, nacido en la sangre y la muerte, se esfuerza ahora por reconstruir lo que fue destruido. La Exploradora, a caballo entre los destinos de dos pueblos, se ve obligada a elegir entre una muerte lenta y una terrible traición a todo en lo que cree.
+
+Ya es hora',  -- synopsis
+    '978-0-7653-2636-2',  -- isbn
+    1,  -- author_id (id del autor en la tabla Author)
+    2,  -- genre_id (id del género en la tabla Genre)
+    'pr.webp'  -- image
+);
+
+INSERT INTO "Books" (
+    "Title", "PublishedDate", "Stock", "Price", "Synopsis", "Isbn", "AuthorId", "GenreId", "Image"
+) VALUES (
+    'Juramentada',  -- title
+    '2017-11-14',  -- published_date
+    20,  -- stock
+    33.15,  -- price
+    'La humanidad se enfrenta a una nueva Desolación con el regreso de los Portadores del Vacío, un enemigo tan grande en número como en sed de venganza. La victoria fugaz de los ejercitos alezi de Dalinar Kholin ha tenido consecuencias: el enemigo parshendi ha convocado la violenta tormenta eterna, que arrasa el mundo y hace que los hasta ahora pacíficos parshmenios descubran con horror que llevan un milenio esclavizados por los humanos. Al mismo tiempo, en una desesperada huida para alertar a su familia de la amenaza, Kaladin se pregunta si la repentina ira de los parshmenios está justificada.
+
+Entretanto, en la torre de la ciudad de Urithiru, a salvo de la tormenta, Shallan Davar investiga las maravillas de la antigua fortaleza de los Caballeros Radiantes y desentierra oscuros secretos que acechan en las profundidades',  -- synopsis
+    '978-0-7653-2637-9',  -- isbn
+    1,  -- author_id (id del autor en la tabla Author)
+    2,  -- genre_id (id del género en la tabla Genre)
+    'j.webp'  -- image
+);
+
+INSERT INTO "Books" (
+    "Title", "PublishedDate", "Stock", "Price", "Synopsis", "Isbn", "AuthorId", "GenreId", "Image"
+) VALUES (
+    'El Ritmo de la Guerra',  -- title
+    '2020-11-17',  -- published_date
+    20,  -- stock
+    33.15,  -- price
+    'Hay secretos que hemos guardado mucho tiempo. Vigilantes. Insomnes. Eternos. Y pronto dejarán de ser nuestros.
+
+La Una que es Tres busca, sin saberlo, el alma capturada. El spren aprisionado, olvidado hace mucho tiempo. ¿Puede liberar su propia alma a tiempo de hallar el conocimiento que condena a todos los pueblos de Roshar?
+
+El Soldado Caído acaricia y ama la lanza, incluso mientras el arma hiende su propia carne. Camina siempre hacia delante, siempre hacia la oscuridad, sin luz. No puede llevar consigo a nadie, salvo aquello que el mismo puede avivar.
+
+La Hermana Derrumbada comprende sus errores y piensa que ella misma es un error. Parece muy alejada de sus antepasados, pero no comprende que son quienes la llevan a hombros. Hacia la victoria, y hacia ese silencio, el más importante de todos.
+
+Y la Madre de Máquinas, la más crucial de todos ellos, danza con mentirosos en un gran baile. Debe desenmascararlos, alcanzar sus verdades ocultas y entregarlas al mundo.',  -- synopsis
+    '978-0-7653-2638-6',  -- isbn
+    1,  -- author_id (id del autor en la tabla Author)
+    2,  -- genre_id (id del género en la tabla Genre)
+    'erdlg.webp'  -- image
+);
+
+INSERT INTO "Books" (
+    "Title", "PublishedDate", "Stock", "Price", "Synopsis", "Isbn", "AuthorId", "GenreId", "Image"
+) VALUES (
+    'El Imperio Final',  -- title
+    '2006-07-17',  -- published_date
+    20,  -- stock
+    23.65,  -- price
+    'Durante mil años han caído cenizas del cielo. Durante mil años nada ha florecido. Durante mil años los skaa han sido esclavizados y viven en la miseria, sumidos en un miedo inevitable. Durante mil años el Lord Legislador ha reinado con poder absoluto, dominando gracias al terror, a sus poderes y a su inmortalidad, ayudado por «obligadores» e «inquisidores», junto a la poderosa magia de la alomancia.
+
+Pero los nobles a menudo han tenido trato sexual con jóvenes skaa y, aunque la ley lo prohíbe, algunos de sus bastardos han sobrevivido y heredado los poderes alománticos: son los «nacidos de la bruma» (mistborn).
+
+Ahora, Kelsier, el «superviviente», el único que ha logrado huir de los Pozos de Hathsin, ha encontrado a Vin, una pobre chica skaa con mucha suerte... Tal vez los dos, con el mejor equipo criminal jamás reunido, unidos a la rebelión que los skaa intentan desde hace mil años, logren cambiar el mundo y acabar con la atroz mano de hierro del Lord Legislador.
+
+Pero, ¿qué pasa si el héroe de la profecía falla?',  -- synopsis
+    '978-0-7653-1179-5',  -- isbn
+    1,  -- author_id (id del autor en la tabla Author)
+    2,  -- genre_id (id del género en la tabla Genre)
+    'epf.webp'  -- image
+);
+
+INSERT INTO "Books" (
+    "Title", "PublishedDate", "Stock", "Price", "Synopsis", "Isbn", "AuthorId", "GenreId", "Image"
+) VALUES (
+    'El Pozo de la Acensión',  -- title
+    '2007-08-21',  -- published_date
+    20,  -- stock
+    23.65,  -- price
+    'El mal ha sido derrotado. Pero la guerra acaba de empezar.
+
+Lograron lo imposible y pusieron fin al reinado milenario de lord Legislador. Ahora Vin, que ha pasado de ser una ladronzuela a una poderosa nacida de la bruma, y Elend Venture, el joven noble e idealista que la ama, deberán construir una sociedad nueva y próspera sobre las cenizas de ese imperio derrotado.
+
+Mientras las tensiones siguen creciendo tras la revuelta, una antigua leyenda ofrece un atisbo de esperanza para el pueblo. Sin embargo, incluso si las habladurías son ciertas, nadie sabe dónde se encuentra el Pozo de la Ascensión ni que clase de poder otorga.
+
+Es muy posible que matar al lord Legislador fuera la parte fácil. Sobrevivir a las consecuencias de su caída será el verdadero desafío.',  -- synopsis
+    '978-0-7653-1688-2',  -- isbn
+    1,  -- author_id (id del autor en la tabla Author)
+    2,  -- genre_id (id del género en la tabla Genre)
+    'epdla.webp'  -- image
+);
+
+INSERT INTO "Books" (
+    "Title", "PublishedDate", "Stock", "Price", "Synopsis", "Isbn", "AuthorId", "GenreId", "Image"
+) VALUES (
+    'El Héroe de las Eras',  -- title
+    '2008-10-14',  -- published_date
+    20,  -- stock
+    23.65,  -- price
+    'Vin cumplió la profecía y liberó el poder acumulado en el Pozo de la Ascensión. Sin embargo, todo resultó ser una trampa, y ahora el ser divino llamado Ruina campa a sus anchas por el mundo decidido a arrasarlo con terremotos y ríos de fuego.
+
+Tras haber esquivado la muerte convirtiendose en un nacido de la bruma, el emperador Elend Venture es el único capaz de contenerlo, y el imperio que ha formado junto a Vin se encuentra a la espera de un salvador. Pero para ello ha de enfrentar las fuerzas de Ruina. Además, los guerreros que luchan por el poder han decidido tomar la ciudad de Luthadel, y las viejas rencillas entre los nobles vuelven a resurgir.
+
+Mientras tanto, Vin sigue buscando respuestas a la pregunta que la consume: ¿qué es el Heroe de las Eras?',  -- synopsis
+    '978-0-7653-1897-8',  -- isbn
+    1,  -- author_id (id del autor en la tabla Author)
+    2,  -- genre_id (id del género en la tabla Genre)
+    'ehdle.webp'  -- image
+);
+
+
+INSERT INTO "Books" (
+    "Title", "PublishedDate", "Stock", "Price", "Synopsis", "Isbn", "AuthorId", "GenreId", "Image"
+) VALUES (
+    'Eragon',  -- title
+    '2002-08-26',  -- published_date
+    20,  -- stock
+    29.99,  -- price
+    'Un joven granjero llamado Eragon encuentra un misterioso huevo que resulta ser un dragón. Junto a su dragón Saphira, Eragon debe enfrentarse a los oscuros poderes que amenazan su hogar y descubrir su destino como Jinete de Dragón.',  -- synopsis
+    '978-0-345-47821-8',  -- isbn
+    11,  -- author_id (id del autor en la tabla Author)
+    2,  -- genre_id (id del género en la tabla Genre)
+    'e.webp'  -- image
+);
+
+INSERT INTO "Books" (
+    "Title", "PublishedDate", "Stock", "Price", "Synopsis", "Isbn", "AuthorId", "GenreId", "Image"
+) VALUES (
+    'Eldest',  -- title
+    '2005-08-23',  -- published_date
+    20,  -- stock
+    29.99,  -- price
+    'Eragon, ahora un joven Jinete de Dragón, debe enfrentarse a nuevos desafíos mientras busca cumplir su destino. La guerra se acerca y Eragon debe decidir entre la lealtad a sus amigos y la búsqueda de la verdad.',  -- synopsis
+    '978-0-345-47822-5',  -- isbn
+   11,  -- author_id (id del autor en la tabla Author)
+    2,  -- genre_id (id del género en la tabla Genre)
+    'eldest.webp'  -- image
+);
+
+INSERT INTO "Books" (
+    "Title", "PublishedDate", "Stock", "Price", "Synopsis", "Isbn", "AuthorId", "GenreId", "Image"
+) VALUES (
+    'Brisingr',  -- title
+    '2008-09-20',  -- published_date
+    20,  -- stock
+    29.99,  -- price
+    'Eragon y Saphira enfrentan nuevas amenazas mientras luchan para proteger Alagaësia de los oscuros poderes que buscan destruirla. Eragon se embarca en un viaje de descubrimiento personal mientras se enfrenta a decisiones difíciles.',  -- synopsis
+    '978-0-345-47823-2',  -- isbn
+    11,  -- author_id (id del autor en la tabla Author)
+    2,  -- genre_id (id del género en la tabla Genre)
+    'brisin.webp'  -- image
+);
+
+INSERT INTO "Books" (
+    "Title", "PublishedDate", "Stock", "Price", "Synopsis", "Isbn", "AuthorId", "GenreId", "Image"
+) VALUES (
+    'Legado',  -- title
+    '2011-11-08',  -- published_date
+    20,  -- stock
+    29.99,  -- price
+    'El destino de Alagaësia pende de un hilo mientras Eragon y Saphira se preparan para la batalla final contra el rey Galbatorix. Eragon debe descubrir su verdadero potencial y lo que significa ser un Jinete de Dragón.',  -- synopsis
+    '978-0-345-47824-9',  -- isbn
+    11,  -- author_id (id del autor en la tabla Author)
+    2,  -- genre_id (id del género en la tabla Genre)
+    'legado.webp'  -- image
+);
