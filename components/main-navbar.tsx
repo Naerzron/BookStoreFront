@@ -11,7 +11,7 @@ const MainNavbar = () => {
                     </Link>
                 </li>
                 <li>
-                    <Link href="/account">
+                    <Link href="/account?redirect=/account">
                         <p>Mi cuenta</p>
                     </Link>
                 </li>

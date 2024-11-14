@@ -6,7 +6,7 @@ export function middleware(request: NextRequest) {
         return NextResponse.redirect(new URL(HOME_PAGE, request.url));
     }
 
-    const userLogged = request.cookies.get("userLogged");
+    const userLogged = request.cookies.get("token");
 
     const restrictedRoutes = ["/account"];
     const isRestrictedRoute = restrictedRoutes.some((route) =>
