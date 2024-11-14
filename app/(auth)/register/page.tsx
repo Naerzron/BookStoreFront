@@ -1,5 +1,6 @@
 "use client";
 
+import Input from "@/components/ui/input";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 
@@ -15,11 +16,11 @@ export default function Register() {
     const [address, setAddress] = useState<string>("");
     const [birthDate, setBirthdate] = useState<string>("");
     const [country, setCountry] = useState<string>("");
-    const [dni, setDni] = useState<string>("");  
+    const [dni, setDni] = useState<string>("");
     const [name, setName] = useState<string>("");
     const [lastName, setLastName] = useState<string>("");
     const [phoneNumber, setPhoneNumber] = useState<string>("");
-    
+
     const [errorMessage, setErrorMessage] = useState("");
     const redirectTo = searchParams.get("redirect") || "/";
 
@@ -49,7 +50,7 @@ export default function Register() {
                 },
                 body: JSON.stringify(registerData),
             });
-            
+
             const data: ApiResponse = await response.json();
 
             if (data.success) {
@@ -79,97 +80,49 @@ export default function Register() {
                             <label className="block text-gray-700 dark:text-gray-300 font-semibold">
                                 Nombre de Usuario:
                             </label>
-                            <input
-                                type="text"
-                                value={userName}
-                                onChange={(e) => setUserName(e.target.value)}
-                                required
-                                className="w-full px-3 py-2 bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-md border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            />
+                            <Input value={userName} onChange={setUserName} />
                         </div>
                         <div>
                             <label className="block text-gray-700 dark:text-gray-300 font-semibold">
                                 Email:
                             </label>
-                            <input
-                                type="email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                required
-                                className="w-full px-3 py-2 bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-md border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            />
+                            <Input type="email" value={email} onChange={setEmail} />
                         </div>
                         <div>
                             <label className="block text-gray-700 dark:text-gray-300 font-semibold">
                                 Contraseña:
                             </label>
-                            <input
-                                type="password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                required
-                                className="w-full px-3 py-2 bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-md border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            />
+                            <Input type="password" value={password} onChange={setPassword} />
                         </div>
                         <div>
                             <label className="block text-gray-700 dark:text-gray-300 font-semibold">
                                 Confirmar Contraseña:
                             </label>
-                            <input
-                                type="password"
-                                value={confirmPassword}
-                                onChange={(e) => setConfirmPassword(e.target.value)}
-                                required
-                                className="w-full px-3 py-2 bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-md border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            />
+                            <Input type="password" value={confirmPassword} onChange={setConfirmPassword} />
                         </div>
                         <div>
                             <label className="block text-gray-700 dark:text-gray-300 font-semibold">
                                 Nombre:
                             </label>
-                            <input
-                                type="text"
-                                value={name}
-                                onChange={(e) => setName(e.target.value)}
-                                required
-                                className="w-full px-3 py-2 bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-md border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            />
+                            <Input value={name} onChange={setName} />
                         </div>
                         <div>
                             <label className="block text-gray-700 dark:text-gray-300 font-semibold">
                                 Apellido:
                             </label>
-                            <input
-                                type="text"
-                                value={lastName}
-                                onChange={(e) => setLastName(e.target.value)}
-                                required
-                                className="w-full px-3 py-2 bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-md border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            />
+                            <Input value={lastName} onChange={setLastName} />
                         </div>
                         <div>
                             <label className="block text-gray-700 dark:text-gray-300 font-semibold">
                                 Dirección:
                             </label>
-                            <input
-                                type="text"
-                                value={address}
-                                onChange={(e) => setAddress(e.target.value)}
-                                required
-                                className="w-full px-3 py-2 bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-md border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            />
+                            <Input value={address} onChange={setAddress} />
                         </div>
                         <div>
                             <label className="block text-gray-700 dark:text-gray-300 font-semibold">
                                 Fecha de Nacimiento:
                             </label>
-                            <input
-                                type="date"
-                                value={birthDate}
-                                onChange={(e) => setBirthdate(e.target.value)}
-                                required
-                                className="w-full px-3 py-2 bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-md border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            />
+                            <Input type="date" value={birthDate} onChange={setBirthdate} />
                         </div>
                         <div>
                             <label className="block text-gray-700 dark:text-gray-300 font-semibold">
@@ -192,25 +145,13 @@ export default function Register() {
                             <label className="block text-gray-700 dark:text-gray-300 font-semibold">
                                 DNI:
                             </label>
-                            <input
-                                type="text"
-                                value={dni}
-                                onChange={(e) => setDni(e.target.value)}
-                                required
-                                className="w-full px-3 py-2 bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-md border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            />
+                            <Input value={dni} onChange={setDni} />
                         </div>
                         <div>
                             <label className="block text-gray-700 dark:text-gray-300 font-semibold">
                                 Teléfono:
                             </label>
-                            <input
-                                type="text"
-                                value={phoneNumber}
-                                onChange={(e) => setPhoneNumber(e.target.value)}
-                                required
-                                className="w-full px-3 py-2 bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-md border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            />
+                            <Input value={phoneNumber} onChange={setPhoneNumber} />
                         </div>
                     </div>
                     <button

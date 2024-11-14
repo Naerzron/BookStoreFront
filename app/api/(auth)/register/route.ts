@@ -23,7 +23,7 @@ export async function POST(request: Request): Promise<NextResponse> {
                     { status: 200 }
                 );
         } else {
-            console.log(data.error);
+            console.log(data);
             return NextResponse.json(
                 { success: false, message: "Error de registro. Verifica los datos proporcionados." },
                 { status: 400 }
