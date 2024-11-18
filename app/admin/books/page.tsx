@@ -41,7 +41,7 @@ export default function Books() {
         <div className="flex flex-col justify-center items-center gap-8 px-44 pt-12">
             <div className="flex gap-8 items-center content-around">
                 <h1 className="text-5xl font-bold">Admin panel</h1>
-                <Link href="/books/crear" className="flex flex-col justify-center items-center"><NewspaperIcon className="w-10 h-10 mr-1" />CREAR NUEVO</Link>
+                <Link href="books/create" className="flex flex-col justify-center items-center"><NewspaperIcon className="w-10 h-10 mr-1" />CREAR NUEVO</Link>
             </div>
 
             {isLoading ? (

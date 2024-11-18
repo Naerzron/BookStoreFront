@@ -3,3 +3,7 @@ type ApiResponse = {
     status: number;
     message?: string;
 };
+
+type LoginResponse = ApiResponse & {
+    userRole: UserRole
+}

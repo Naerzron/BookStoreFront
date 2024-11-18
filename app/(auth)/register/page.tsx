@@ -26,7 +26,6 @@ export default function Register() {
 
     const handleSubmit = async (e: { preventDefault: () => void; }) => {
         e.preventDefault();
-        console.log("Formulario enviado");
 
         const registerData: RegisterData = {
             userName: userName,
@@ -54,7 +53,6 @@ export default function Register() {
             const data: ApiResponse = await response.json();
 
             if (data.success) {
-                console.log('Registrado con exito');
                 setErrorMessage("");
                 router.replace(redirectTo);
             } else {

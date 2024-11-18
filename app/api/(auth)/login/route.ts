@@ -1,3 +1,4 @@
+import { jwtDecode } from "jwt-decode";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request): Promise<NextResponse> {
@@ -23,12 +24,14 @@ export async function POST(request: Request): Promise<NextResponse> {
                 );
             }
 
-            const res = NextResponse.json({ success: true }, { status: 200 });
-            res.cookies.set("token", token, {
+            const decoded: UserToken = jwtDecode(token);
+
+            const res = NextResponse.json({ success: true, userRole: decoded.role }, { status: 200 });
+            res.cookies.set("jwt", token, {
                 maxAge: 60 * 60 * 0.5, 
                 httpOnly: true, 
                 secure: true, 
-                path: "/", 
+                path: "/"
             });
 
             return res;

@@ -49,7 +49,6 @@ export default function CreateGenre() {
             else {
                 setMensaje("Error al crear género");
             }
-            console.log(response);
         } catch (error) {
             console.error("Error");
             setMensaje("Error al crear género");

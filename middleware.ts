@@ -1,22 +1,55 @@
 import { NextRequest, NextResponse } from "next/server";
 import { HOME_PAGE, LOGIN_PAGE } from "@/lib/constants";
+import { jwtDecode } from "jwt-decode";
 
 export function middleware(request: NextRequest) {
-    if (request.nextUrl.pathname === "/") {
+    const pathname = request.nextUrl.pathname;
+
+    if (pathname === "/") {
         return NextResponse.redirect(new URL(HOME_PAGE, request.url));
     }
 
-    const userLogged = request.cookies.get("token");
+    const userLogged = request.cookies.get("jwt");
+    const token = userLogged?.value;
 
-    const restrictedRoutes = ["/account"];
-    const isRestrictedRoute = restrictedRoutes.some((route) =>
-        request.nextUrl.pathname.startsWith(route)
+    console.log(userLogged);
+    
+    let userRole: UserRole = 'Default';
+
+    if (token) {
+        const decoded: UserToken = jwtDecode(token);
+        console.log(decoded.role);
+
+        userRole = decoded.role ?? userRole;
+    }
+
+    // Definir las rutas restringidas para usuarios y administradores
+    const userRestrictedRoutes = ["/account"];
+    const adminRestrictedRoutes = ["/admin"];
+
+    const isUserRestrictedRoute = userRestrictedRoutes.some((route) =>
+        pathname.startsWith(route)
+    );
+    const isAdminRestrictedRoute = adminRestrictedRoutes.some((route) =>
+        pathname.startsWith(route)
     );
 
-    if (isRestrictedRoute && !userLogged) {
+    if ((isUserRestrictedRoute || isAdminRestrictedRoute) && !token) {
         const url = request.nextUrl.clone();
         url.pathname = LOGIN_PAGE;
         return NextResponse.redirect(url);
+    }
+
+    if (isAdminRestrictedRoute && userRole !== 'Administrador') {
+        return NextResponse.redirect(new URL("/", request.url));
+    }
+
+    if (pathname.startsWith('/books') && userRole === 'Administrador') {
+        return NextResponse.redirect(new URL("/admin/books", request.url));
+    }
+
+    if (isUserRestrictedRoute && userRole !== 'Usuario') {
+        return NextResponse.redirect(new URL("/", request.url));
     }
 
     return NextResponse.next();

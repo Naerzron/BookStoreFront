@@ -4,7 +4,6 @@ export async function POST(request: Request): Promise<NextResponse> {
     try {
         const registerData: RegisterData = await request.json();
 
-        console.log(registerData);
 
         const response = await fetch("http://localhost:5141/api/auth/register", {
             method: "POST",
@@ -23,7 +22,6 @@ export async function POST(request: Request): Promise<NextResponse> {
                     { status: 200 }
                 );
         } else {
-            console.log(data);
             return NextResponse.json(
                 { success: false, message: "Error de registro. Verifica los datos proporcionados." },
                 { status: 400 }

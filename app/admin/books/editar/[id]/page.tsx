@@ -17,7 +17,8 @@ export default function EditBook() {
         synopsis: '',
         isbn: '',
         authorId: '',
-        genreId: ''
+        genreId: '',
+        image: ''
     });
 
     //Estados del componente
@@ -41,7 +42,8 @@ export default function EditBook() {
                     synopsis: book.synopsis,
                     isbn: book.isbn,
                     authorId: String(book.authorId),
-                    genreId: String(book.genreId)
+                    genreId: String(book.genreId),
+                    image: String(book.image)
                 })
             } catch (error) {
                 console.error('Error fetching books: ', error);
@@ -65,7 +67,8 @@ export default function EditBook() {
                 synopsis: formData.synopsis,
                 isbn: formData.isbn,
                 authorId: Number(formData.authorId),
-                genreId: Number(formData.genreId)
+                genreId: Number(formData.genreId),
+                image: String(formData.image)
             }
             const response = await fetch(`http://localhost:5141/api/books/${id}`,
                 {
@@ -84,14 +87,14 @@ export default function EditBook() {
                     synopsis: '',
                     isbn: '',
                     authorId: '',
-                    genreId: ''
+                    genreId: '',
+                    image: ''
                 })
                 setMensaje("Libro editado correctamente");
             }
             else {
                 setMensaje("Error al editar libro");
             }
-            console.log(response);
         } catch (error) {
             console.error("Error");
             setMensaje("Error al editar libro");
@@ -269,6 +272,22 @@ export default function EditBook() {
                             </option>
                         ))}
                     </select>
+                </div>
+
+                {/* Ruta imagen */}
+                <div className="mb-4">
+                    <label htmlFor="price" className="block text-sm font-medium text-gray-700 dark:text-gray-400">
+                        Ruta a la imagen
+                    </label>
+                    <input
+                        type="string"
+                        name="image"
+                        value={formData.image}
+                        onChange={handleInputChange}
+                        className="mt-1 block w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-300"
+                        placeholder="Ruta a la imagen"
+                        required
+                    />
                 </div>
 
                 {/* Botón de enviar */}

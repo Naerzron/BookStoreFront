@@ -6,7 +6,6 @@ import React, { useState } from "react";
 export default function Login() {
     const router = useRouter();
     const searchParams = useSearchParams();
-    console.log(searchParams.get("redirect"));
     const redirectTo = searchParams.get("redirect") || "/";
 
     const [email, setEmail] = useState("");
@@ -25,13 +24,15 @@ export default function Login() {
                 body: JSON.stringify({ email, password }),
             });
             
-            const data: ApiResponse = await response.json();
-
+            const data: LoginResponse = await response.json();
             if (data.success) {
-                console.log('Logueado con exito');
                 setErrorMessage("");
-                router.replace(redirectTo);
                 
+                if (data.userRole === 'Administrador') {
+                    router.replace('/admin/books');
+                } else {
+                    router.replace(redirectTo);
+                }
             } else {
                 setErrorMessage(
                     "Error de autenticación. Verifica tus credenciales."
