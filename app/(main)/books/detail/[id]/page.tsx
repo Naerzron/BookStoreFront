@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
+import { useCart } from "@/components/CartContext";
 
 export default function BookDetail() {
     const [showFullSynopsis, setShowFullSynopsis] = useState(false);
@@ -10,6 +11,21 @@ export default function BookDetail() {
 
     const params = useParams(); // Aquí accedemos al parámetro "id" de la URL
     const id = params.id; // Aquí accedemos al parámetro "id" de la URL
+    
+    // Hook del carrito
+    const { addToCart, cartItems } = useCart(); // Accede a la función para añadir al carrito
+    console.log(cartItems);
+    // Función para manejar la acción de añadir al carrito
+    const handleAddToCart = () => {
+        if (book) {
+            addToCart({
+                id: book.id,
+                title: book.title,
+                price: book.price,
+                quantity: 1, // Agregamos una unidad por defecto
+            });
+        }
+    }
 
     useEffect(() => {
         const fetchBook = async () => {
@@ -99,7 +115,10 @@ export default function BookDetail() {
                         </div>
 
                         {/* Botón de añadir al carrito */}
-                        <button className="px-6 py-3 bg-green-600 text-white rounded-md text-lg font-medium hover:bg-green-700 dark:bg-green-500 dark:hover:bg-green-600">
+                        <button
+                            onClick={handleAddToCart} // Llama a la función para añadir al carrito
+                            className="px-6 py-3 bg-green-600 text-white rounded-md text-lg font-medium hover:bg-green-700 dark:bg-green-500 dark:hover:bg-green-600"
+                        >
                             Añadir al carrito
                         </button>
                     </div>

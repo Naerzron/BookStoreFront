@@ -12,5 +12,10 @@ export async function POST(request: Request): Promise<NextResponse> {
             body: JSON.stringify({ currentPassword, newPassword }),
             credentials: "include",
         });
+
+        return NextResponse.json({ success: true, message: "Exito" }, { status: 200 });
         
+    }catch{
+        return NextResponse.json({ success: false, message: "Error de autenticación. Verifica tus credenciales." }, { status: 403 });
     }
+}

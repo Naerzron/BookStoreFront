@@ -11,14 +11,11 @@ export function middleware(request: NextRequest) {
 
     const userLogged = request.cookies.get("jwt");
     const token = userLogged?.value;
-
-    console.log(userLogged);
     
     let userRole: UserRole = 'Default';
 
     if (token) {
         const decoded: UserToken = jwtDecode(token);
-        console.log(decoded.role);
 
         userRole = decoded.role ?? userRole;
     }

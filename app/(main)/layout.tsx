@@ -1,3 +1,4 @@
+import { CartProvider } from "@/components/CartContext";
 import MainNavbar from "@/components/main-navbar";
 
 interface MainLayoutProps {
@@ -8,7 +9,10 @@ export default function MainLayout({ children }: MainLayoutProps) {
     return (
         <>
             <MainNavbar />
-            {children}
+            <CartProvider>
+                {children}
+            </CartProvider>
+           
         </>
     );
 }
