@@ -1,4 +1,4 @@
-import { CartProvider } from "@/components/CartContext";
+import { CartProvider } from "@/contexts/CartContext";
 import MainNavbar from "@/components/main-navbar";
 
 interface MainLayoutProps {

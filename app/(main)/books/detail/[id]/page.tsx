@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import { useCart } from "@/components/CartContext";
+import { useCart } from "@/contexts/CartContext";
 
 export default function BookDetail() {
     const [showFullSynopsis, setShowFullSynopsis] = useState(false);

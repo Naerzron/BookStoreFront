@@ -76,7 +76,7 @@ const MainNavbar = () => {
                     </Link>
                 </li>
                 <li>
-                    <Link href="">
+                    <Link href="/cart">
                         <p>Carrito</p>
                     </Link>
                 </li>
