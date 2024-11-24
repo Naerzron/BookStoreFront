@@ -3,7 +3,6 @@ import { NextResponse } from "next/server";
 
 export async function POST(req: Request): Promise<NextResponse> {
     const token = cookies().get("jwt");
-    console.log(token);
 
     if (!token) {
         return NextResponse.json(

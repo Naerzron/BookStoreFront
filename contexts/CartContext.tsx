@@ -19,6 +19,7 @@ type CartContextType = {
     cartItems: CartItem[];
     addToCart: (item: CartItem) => void;
     removeFromCart: (id: number) => void;
+    updateCartItem: (id: number, quantity: number) => void;
     clearCart: () => void;
 };
 
@@ -67,8 +68,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
                         Ver mi cesta
                     </Link>
                 </ToastAction>,
-            })
-
+            });
 
             return updatedCartItems;
         });
@@ -85,6 +85,26 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
         });
     };
 
+    const updateCartItem = (id: number, quantity: number) => {
+        setCartItems((prev) => {
+            const updatedCartItems = prev.map((cartItem) =>
+                cartItem.id === id ? { ...cartItem, quantity } : cartItem
+            );
+
+            // Actualizar sessionStorage con los elementos modificados
+            setItemWithExpiry('cartItems', updatedCartItems);
+
+            // Mostrar notificación
+            toast({
+                variant: "default",
+                title: "Cantidad actualizada",
+                description: `Has cambiado la cantidad a ${quantity}.`,
+            });
+
+            return updatedCartItems;
+        });
+    };
+
     const clearCart = () => {
         setCartItems(() => {
             // Vaciar el sessionStorage
@@ -95,7 +115,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     };
 
     return (
-        <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, clearCart }}>
+        <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, updateCartItem, clearCart }}>
             {children}
         </CartContext.Provider>
     );

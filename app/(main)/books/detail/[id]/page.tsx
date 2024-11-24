@@ -13,8 +13,8 @@ export default function BookDetail() {
     const id = params.id; // Aquí accedemos al parámetro "id" de la URL
     
     // Hook del carrito
-    const { addToCart, cartItems } = useCart(); // Accede a la función para añadir al carrito
-    console.log(cartItems);
+    const { addToCart } = useCart(); // Accede a la función para añadir al carrito
+    
     // Función para manejar la acción de añadir al carrito
     const handleAddToCart = () => {
         if (book) {

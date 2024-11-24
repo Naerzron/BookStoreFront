@@ -12,7 +12,6 @@ export default function MainLayout({ children }: MainLayoutProps) {
             <CartProvider>
                 {children}
             </CartProvider>
-           
         </>
     );
 }
