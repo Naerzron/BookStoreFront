@@ -6,14 +6,6 @@ import { getItemWithExpiry, removeItemFromSessionStorage, setItemWithExpiry } fr
 import Link from "next/link";
 import React, { createContext, useContext, useState, ReactNode, useEffect } from "react";
 
-// Define el tipo de artículo del carrito
-type CartItem = {
-    id: number;
-    title: string;
-    price: number;
-    quantity: number;
-};
-
 // Define el contexto
 type CartContextType = {
     cartItems: CartItem[];
@@ -109,7 +101,10 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
         setCartItems(() => {
             // Vaciar el sessionStorage
             removeItemFromSessionStorage('cartItems');
-
+            toast({
+                variant: "destructive",
+                title: "Has vaciado el carrito"
+            });
             return [];
         });
     };

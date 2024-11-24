@@ -26,7 +26,7 @@ export default function Books() {
     }, []);
 
     return (
-        <div className="flex flex-col justify-center items-center gap-8 px-12 pt-12">
+        <div className="flex flex-col justify-center items-center gap-8 px-12 pt-32 pb-12">
             {isLoading ? (
                 <h1 className="animate-pulse">Cargando</h1>
             ) : (

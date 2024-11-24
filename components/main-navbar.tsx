@@ -63,7 +63,7 @@ const MainNavbar = () => {
     };
 
     return (
-        <div className="w-full h-20 bg-emerald-800 dark:bg-gray-700 sticky top-0 flex justify-between items-center px-4">
+        <div className="w-full h-20 bg-emerald-800 dark:bg-gray-700 fixed top-0 flex justify-between items-center px-4">
             <ul className="hidden md:flex gap-x-6 text-white dark:text-gray-400 items-center">
                 <li>
                     <Link href="/books">

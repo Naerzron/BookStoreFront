@@ -1,6 +1,10 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
 import { useCart } from "@/contexts/CartContext";
+import { ShoppingCart, X } from "lucide-react";
+import Image from "next/image";
 import { useState } from "react";
 
 export default function CartPage() {
@@ -25,6 +29,27 @@ export default function CartPage() {
         updateCartItem(id, newQuantity); // Actualizar la cantidad en el estado global del carrito
     };
 
+    const handleConfirmOrder = async () => {
+        try {
+            const response = await fetch('/api/orders', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(cartItems),
+            });
+    
+            if (!response.ok) {
+                throw new Error("Failed to create the order");
+            }
+    
+            const data = await response.json();
+            console.log("Order created successfully:", data);
+        } catch (error) {
+            console.error("Error creating order:", error);
+        }
+    };    
+
     return (
         <div className="min-h-screen bg-gray-50 dark:bg-gray-700 flex items-center justify-center p-6">
             <div className="max-w-6xl w-full bg-white dark:bg-gray-800 shadow-md sm:rounded-lg p-6 grid grid-cols-1 gap-6">
@@ -39,58 +64,91 @@ export default function CartPage() {
                         Tu carrito está vacío.
                     </p>
                 ) : (
-                    <div className="space-y-6">
-                        {/* Lista de artículos */}
-                        {cartItems.map((item) => (
-                            <div
-                                key={item.id}
-                                className="flex justify-between items-center bg-gray-100 dark:bg-gray-700 rounded-lg p-4"
-                            >
-                                <div className="space-y-2">
-                                    <h2 className="font-bold text-lg text-gray-800 dark:text-gray-300">
-                                        {item.title}
-                                    </h2>
-                                    <p className="text-gray-600 dark:text-gray-400">
-                                        €{item.price} x{" "}
-                                        <input
-                                            type="number"
-                                            value={quantities[item.id] || item.quantity}
-                                            min="1"
-                                            onChange={(e) =>
-                                                handleQuantityChange(
-                                                    item.id,
-                                                    parseInt(e.target.value, 10)
-                                                )
-                                            }
-                                            className="w-16 text-center border rounded-md dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300"
-                                        />
+                    <div className="w-full space-y-6">
+                        <div className="space-y-6">
+                            {/* Lista de artículos */}
+                            {cartItems.map((item) => (
+                                <div
+                                    key={item.id}
+                                    className="flex justify-between items-center bg-gray-100 dark:bg-gray-700 rounded-lg p-4"
+                                >
+                                    <div className="flex gap-4">
+                                        <div>
+                                            <Image
+                                                src={`/resources/images/${item.image}`}
+                                                width={100}
+                                                height={200}
+                                                alt={item.title}
+                                                objectFit="contain"
+                                                className="rounded-md"
+                                            />
+                                        </div>
+                                        <div>
+                                            <h2 className="font-bold text-lg text-gray-800 dark:text-gray-300">
+                                                {item.title}
+                                            </h2>
+                                            <p className="text-gray-600 dark:text-gray-400">
+                                                €{item.price} x{" "}
+                                                <input
+                                                    type="number"
+                                                    value={
+                                                        quantities[item.id] ||
+                                                        item.quantity
+                                                    }
+                                                    min="1"
+                                                    onChange={(e) =>
+                                                        handleQuantityChange(
+                                                            item.id,
+                                                            parseInt(
+                                                                e.target.value,
+                                                                10
+                                                            )
+                                                        )
+                                                    }
+                                                    className="w-16 text-center border rounded-md dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300"
+                                                />
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <Button
+                                        variant={'destructive'}
+                                        onClick={() => removeFromCart(item.id)}
+                                        className="font-semibold"
+                                    >
+                                        <X />
+                                        Eliminar
+                                    </Button>
+                                </div>
+                            ))}
+
+                            {/* Total y acciones */}
+                            <div className="flex justify-between items-center">
+                                <div>
+                                    <span className="text-gray-700 dark:text-gray-300 font-semibold text-lg">
+                                        Total:
+                                    </span>
+                                    <p className="text-green-600 font-bold dark:text-green-400 text-2xl mt-2">
+                                        €{total.toFixed(2)}
                                     </p>
                                 </div>
                                 <button
-                                    onClick={() => removeFromCart(item.id)}
-                                    className="text-red-500 dark:text-red-400 hover:underline font-semibold"
+                                    onClick={clearCart}
+                                    className="bg-red-600 text-white px-6 py-3 rounded-md text-lg font-medium hover:bg-red-700 dark:bg-red-500 dark:hover:bg-red-600"
                                 >
-                                    Eliminar
+                                    Vaciar carrito
                                 </button>
                             </div>
-                        ))}
-
-                        {/* Total y acciones */}
-                        <div className="flex justify-between items-center">
-                            <div>
-                                <span className="text-gray-700 dark:text-gray-300 font-semibold text-lg">
-                                    Total:
-                                </span>
-                                <p className="text-green-600 font-bold dark:text-green-400 text-2xl mt-2">
-                                    €{total.toFixed(2)}
-                                </p>
-                            </div>
-                            <button
-                                onClick={clearCart}
-                                className="bg-red-600 text-white px-6 py-3 rounded-md text-lg font-medium hover:bg-red-700 dark:bg-red-500 dark:hover:bg-red-600"
+                        </div>
+                        <Separator />
+                        <div className="w-full">
+                            <Button
+                                variant={'success'}
+                                onClick={handleConfirmOrder}
+                                className="w-full p-6 font-medium text-xl shadow-md"
                             >
-                                Vaciar carrito
-                            </button>
+                                <ShoppingCart />
+                                Confirmar pedido
+                            </Button>
                         </div>
                     </div>
                 )}
