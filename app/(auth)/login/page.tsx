@@ -1,9 +1,11 @@
 "use client";
 
+import { useAuth } from "@/contexts/AuthContext";
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { useState } from "react";
 
 export default function Login() {
+    const { handleCtxLogin } = useAuth();
     const router = useRouter();
     const searchParams = useSearchParams();
     const redirectTo = searchParams.get("redirect") || "/";
@@ -27,6 +29,8 @@ export default function Login() {
             const data: LoginResponse = await response.json();
             if (data.success) {
                 setErrorMessage("");
+                
+                handleCtxLogin();
                 
                 if (data.userRole === 'Administrador') {
                     router.replace('/admin/books');

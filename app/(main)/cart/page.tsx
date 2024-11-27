@@ -2,12 +2,15 @@
 
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { useAuth } from "@/contexts/AuthContext";
 import { useCart } from "@/contexts/CartContext";
 import { ShoppingCart, X } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 
 export default function CartPage() {
+    const { isLoggedIn } = useAuth();
     const { cartItems, updateCartItem, removeFromCart, clearCart } = useCart();
     const [quantities, setQuantities] = useState(
         cartItems.reduce((acc, item) => {
@@ -56,8 +59,8 @@ export default function CartPage() {
     };
 
     return (
-        <div className="min-h-screen bg-gray-50 dark:bg-gray-700 flex items-center justify-center p-6">
-            <div className="max-w-6xl w-full bg-white dark:bg-gray-800 shadow-md sm:rounded-lg p-6 grid grid-cols-1 gap-6">
+        <div className="min-h-screen bg-gray-50 dark:bg-gray-700 flex justify-center p-6 pt-28">
+            <div className="max-w-6xl w-full h-fit bg-white dark:bg-gray-800 shadow-md sm:rounded-lg p-6 grid grid-cols-1 gap-6">
                 {/* Título */}
                 <h1 className="text-4xl font-bold text-gray-800 dark:text-gray-300 mb-4 text-center">
                     Carrito de Compras
@@ -84,8 +87,7 @@ export default function CartPage() {
                                                 width={100}
                                                 height={200}
                                                 alt={item.title}
-                                                objectFit="contain"
-                                                className="rounded-md"
+                                                className="rounded-md object-contain"
                                             />
                                         </div>
                                         <div>
@@ -146,14 +148,24 @@ export default function CartPage() {
                         </div>
                         <Separator />
                         <div className="w-full">
-                            <Button
-                                variant={"success"}
-                                onClick={() => setIsModalOpen(true)} // Mostrar modal
-                                className="w-full p-6 font-medium text-xl shadow-md"
-                            >
-                                <ShoppingCart />
-                                Confirmar pedido
-                            </Button>
+                            {isLoggedIn ? (
+                                <Button
+                                    variant={"success"}
+                                    onClick={() => setIsModalOpen(true)} // Mostrar modal
+                                    className="w-full p-6 font-medium text-xl shadow-md"
+                                >
+                                    <ShoppingCart />
+                                    Confirmar pedido
+                                </Button>
+                            ) : (
+                                <Button>
+                                    <Link
+                                        href={'/login'}
+                                    >
+                                        Iniciar sesión para continuar con el pedido
+                                    </Link>
+                                </Button>
+                            )}
                         </div>
                     </div>
                 )}
@@ -167,7 +179,6 @@ export default function CartPage() {
                             </h2>
                             <p className="text-gray-600 dark:text-gray-400 mb-6">
                                 ¿Estás seguro de que deseas confirmar tu pedido?
-                                Esta acción no se puede deshacer.
                             </p>
                             <div className="flex justify-end space-x-4">
                                 <Button
