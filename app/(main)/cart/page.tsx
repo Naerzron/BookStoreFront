@@ -16,6 +16,8 @@ export default function CartPage() {
         }, {} as Record<number, number>)
     );
 
+    const [isModalOpen, setIsModalOpen] = useState(false); // Estado para el modal
+
     // Calcular el total
     const total = cartItems.reduce(
         (sum, item) => sum + item.price * item.quantity,
@@ -31,24 +33,27 @@ export default function CartPage() {
 
     const handleConfirmOrder = async () => {
         try {
-            const response = await fetch('/api/orders', {
-                method: 'POST',
+            const response = await fetch("/api/orders", {
+                method: "POST",
                 headers: {
-                    'Content-Type': 'application/json',
+                    "Content-Type": "application/json",
                 },
                 body: JSON.stringify(cartItems),
             });
-    
+
             if (!response.ok) {
                 throw new Error("Failed to create the order");
             }
-    
+
             const data = await response.json();
             console.log("Order created successfully:", data);
+
+            clearCart(false); // Vaciar el carrito después de confirmar
+            setIsModalOpen(false); // Cerrar el modal
         } catch (error) {
             console.error("Error creating order:", error);
         }
-    };    
+    };
 
     return (
         <div className="min-h-screen bg-gray-50 dark:bg-gray-700 flex items-center justify-center p-6">
@@ -111,7 +116,7 @@ export default function CartPage() {
                                         </div>
                                     </div>
                                     <Button
-                                        variant={'destructive'}
+                                        variant={"destructive"}
                                         onClick={() => removeFromCart(item.id)}
                                         className="font-semibold"
                                     >
@@ -132,7 +137,7 @@ export default function CartPage() {
                                     </p>
                                 </div>
                                 <button
-                                    onClick={clearCart}
+                                    onClick={() => clearCart()}
                                     className="bg-red-600 text-white px-6 py-3 rounded-md text-lg font-medium hover:bg-red-700 dark:bg-red-500 dark:hover:bg-red-600"
                                 >
                                     Vaciar carrito
@@ -142,13 +147,42 @@ export default function CartPage() {
                         <Separator />
                         <div className="w-full">
                             <Button
-                                variant={'success'}
-                                onClick={handleConfirmOrder}
+                                variant={"success"}
+                                onClick={() => setIsModalOpen(true)} // Mostrar modal
                                 className="w-full p-6 font-medium text-xl shadow-md"
                             >
                                 <ShoppingCart />
                                 Confirmar pedido
                             </Button>
+                        </div>
+                    </div>
+                )}
+
+                {/* Modal */}
+                {isModalOpen && (
+                    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                        <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg max-w-md w-full">
+                            <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4">
+                                ¿Confirmar pedido?
+                            </h2>
+                            <p className="text-gray-600 dark:text-gray-400 mb-6">
+                                ¿Estás seguro de que deseas confirmar tu pedido?
+                                Esta acción no se puede deshacer.
+                            </p>
+                            <div className="flex justify-end space-x-4">
+                                <Button
+                                    variant="secondary"
+                                    onClick={() => setIsModalOpen(false)}
+                                >
+                                    Cancelar
+                                </Button>
+                                <Button
+                                    variant="success"
+                                    onClick={handleConfirmOrder}
+                                >
+                                    Confirmar
+                                </Button>
+                            </div>
                         </div>
                     </div>
                 )}

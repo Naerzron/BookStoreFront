@@ -12,7 +12,7 @@ type CartContextType = {
     addToCart: (item: CartItem) => void;
     removeFromCart: (id: number) => void;
     updateCartItem: (id: number, quantity: number) => void;
-    clearCart: () => void;
+    clearCart: (showToast?: boolean) => void;
 };
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -97,14 +97,18 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
         });
     };
 
-    const clearCart = () => {
+    const clearCart = (showToast: boolean = true) => {
         setCartItems(() => {
             // Vaciar el sessionStorage
             removeItemFromSessionStorage('cartItems');
-            toast({
-                variant: "destructive",
-                title: "Has vaciado el carrito"
-            });
+
+            if (showToast) {
+                toast({
+                    variant: "destructive",
+                    title: "Has vaciado el carrito"
+                });
+            }
+            
             return [];
         });
     };

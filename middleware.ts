@@ -31,7 +31,7 @@ export function middleware(request: NextRequest) {
         pathname.startsWith(route)
     );
 
-    console.log(isAdminRestrictedRoute, isUserRestrictedRoute, userRole, userLogged);
+    //console.log(isAdminRestrictedRoute, isUserRestrictedRoute, userRole, userLogged);
 
     if ((isUserRestrictedRoute || isAdminRestrictedRoute) && !token) {
         const url = request.nextUrl.clone();

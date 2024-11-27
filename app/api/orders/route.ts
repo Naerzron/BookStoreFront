@@ -1,12 +1,8 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function POST(req: Request): Promise<NextResponse> {
+export async function POST(req: NextRequest): Promise<NextResponse> {
     try {
-        // Parsear los datos recibidos del cliente
         const cartItems: CartItem[] = await req.json();
-
-        // Aquí podrías agregar lógica para procesar los `cartItems`, como validaciones o formateo
-        console.log("Cart items received:", cartItems);
 
         if (!cartItems) {
             return NextResponse.json(
@@ -21,13 +17,15 @@ export async function POST(req: Request): Promise<NextResponse> {
                 quantity: item.quantity,
             })),
         };
-
+        const userLogged = req.cookies.get("jwt");
+        const token = userLogged?.value;
+        console.log("token:" + token);
         // Realiza la solicitud POST al endpoint
-        const response = await fetch("http://localhost:5141/api/Orders", {
+        const response = await fetch("http://localhost:5141/api/orders", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                // Authorization: `Bearer ${token}`, // Incluye el token si tu API lo requiere
+                "Authorization": `Bearer ${token}`, // Incluye el token si tu API lo requiere
             },
             body: JSON.stringify(orderRequest),
         });

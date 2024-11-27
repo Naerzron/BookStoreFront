@@ -10,14 +10,14 @@ export default function Account() {
     const [activeTab, setActiveTab] = useState<"profile" | "orders" | "changePassword">("profile");
 
     return (
-        <div className="min-h-screen bg-gray-50 dark:bg-gray-700">
+        <div className="min-h-screen bg-gray-50 dark:bg-gray-700 flex flex-col">
             {/* Navbar */}
             <Navbar />
 
             {/* Main Content */}
-            <div className="flex flex-col md:flex-row">
+            <div className="flex flex-1 flex-col md:flex-row items-start px-12 pt-32 pb-12">
                 {/* Sidebar */}
-                <aside className="w-full md:w-1/4 bg-white dark:bg-gray-800 shadow-md p-6">
+                <aside className="w-full md:w-1/4 bg-white dark:bg-gray-800 shadow-md p-6 sticky top-32">
                     <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-300 mb-6">Mi cuenta</h1>
                     <nav className="space-y-4">
                         <button
@@ -54,7 +54,7 @@ export default function Account() {
                 </aside>
 
                 {/* Content */}
-                <main className="flex-1 bg-gray-50 dark:bg-gray-700 p-6">
+                <main className="flex-1 bg-gray-50 dark:bg-gray-700 p-12 rounded-lg shadow-md overflow-auto">
                     {activeTab === "profile" && <ProfileForm />}
                     {activeTab === "orders" && <Orders />}
                     {activeTab === "changePassword" && <ChangePassword />}
