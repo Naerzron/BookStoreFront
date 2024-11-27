@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { useAuth } from "@/contexts/AuthContext";
 import { useCart } from "@/contexts/CartContext";
+import { toast } from "@/hooks/use-toast";
 import { ShoppingCart, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -32,6 +33,13 @@ export default function CartPage() {
         if (newQuantity < 1) return; // Evitar cantidades menores a 1
         setQuantities((prev) => ({ ...prev, [id]: newQuantity }));
         updateCartItem(id, newQuantity); // Actualizar la cantidad en el estado global del carrito
+
+        // Mostrar notificación
+        toast({
+            variant: "default",
+            title: "Cantidad actualizada",
+            description: `Has cambiado la cantidad a ${newQuantity}.`,
+        });
     };
 
     const handleConfirmOrder = async () => {
@@ -51,8 +59,14 @@ export default function CartPage() {
             const data = await response.json();
             console.log("Order created successfully:", data);
 
-            clearCart(false); // Vaciar el carrito después de confirmar
+            clearCart(); // Vaciar el carrito después de confirmar
             setIsModalOpen(false); // Cerrar el modal
+
+            // Mostrar notificación
+            toast({
+                variant: "destructive",
+                title: "Has vaciado el carrito"
+            });
         } catch (error) {
             console.error("Error creating order:", error);
         }

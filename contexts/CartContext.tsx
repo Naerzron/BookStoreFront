@@ -12,7 +12,7 @@ type CartContextType = {
     addToCart: (item: CartItem) => void;
     removeFromCart: (id: number) => void;
     updateCartItem: (id: number, quantity: number) => void;
-    clearCart: (showToast?: boolean) => void;
+    clearCart: () => void;
 };
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -49,19 +49,6 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
             // Actualizar sessionStorage dentro del setter de estado
             setItemWithExpiry('cartItems', updatedCartItems);
 
-            toast({
-                variant: "success",
-                title: "¡Añadido!",
-                description: `Has añadido ${item.title} a tu cesta.`,
-                action: <ToastAction altText="Cart link">
-                    <Link
-                        href={'/cart'}
-                    >
-                        Ver mi cesta
-                    </Link>
-                </ToastAction>,
-            });
-
             return updatedCartItems;
         });
     };
@@ -86,29 +73,14 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
             // Actualizar sessionStorage con los elementos modificados
             setItemWithExpiry('cartItems', updatedCartItems);
 
-            // Mostrar notificación
-            toast({
-                variant: "default",
-                title: "Cantidad actualizada",
-                description: `Has cambiado la cantidad a ${quantity}.`,
-            });
-
             return updatedCartItems;
         });
     };
 
-    const clearCart = (showToast: boolean = true) => {
+    const clearCart = () => {
         setCartItems(() => {
             // Vaciar el sessionStorage
             removeItemFromSessionStorage('cartItems');
-
-            if (showToast) {
-                toast({
-                    variant: "destructive",
-                    title: "Has vaciado el carrito"
-                });
-            }
-            
             return [];
         });
     };

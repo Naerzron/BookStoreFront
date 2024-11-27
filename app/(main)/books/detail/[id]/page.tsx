@@ -3,6 +3,9 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { useCart } from "@/contexts/CartContext";
 import { Loader } from "lucide-react";
+import { toast } from "@/hooks/use-toast";
+import { ToastAction } from "@/components/ui/toast";
+import Link from "next/link";
 
 export default function BookDetail() {
     const [showFullSynopsis, setShowFullSynopsis] = useState(false);
@@ -25,6 +28,19 @@ export default function BookDetail() {
                 price: book.price,
                 quantity: 1, // Agregamos una unidad por defecto
                 image: book.image,
+            });
+
+            toast({
+                variant: "success",
+                title: "¡Añadido!",
+                description: `Has añadido ${book.title} a tu cesta.`,
+                action: <ToastAction altText="Cart link">
+                    <Link
+                        href={'/cart'}
+                    >
+                        Ver mi cesta
+                    </Link>
+                </ToastAction>,
             });
         }
     };
