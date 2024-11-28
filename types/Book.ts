@@ -1,4 +1,4 @@
-export interface Book {
+type Book = {
     id: number;
     title: string;
     publishedDate: string; // Utilizamos string en lugar de DateOnly para manejarlo en TypeScript

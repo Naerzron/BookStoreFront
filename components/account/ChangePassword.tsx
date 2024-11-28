@@ -48,10 +48,10 @@ export default function ChangePassword() {
     };
 
     return (
-        <div className="p-6 bg-white shadow-md rounded-md dark:bg-gray-800">
+        <div>
             <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-300 mb-4">Cambiar Contraseña</h2>
-            <form onSubmit={handleSubmit} className="space-y-4">
-                <div>
+            <form onSubmit={handleSubmit} className="max-w-md space-y-4">
+                <div className="flex flex-col">
                     <label className="block text-gray-700 dark:text-gray-300 font-medium">Contraseña Actual:</label>
                     <input
                         type="password"
@@ -61,7 +61,7 @@ export default function ChangePassword() {
                         className="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                 </div>
-                <div>
+                <div className="flex flex-col">
                     <label className="block text-gray-700 dark:text-gray-300 font-medium">Nueva Contraseña:</label>
                     <input
                         type="password"
@@ -71,7 +71,7 @@ export default function ChangePassword() {
                         className="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                 </div>
-                <div>
+                <div className="flex flex-col">
                     <label className="block text-gray-700 dark:text-gray-300 font-medium">Confirmar Nueva Contraseña:</label>
                     <input
                         type="password"
@@ -83,7 +83,7 @@ export default function ChangePassword() {
                 </div>
                 <button
                     type="submit"
-                    className="py-2 px-4 bg-blue-600 text-white rounded-md font-medium hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full py-2 px-4 bg-blue-600 text-white rounded-md font-medium hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
                     Cambiar Contraseña
                 </button>

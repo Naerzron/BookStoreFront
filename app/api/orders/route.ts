@@ -17,9 +17,10 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
                 quantity: item.quantity,
             })),
         };
-        const userLogged = req.cookies.get("jwt");
-        const token = userLogged?.value;
-        console.log("token:" + token);
+
+        const cookieToken = req.cookies.get("jwt");
+        const token = cookieToken?.value;
+
         // Realiza la solicitud POST al endpoint
         const response = await fetch("http://localhost:5141/api/orders", {
             method: "POST",
@@ -52,6 +53,53 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
         // Responder con un error si ocurre algo inesperado
         return NextResponse.json(
             { success: false, message: "Failed to process the order" },
+            { status: 500 }
+        );
+    }
+}
+
+export async function GET(req: NextRequest): Promise<NextResponse> {
+    try {
+        const cookieToken = req.cookies.get("jwt");
+        const token = cookieToken?.value;
+
+        if (!token) {
+            return NextResponse.json(
+                { success: false, message: "User not logged" },
+                { status: 400 }
+            );
+        }
+
+        const response = await fetch("http://localhost:5141/api/orders/user", {
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`,
+            },
+            credentials: "include",
+        });
+
+        console.log(response);
+
+        if (!response.ok) {
+            throw new Error("Failed to fetch the orders");
+        }
+
+        const data = await response.json();
+        console.log("Orders fetched successfully:", data);
+        if (!response.ok) {
+            return NextResponse.json(
+                { message: "Error fetching orders" },
+                { status: response.status }
+            );
+        }
+
+        return NextResponse.json(
+            { success: true, message: "Orders fetched successfully", orders: data },
+            { status: 200 }
+        );
+    } catch (error) {
+        return NextResponse.json(
+            { success: false, message: "Failed to fetch the orders" },
             { status: 500 }
         );
     }

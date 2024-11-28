@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useEffect, useState } from 'react'
-import { Book } from "@/types/Book";
 import { useParams } from 'next/navigation';
 import { Author } from '@/types/Author';
 import { Genre } from '@/types/Genre';

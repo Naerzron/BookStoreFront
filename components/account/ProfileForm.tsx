@@ -1,20 +1,21 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { Button } from "../ui/button";
+import { toast } from "@/hooks/use-toast";
 
 type ProfileForm = {
-    name: string,
-    lastName: string,
-    email: string,
-    phoneNumber: string,
-    address: string,
-    birthDate: string,
-    country: string,
-    dni: string
-}
+    name: string;
+    lastName: string;
+    email: string;
+    phoneNumber: string;
+    address: string;
+    birthDate: string;
+    country: string;
+    dni: string;
+};
 
 export const ProfileForm = () => {
-    
     const [profileForm, setProfileForm] = useState<ProfileForm>({
         name: "",
         address: "",
@@ -23,39 +24,47 @@ export const ProfileForm = () => {
         dni: "",
         email: "",
         lastName: "",
-        phoneNumber: ""
-    })
-    
+        phoneNumber: "",
+    });
+
     const [isLoading, setIsLoading] = useState(true);
-    const [isEditing, setisEditing] = useState(false)
+    const [isEditing, setisEditing] = useState(false);
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setProfileForm({ ...profileForm, [e.target.name]: e.target.value });
     };
 
     const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        setProfileForm({...profileForm, "country": e.target.value})
-    }
+        setProfileForm({ ...profileForm, country: e.target.value });
+    };
 
     const handleSaveChanges = async () => {
         try {
-            await fetch(
-                `http://localhost:5141/api/account`,
-                {
-                    method: "POST",
-                    credentials: "include", //Incluye las cookies del token de autenticacion
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify(profileForm),
-                    
-                }
-            );
-        }
-        catch(error) {
-            console.error("Error changing user account", error);
+            const response = await fetch(`http://localhost:5141/api/account`, {
+                method: "POST",
+                credentials: "include", //Incluye las cookies del token de autenticacion
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(profileForm),
+            });
 
+            if (!response.ok) {
+                toast({
+                    variant: "destructive",
+                    title: "No se han podido actualizar los dagos",
+                });
+                return;
+            }
+
+            setisEditing(false);
+            toast({
+                variant: "success",
+                title: "Datos actualizados",
+            });
+        } catch (error) {
+            console.error("Error changing user account", error);
         }
-    }
+    };
 
     useEffect(() => {
         const fetchUserAccount = async () => {
@@ -64,7 +73,7 @@ export const ProfileForm = () => {
                     `http://localhost:5141/api/account`,
                     {
                         method: "GET",
-                        credentials: "include" //Incluye las cookies del token de autenticacion
+                        credentials: "include", //Incluye las cookies del token de autenticacion
                     }
                 );
                 const data: ProfileForm = await response.json();
@@ -76,7 +85,7 @@ export const ProfileForm = () => {
                     dni: data.dni,
                     email: data.email,
                     lastName: data.lastName,
-                    phoneNumber: data.phoneNumber
+                    phoneNumber: data.phoneNumber,
                 });
                 setIsLoading(false);
             } catch (error) {
@@ -85,14 +94,16 @@ export const ProfileForm = () => {
         };
 
         fetchUserAccount();
-    }, [])
-    
-    if(isLoading) return;
+    }, []);
+
+    if (isLoading) return;
 
     return (
-
         <form className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 dark:bg-gray-800 p-6 bg-white shadow-md rounded-md">
+            <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-300 mb-4">
+                Mis datos
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 dark:bg-gray-800">
                 <div>
                     <label className="block text-gray-700 dark:text-gray-300 font-semibold">
                         Nombre:
@@ -209,24 +220,20 @@ export const ProfileForm = () => {
                         disabled={!isEditing}
                     />
                 </div>
-                <button
-                type="button"
-                className="px-4 py-2 bg-blue-600 text-white rounded-md font-medium hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600"
-                hidden={isEditing}
-                onClick={() => setisEditing(true)}
-                >
-                    Editar Datos
-                </button>
-                <button
-                    type="submit"
-                    className="px-4 py-2 bg-blue-600 text-white rounded-md font-medium hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600"
-                    hidden={!isEditing}
-                    onClick={handleSaveChanges}
-                >
-                    Guardar Cambios
-                </button>
             </div>
-            
+            <div className="w-full">
+                <Button
+                    type="button"
+                    className="w-full px-4 py-2 rounded-md font-medium"
+                    hidden={isEditing}
+                    onClick={() =>
+                        isEditing ? handleSaveChanges() : setisEditing(true)
+                    }
+                    variant={isEditing ? 'success' : 'secondary'}
+                >
+                    {isEditing ? "Guardar Cambios" : "Editar Datos"}
+                </Button>
+            </div>
         </form>
     );
 };

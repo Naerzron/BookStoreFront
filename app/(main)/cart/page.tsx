@@ -172,7 +172,10 @@ export default function CartPage() {
                                     Confirmar pedido
                                 </Button>
                             ) : (
-                                <Button>
+                                <Button
+                                    variant={'outline'}
+                                    className="w-full text-lg"
+                                >
                                     <Link
                                         href={'/login'}
                                     >

@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
@@ -36,15 +37,18 @@ export default function Books() {
                             key={book.id}
                             className="bg-white rounded-lg shadow-md overflow-hidden dark:bg-gray-800"
                         >
-                            <div className="w-full h-80 overflow-hidden">
-                                <img
+                            <div className="w-full overflow-hidden">
+                                <Image
                                     src={`/resources/images/${
                                         book.image == ""
                                             ? "default.jpg"
                                             : book.image
                                     }`}
                                     alt={`Portada de ${book.title}`}
-                                    className="w-full h-full object-cover"
+                                    className="w-full h-full object-contain"
+                                    width={200}
+                                    height={300}
+                                    priority={false}
                                 />
                             </div>
                             <div className="p-4">

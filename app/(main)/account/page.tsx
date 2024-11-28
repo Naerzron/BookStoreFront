@@ -15,9 +15,9 @@ export default function Account() {
             <Navbar />
 
             {/* Main Content */}
-            <div className="flex flex-1 flex-col md:flex-row items-start px-12 pt-32 pb-12">
+            <div className="flex flex-1 flex-col md:flex-row items-start px-12 pt-32 pb-12 gap-4 md:gap-12">
                 {/* Sidebar */}
-                <aside className="w-full md:w-1/4 bg-white dark:bg-gray-800 shadow-md p-6 sticky top-32">
+                <aside className="w-full md:w-1/4 bg-white dark:bg-gray-800 shadow-md p-6 md:sticky md:top-3 border border-gray-2002">
                     <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-300 mb-6">Mi cuenta</h1>
                     <nav className="space-y-4">
                         <button
@@ -54,7 +54,7 @@ export default function Account() {
                 </aside>
 
                 {/* Content */}
-                <main className="flex-1 bg-gray-50 dark:bg-gray-700 p-12 rounded-lg shadow-md overflow-auto">
+                <main className="w-full border border-gray-200 bg-white dark:bg-gray-700 p-6 md:p-12 rounded-lg shadow-md overflow-auto">
                     {activeTab === "profile" && <ProfileForm />}
                     {activeTab === "orders" && <Orders />}
                     {activeTab === "changePassword" && <ChangePassword />}
