@@ -1,8 +1,8 @@
-import { clsx, type ClassValue } from "clsx"
-import { twMerge } from "tailwind-merge"
+import { clsx, type ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
+    return twMerge(clsx(inputs));
 }
 
 import { ONE_WEEK_IN_MS } from "@/lib/constants";
@@ -13,7 +13,11 @@ import { ONE_WEEK_IN_MS } from "@/lib/constants";
  * @param value - El valor a guardar, que será convertido a JSON.
  * @param ttl - Tiempo de vida en milisegundos (Time To Live).
  */
-export const setItemWithExpiry = (key: string, value: unknown, ttl: number = ONE_WEEK_IN_MS): void => {
+export const setItemWithExpiry = (
+    key: string,
+    value: unknown,
+    ttl: number = ONE_WEEK_IN_MS
+): void => {
     if (typeof window !== "undefined" && window.sessionStorage) {
         try {
             const now = Date.now();
@@ -75,4 +79,12 @@ export const removeItemFromSessionStorage = (key: string): void => {
     } else {
         console.warn("sessionStorage no está disponible en este entorno.");
     }
+};
+
+export const formatDate = (isoDate: string) => {
+    const date = new Date(isoDate);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // Mes empieza en 0
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
 };

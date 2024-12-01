@@ -40,7 +40,7 @@ const MainNavbar = () => {
     };
 
     return (
-        <div className="w-full h-20 bg-emerald-800 dark:bg-gray-700 fixed top-0 flex justify-between items-center px-4">
+        <div className="w-full h-20 bg-emerald-800 dark:bg-gray-700 fixed top-0 flex justify-between items-center px-4 z-50">
             <ul className="hidden md:flex gap-x-6 text-white dark:text-gray-400 items-center">
                 <li>
                     <Link href="/books" className="flex items-center gap-2">
@@ -49,7 +49,7 @@ const MainNavbar = () => {
                     </Link>
                 </li>
                 <li>
-                    <Link href="/account?redirect=/account" className="flex items-center gap-2">
+                    <Link href="/account" className="flex items-center gap-2">
                         <CircleUserRound strokeWidth={1} className="w-6 h-6" />
                         <p>Mi cuenta</p>
                     </Link>

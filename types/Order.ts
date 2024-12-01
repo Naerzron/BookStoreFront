@@ -1,5 +1,8 @@
 type Order = {
     id: number,
+    createdDate: string,
+    status: string,
+    totalAmount: string,
     details: OrderDetail[],
     user: User
 }

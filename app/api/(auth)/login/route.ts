@@ -28,7 +28,7 @@ export async function POST(request: Request): Promise<NextResponse> {
 
             const res = NextResponse.json({ success: true, userRole: decoded.role }, { status: 200 });
             res.cookies.set("jwt", token, {
-                maxAge: 60 * 60 * 0.5, 
+                maxAge: 60 * 60 * 12, 
                 httpOnly: true, 
                 secure: true, 
                 path: "/"

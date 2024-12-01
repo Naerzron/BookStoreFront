@@ -22,7 +22,6 @@ export default function Register() {
     const [phoneNumber, setPhoneNumber] = useState<string>("");
 
     const [errorMessage, setErrorMessage] = useState("");
-    const redirectTo = searchParams.get("redirect") || "/";
 
     const handleSubmit = async (e: { preventDefault: () => void; }) => {
         e.preventDefault();
@@ -54,7 +53,7 @@ export default function Register() {
 
             if (data.success) {
                 setErrorMessage("");
-                router.replace(redirectTo);
+                router.replace('/');
             } else {
                 setErrorMessage(
                     "Error al registrar."

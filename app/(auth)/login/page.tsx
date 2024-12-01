@@ -8,7 +8,6 @@ export default function Login() {
     const { handleCtxLogin } = useAuth();
     const router = useRouter();
     const searchParams = useSearchParams();
-    const redirectTo = searchParams.get("redirect") || "/";
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -35,7 +34,7 @@ export default function Login() {
                 if (data.userRole === 'Administrador') {
                     router.replace('/admin/books');
                 } else {
-                    router.replace(redirectTo);
+                    router.replace('/');
                 }
             } else {
                 setErrorMessage(
