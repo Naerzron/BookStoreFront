@@ -16,6 +16,7 @@ export default function CreateGenre() {
         name: "",
         description: ""
     });
+    
     //Estados del componente
     const [mensaje, setMensaje] = useState<string>("");
     const [genres, setGenres] = useState<Genre[]>([]);

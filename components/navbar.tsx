@@ -61,6 +61,11 @@ const Navbar = () => {
                 </Link>
               </li>
               <li>
+                <Link href="/admin/users">
+                  <p>Usuarios</p>
+                </Link>
+              </li>
+              <li>
                 {/* Botón para cerrar sesión */}
                 <button
                     onClick={handleLogout}
