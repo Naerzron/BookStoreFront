@@ -92,7 +92,7 @@ export default function BookDetail() {
                                 Precio:
                             </span>
                             <span className="ml-2 text-green-600 font-bold dark:text-green-400">
-                                €{book?.price}
+                                {book?.price} €
                             </span>
                         </div>
 
@@ -102,7 +102,7 @@ export default function BookDetail() {
                                 Stock:
                             </span>
                             <span className="ml-2 text-green-600 font-bold dark:text-green-400">
-                                €{book?.stock}
+                                {book?.stock} unidades
                             </span>
                         </div>
                     </div>

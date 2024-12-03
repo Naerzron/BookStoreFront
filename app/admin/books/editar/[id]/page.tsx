@@ -4,53 +4,99 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'next/navigation';
 import { Author } from '@/types/Author';
 import { Genre } from '@/types/Genre';
+import {Book} from '@/types/Book';
+
+interface FormData {
+    title: string,
+    publishedDate: string,
+    stock: number,
+    price: number,
+    synopsis: string,
+    isbn: string,
+    author?: Author,
+    genre?: Genre,
+    image: string
+}
 
 export default function EditBook() {
+    const params = useParams(); // Aquí accedemos al parámetro "id" de la URL
+    const id = Number(params.id); // Aquí accedemos al parámetro "id" de la URL
 
     // Estado para el formulario
-    const [formData, setFormData] = useState({
+    const [formData, setFormData] = useState<FormData>({
         title: '',
         publishedDate: '',
-        stock: '',
-        price: '',
+        stock: 0,
+        price: 0,
         synopsis: '',
         isbn: '',
-        authorId: '',
-        genreId: '',
+        author: undefined,
+        genre: undefined,
         image: ''
     });
 
     //Estados del componente
     const [genres, setGenres] = useState<Genre[]>([]);
     const [authors, setAuthors] = useState<Author[]>([]);
-    const [mensaje, setMensaje] = useState("");
+    const [mensaje, setMensaje] = useState<String>("");
 
-    const params = useParams(); // Aquí accedemos al parámetro "id" de la URL
-    const id = params.id; // Aquí accedemos al parámetro "id" de la URL
-    
     useEffect(() => {
-        const fetchBooks = async () => {
+        const fetchData = async () => {
             try {
-                const response = await fetch(`http://localhost:5141/api/books/${id}`);
-                const book: Book = await response.json();
-                setFormData({
-                    title: book.title,
-                    publishedDate: book.publishedDate,
-                    stock: String(book.stock), 
-                    price: String(book.price),
-                    synopsis: book.synopsis,
-                    isbn: book.isbn,
-                    authorId: String(book.authorId),
-                    genreId: String(book.genreId),
-                    image: String(book.image)
-                })
+                // Fetch genres
+                const fetchGenres = async (): Promise<Genre[]> => {
+                    const response = await fetch("http://localhost:5141/api/genres");
+                    return response.json();
+                };
+    
+                // Fetch authors
+                const fetchAuthors = async (): Promise<Author[]> => {
+                    const response = await fetch("http://localhost:5141/api/authors");
+                    return response.json();
+                };
+    
+                // Fetch book
+                const fetchBook = async (): Promise<Book | undefined> => {
+                    try {
+                        const response = await fetch(`http://localhost:5141/api/books/book/${id}`);
+                        if (!response.ok) {
+                            throw new Error("Failed to fetch the book");
+                        }
+                        return response.json();
+                    } catch (error) {
+                        console.error("Error fetching books:", error);
+                        return undefined;
+                    }
+                };
+    
+                // Fetch data
+                const genres = await fetchGenres();
+                const authors = await fetchAuthors();
+                const book = await fetchBook();
+    
+                // Set state
+                setGenres(genres);
+                setAuthors(authors);
+                if (book) {
+                    setFormData({
+                        title: book.title,
+                        publishedDate: book.publishedDate,
+                        stock: book.stock,
+                        price: book.price,
+                        synopsis: book.synopsis,
+                        isbn: book.isbn,
+                        author: authors.find((a) => a.id === book.author?.id),
+                        genre: genres.find((g) => g.id === book.genre?.id),
+                        image: String(book.image),
+                    });
+                }
             } catch (error) {
-                console.error('Error fetching books: ', error);
+                console.error("Error fetching data:", error);
             }
         };
-
-        fetchBooks();
-    }, [])
+    
+        fetchData();
+    }, []);
 
     // Manejar el envío del formulario
     const handleSubmit = async (e: React.FormEvent) => {
@@ -65,10 +111,11 @@ export default function EditBook() {
                 price: Number(formData.price),
                 synopsis: formData.synopsis,
                 isbn: formData.isbn,
-                authorId: Number(formData.authorId),
-                genreId: Number(formData.genreId),
+                author: authors.find(a => a.id === formData.author?.id),
+                genre: genres.find(g => g.id === formData.genre?.id),
                 image: String(formData.image)
             }
+            console.log(book);
             const response = await fetch(`http://localhost:5141/api/books/${id}`,
                 {
                     method: 'PUT',
@@ -78,17 +125,7 @@ export default function EditBook() {
                     body: JSON.stringify(book)
                 })
             if (response.ok) {
-                setFormData({
-                    title: '',
-                    publishedDate: '',
-                    stock: '',
-                    price: '',
-                    synopsis: '',
-                    isbn: '',
-                    authorId: '',
-                    genreId: '',
-                    image: ''
-                })
+
                 setMensaje("Libro editado correctamente");
             }
             else {
@@ -99,24 +136,6 @@ export default function EditBook() {
             setMensaje("Error al editar libro");
         }
     };
-
-    useEffect(() => {
-        async function fetchGenres() {
-            const response = await fetch("http://localhost:5141/api/genres"); // Cambia esto a tu ruta de API
-            const data = await response.json();
-            setGenres(data);
-        }
-        fetchGenres();
-    }, []);
-
-    useEffect(() => {
-        async function fetchAuthors() {
-            const response = await fetch("http://localhost:5141/api/authors");
-            const data = await response.json();
-            setAuthors(data);
-        }
-        fetchAuthors();
-    }, []);
 
      // Manejar el cambio en los campos
      const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
