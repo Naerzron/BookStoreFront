@@ -21,7 +21,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
         const cookieToken = req.cookies.get("jwt");
         const token = cookieToken?.value;
 
-        const response = await fetch("http://localhost:5141/api/orders", {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/orders`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -67,7 +67,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
             );
         }
 
-        const response = await fetch("http://localhost:5141/api/orders/user", {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/orders/user`, {
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${token}`,

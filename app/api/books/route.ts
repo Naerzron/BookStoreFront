@@ -2,9 +2,8 @@ import { NextResponse } from "next/server";
 
 export async function GET(req: Request): Promise<NextResponse> {
     try {
-        // Obtener parámetros de la URL
         const { searchParams } = new URL(req.url);
-        const bookId = searchParams.get("id"); // Extraer el ID del libro de los parámetros
+        const bookId = searchParams.get("id");
 
         if (!bookId) {
             return NextResponse.json(
@@ -13,8 +12,9 @@ export async function GET(req: Request): Promise<NextResponse> {
             );
         }
 
-        // Llamada a la API para obtener información del libro
-        const response = await fetch(`http://localhost:5141/api/books/${bookId}`);
+        const response = await fetch(
+            `${process.env.NEXT_PUBLIC_API_URL}/api/books/${bookId}`
+        );
         if (!response.ok) {
             return NextResponse.json(
                 { message: "Error fetching book" },
@@ -24,7 +24,6 @@ export async function GET(req: Request): Promise<NextResponse> {
 
         const book: GetBookResponse = await response.json();
 
-        // Devolver la respuesta en formato JSON
         return NextResponse.json(book, { status: 200 });
     } catch (error) {
         console.error("Error fetching book: ", error);

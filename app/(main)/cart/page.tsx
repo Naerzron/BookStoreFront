@@ -17,24 +17,21 @@ export default function CartPage() {
         cartItems.reduce((acc, item) => {
             acc[item.id] = item.quantity;
             return acc;
-        }, {} as Record<number, number>)
+        }, {} as Record<number, number>),
     );
 
-    const [isModalOpen, setIsModalOpen] = useState(false); // Estado para el modal
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
-    // Calcular el total
     const total = cartItems.reduce(
         (sum, item) => sum + item.price * item.quantity,
-        0
+        0,
     );
 
-    // Manejar cambios en el input de cantidad
     const handleQuantityChange = (id: number, newQuantity: number) => {
-        if (newQuantity < 1) return; // Evitar cantidades menores a 1
+        if (newQuantity < 1) return;
         setQuantities((prev) => ({ ...prev, [id]: newQuantity }));
-        updateCartItem(id, newQuantity); // Actualizar la cantidad en el estado global del carrito
+        updateCartItem(id, newQuantity);
 
-        // Mostrar notificación
         toast({
             variant: "default",
             title: "Cantidad actualizada",
@@ -58,13 +55,12 @@ export default function CartPage() {
 
             const data = await response.json();
 
-            clearCart(); // Vaciar el carrito después de confirmar
-            setIsModalOpen(false); // Cerrar el modal
+            clearCart();
+            setIsModalOpen(false);
 
-            // Mostrar notificación
             toast({
                 variant: "destructive",
-                title: "Has vaciado el carrito"
+                title: "Has vaciado el carrito",
             });
         } catch (error) {
             console.error("Error creating order:", error);
@@ -80,111 +76,117 @@ export default function CartPage() {
                 </h1>
 
                 {/* Contenido */}
-                {cartItems.length === 0 ? (
-                    <p className="text-center text-gray-600 dark:text-gray-400">
-                        Tu carrito está vacío.
-                    </p>
-                ) : (
-                    <div className="w-full space-y-6">
-                        <div className="space-y-6">
-                            {/* Lista de artículos */}
-                            {cartItems.map((item) => (
-                                <div
-                                    key={item.id}
-                                    className="flex justify-between items-center bg-gray-100 dark:bg-gray-700 rounded-lg p-4"
-                                >
-                                    <div className="flex gap-4">
-                                        <div>
-                                            <Image
-                                                src={`/resources/images/${item.image}`}
-                                                width={100}
-                                                height={200}
-                                                alt={item.title}
-                                                className="rounded-md object-contain"
-                                            />
-                                        </div>
-                                        <div>
-                                            <h2 className="font-bold text-lg text-gray-800 dark:text-gray-300">
-                                                {item.title}
-                                            </h2>
-                                            <p className="text-gray-600 dark:text-gray-400">
-                                                €{item.price} x{" "}
-                                                <input
-                                                    type="number"
-                                                    value={
-                                                        quantities[item.id] ||
-                                                        item.quantity
-                                                    }
-                                                    min="1"
-                                                    onChange={(e) =>
-                                                        handleQuantityChange(
-                                                            item.id,
-                                                            parseInt(
-                                                                e.target.value,
-                                                                10
-                                                            )
-                                                        )
-                                                    }
-                                                    className="w-16 text-center border rounded-md dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300"
-                                                />
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <Button
-                                        variant={"destructive"}
-                                        onClick={() => removeFromCart(item.id)}
-                                        className="font-semibold"
+                {cartItems.length === 0
+                    ? (
+                        <p className="text-center text-gray-600 dark:text-gray-400">
+                            Tu carrito está vacío.
+                        </p>
+                    )
+                    : (
+                        <div className="w-full space-y-6">
+                            <div className="space-y-6">
+                                {/* Lista de artículos */}
+                                {cartItems.map((item) => (
+                                    <div
+                                        key={item.id}
+                                        className="flex justify-between items-center bg-gray-100 dark:bg-gray-700 rounded-lg p-4"
                                     >
-                                        <X />
-                                        Eliminar
-                                    </Button>
-                                </div>
-                            ))}
+                                        <div className="flex gap-4">
+                                            <div>
+                                                <Image
+                                                    src={`/resources/images/${item.image}`}
+                                                    width={100}
+                                                    height={200}
+                                                    alt={item.title}
+                                                    className="rounded-md object-contain"
+                                                />
+                                            </div>
+                                            <div>
+                                                <h2 className="font-bold text-lg text-gray-800 dark:text-gray-300">
+                                                    {item.title}
+                                                </h2>
+                                                <p className="text-gray-600 dark:text-gray-400">
+                                                    €{item.price} x{" "}
+                                                    <input
+                                                        type="number"
+                                                        value={quantities[
+                                                            item.id
+                                                        ] ||
+                                                            item.quantity}
+                                                        min="1"
+                                                        onChange={(e) =>
+                                                            handleQuantityChange(
+                                                                item.id,
+                                                                parseInt(
+                                                                    e.target
+                                                                        .value,
+                                                                    10,
+                                                                ),
+                                                            )}
+                                                        className="w-16 text-center border rounded-md dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300"
+                                                    />
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <Button
+                                            variant={"destructive"}
+                                            onClick={() =>
+                                                removeFromCart(item.id)}
+                                            className="font-semibold"
+                                        >
+                                            <X />
+                                            Eliminar
+                                        </Button>
+                                    </div>
+                                ))}
 
-                            {/* Total y acciones */}
-                            <div className="flex justify-between items-center">
-                                <div>
-                                    <span className="text-gray-700 dark:text-gray-300 font-semibold text-lg">
-                                        Total:
-                                    </span>
-                                    <p className="text-green-600 font-bold dark:text-green-400 text-2xl mt-2">
-                                        €{total.toFixed(2)}
-                                    </p>
+                                {/* Total y acciones */}
+                                <div className="flex justify-between items-center">
+                                    <div>
+                                        <span className="text-gray-700 dark:text-gray-300 font-semibold text-lg">
+                                            Total:
+                                        </span>
+                                        <p className="text-green-600 font-bold dark:text-green-400 text-2xl mt-2">
+                                            €{total.toFixed(2)}
+                                        </p>
+                                    </div>
+                                    <button
+                                        onClick={() => clearCart()}
+                                        className="bg-red-600 text-white px-6 py-3 rounded-md text-lg font-medium hover:bg-red-700 dark:bg-red-500 dark:hover:bg-red-600"
+                                    >
+                                        Vaciar carrito
+                                    </button>
                                 </div>
-                                <button
-                                    onClick={() => clearCart()}
-                                    className="bg-red-600 text-white px-6 py-3 rounded-md text-lg font-medium hover:bg-red-700 dark:bg-red-500 dark:hover:bg-red-600"
-                                >
-                                    Vaciar carrito
-                                </button>
+                            </div>
+                            <Separator />
+                            <div className="w-full">
+                                {isLoggedIn
+                                    ? (
+                                        <Button
+                                            variant={"success"}
+                                            onClick={() => setIsModalOpen(true)}
+                                            className="w-full p-6 font-medium text-xl shadow-md"
+                                        >
+                                            <ShoppingCart />
+                                            Confirmar pedido
+                                        </Button>
+                                    )
+                                    : (
+                                        <Button
+                                            variant={"outline"}
+                                            className="w-full text-lg"
+                                        >
+                                            <Link
+                                                href={"/login"}
+                                            >
+                                                Iniciar sesión para continuar
+                                                con el pedido
+                                            </Link>
+                                        </Button>
+                                    )}
                             </div>
                         </div>
-                        <Separator />
-                        <div className="w-full">
-                            {isLoggedIn ? (
-                                <Button
-                                    variant={"success"}
-                                    onClick={() => setIsModalOpen(true)} // Mostrar modal
-                                    className="w-full p-6 font-medium text-xl shadow-md"
-                                >
-                                    <ShoppingCart />
-                                    Confirmar pedido
-                                </Button>
-                            ) : (
-                                <Button
-                                    variant={'outline'}
-                                    className="w-full text-lg"
-                                >
-                                    <Link
-                                        href={'/login'}
-                                    >
-                                        Iniciar sesión para continuar con el pedido
-                                    </Link>
-                                </Button>
-                            )}
-                        </div>
-                    </div>
-                )}
+                    )}
 
                 {/* Modal */}
                 {isModalOpen && (

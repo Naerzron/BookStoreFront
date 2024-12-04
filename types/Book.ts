@@ -4,7 +4,7 @@ import { Genre } from "./Genre";
 export type Book = {
     id: number;
     title: string;
-    publishedDate: string; // Utilizamos string en lugar de DateOnly para manejarlo en TypeScript
+    publishedDate: string;
     stock: number;
     price: number;
     synopsis: string;
@@ -12,4 +12,4 @@ export type Book = {
     author?: Author;
     genre?: Genre;
     image: string;
-}
+};

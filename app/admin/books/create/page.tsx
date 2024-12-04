@@ -1,44 +1,40 @@
-"use client"
-import React, { useEffect, useState } from 'react'
-import { Genre } from '@/types/Genre';
-import { Author } from '@/types/Author';
-import { CreateBookRequest } from '@/types/CreateBookRequest';
+"use client";
+import React, { useEffect, useState } from "react";
+import { Genre } from "@/types/Genre";
+import { Author } from "@/types/Author";
+import { CreateBookRequest } from "@/types/CreateBookRequest";
 
 type createBookForm = {
-    title: string,
-    publishedDate: string,
-    stock: string,
-    price: string,
-    synopsis: string,
-    isbn: string,
-    authorId: string,
-    genreId: string,
-    image: string
+    title: string;
+    publishedDate: string;
+    stock: string;
+    price: string;
+    synopsis: string;
+    isbn: string;
+    authorId: string;
+    genreId: string;
+    image: string;
 };
 
 export default function CreateBook() {
-    // Estado para el formulario
     const [formData, setFormData] = useState<createBookForm>({
-        title: '',
-        publishedDate: '',
-        stock: '',
-        price: '',
-        synopsis: '',
-        isbn: '',
-        authorId: '',
-        genreId: '',
-        image: ''
+        title: "",
+        publishedDate: "",
+        stock: "",
+        price: "",
+        synopsis: "",
+        isbn: "",
+        authorId: "",
+        genreId: "",
+        image: "",
     });
 
-    //Estados del componente
     const [genres, setGenres] = useState<Genre[]>([]);
     const [authors, setAuthors] = useState<Author[]>([]);
     const [mensaje, setMensaje] = useState("");
 
-    // Manejar el envío del formulario
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        //Envio de datos
         try {
             const bookRequest: CreateBookRequest = {
                 title: formData.title,
@@ -49,31 +45,32 @@ export default function CreateBook() {
                 isbn: formData.isbn,
                 authorId: Number(formData.authorId),
                 genreId: Number(formData.genreId),
-                image: formData.image
-            }
-            const response = await fetch('http://localhost:5141/api/books',
+                image: formData.image,
+            };
+            const response = await fetch(
+                `${process.env.NEXT_PUBLIC_API_URL}/api/books`,
                 {
-                    method: 'POST',
+                    method: "POST",
                     headers: {
-                        'Content-Type': 'application/json',
+                        "Content-Type": "application/json",
                     },
-                    body: JSON.stringify(bookRequest)
-                });
+                    body: JSON.stringify(bookRequest),
+                },
+            );
             if (response.ok) {
                 setFormData({
-                    title: '',
-                    publishedDate: '',
-                    stock: '',
-                    price: '',
-                    synopsis: '',
-                    isbn: '',
-                    authorId: '',
-                    genreId: '',
-                    image: ''
+                    title: "",
+                    publishedDate: "",
+                    stock: "",
+                    price: "",
+                    synopsis: "",
+                    isbn: "",
+                    authorId: "",
+                    genreId: "",
+                    image: "",
                 });
                 setMensaje("Libro creado correctamente");
-            }
-            else {
+            } else {
                 setMensaje("Error al crear libro");
             }
         } catch (error) {
@@ -84,7 +81,9 @@ export default function CreateBook() {
 
     useEffect(() => {
         async function fetchGenres() {
-            const response = await fetch("http://localhost:5141/api/genres"); // Cambia esto a tu ruta de API
+            const response = await fetch(
+                `${process.env.NEXT_PUBLIC_API_URL}/api/genres`,
+            );
             const data = await response.json();
             setGenres(data);
         }
@@ -93,14 +92,15 @@ export default function CreateBook() {
 
     useEffect(() => {
         async function fetchAuthors() {
-            const response = await fetch("http://localhost:5141/api/authors");
+            const response = await fetch(
+                `${process.env.NEXT_PUBLIC_API_URL}/api/authors`,
+            );
             const data = await response.json();
             setAuthors(data);
         }
         fetchAuthors();
     }, []);
 
-    // Manejar el cambio en los campos
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
@@ -119,7 +119,10 @@ export default function CreateBook() {
             <form onSubmit={handleSubmit}>
                 {/* Campo Título */}
                 <div className="mb-4">
-                    <label htmlFor="title" className="block text-sm font-medium text-gray-700 dark:text-gray-400">
+                    <label
+                        htmlFor="title"
+                        className="block text-sm font-medium text-gray-700 dark:text-gray-400"
+                    >
                         Título del libro
                     </label>
                     <input
@@ -135,7 +138,10 @@ export default function CreateBook() {
 
                 {/* Campo publishedDate */}
                 <div className="mb-4">
-                    <label htmlFor="publishedDate" className="block text-sm font-medium text-gray-700 dark:text-gray-400">
+                    <label
+                        htmlFor="publishedDate"
+                        className="block text-sm font-medium text-gray-700 dark:text-gray-400"
+                    >
                         Fecha de publicación
                     </label>
                     <input
@@ -151,7 +157,10 @@ export default function CreateBook() {
 
                 {/* Campo Stock */}
                 <div className="mb-4">
-                    <label htmlFor="titulo" className="block text-sm font-medium text-gray-700 dark:text-gray-400">
+                    <label
+                        htmlFor="titulo"
+                        className="block text-sm font-medium text-gray-700 dark:text-gray-400"
+                    >
                         Stock
                     </label>
                     <input
@@ -167,7 +176,10 @@ export default function CreateBook() {
 
                 {/* Campo Price */}
                 <div className="mb-4">
-                    <label htmlFor="price" className="block text-sm font-medium text-gray-700 dark:text-gray-400">
+                    <label
+                        htmlFor="price"
+                        className="block text-sm font-medium text-gray-700 dark:text-gray-400"
+                    >
                         Precio
                     </label>
                     <input
@@ -183,7 +195,10 @@ export default function CreateBook() {
 
                 {/* Campo Synopsis */}
                 <div className="mb-4">
-                    <label htmlFor="synopsis" className="block text-sm font-medium text-gray-700 dark:text-gray-400">
+                    <label
+                        htmlFor="synopsis"
+                        className="block text-sm font-medium text-gray-700 dark:text-gray-400"
+                    >
                         Sinopsis del libro
                     </label>
                     <input
@@ -199,7 +214,10 @@ export default function CreateBook() {
 
                 {/* Campo ISBN */}
                 <div className="mb-4">
-                    <label htmlFor="isbn" className="block text-sm font-medium text-gray-700 dark:text-gray-400">
+                    <label
+                        htmlFor="isbn"
+                        className="block text-sm font-medium text-gray-700 dark:text-gray-400"
+                    >
                         ISBN
                     </label>
                     <input
@@ -215,7 +233,10 @@ export default function CreateBook() {
 
                 {/* Campo Author */}
                 <div className="mb-4">
-                    <label htmlFor="authorId" className="block text-sm font-medium text-gray-700 dark:text-gray-400">
+                    <label
+                        htmlFor="authorId"
+                        className="block text-sm font-medium text-gray-700 dark:text-gray-400"
+                    >
                         Autor del libro
                     </label>
                     <select
@@ -236,7 +257,10 @@ export default function CreateBook() {
 
                 {/* Campo GenreId */}
                 <div className="mb-4">
-                    <label htmlFor="genreId" className="block text-sm font-medium text-gray-700 dark:text-gray-400">
+                    <label
+                        htmlFor="genreId"
+                        className="block text-sm font-medium text-gray-700 dark:text-gray-400"
+                    >
                         Género del libro
                     </label>
                     <select
@@ -257,7 +281,10 @@ export default function CreateBook() {
 
                 {/* Campo Image */}
                 <div className="mb-4">
-                    <label htmlFor="image" className="block text-sm font-medium text-gray-700 dark:text-gray-400">
+                    <label
+                        htmlFor="image"
+                        className="block text-sm font-medium text-gray-700 dark:text-gray-400"
+                    >
                         Portada
                     </label>
                     <input
@@ -286,4 +313,4 @@ export default function CreateBook() {
             <p className="mt-4 text-center">{mensaje}</p>
         </div>
     );
-}    
+}

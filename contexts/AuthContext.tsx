@@ -2,10 +2,10 @@
 
 import {
     createContext,
-    useContext,
-    useState,
-    useEffect,
     ReactNode,
+    useContext,
+    useEffect,
+    useState,
 } from "react";
 
 interface AuthContextProps {
@@ -39,10 +39,10 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
     const fetchUser = async () => {
         try {
-            const response = await fetch("/api/checkUser", { 
-                method: 'POST'
+            const response = await fetch("/api/checkUser", {
+                method: "POST",
             });
-            
+
             if (!response.ok) {
                 setIsLoggedIn(false);
                 setRole(null);
@@ -51,9 +51,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
             const data = await response.json();
             setIsLoggedIn(true);
-            setRole(data.role);                
+            setRole(data.role);
         } catch (error) {
-            //console.error("Error fetching user data:", error);
             setIsLoggedIn(false);
             setRole(null);
         } finally {
@@ -63,14 +62,22 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
     const handleCtxLogout = () => {
         setIsLoggedIn(false);
-    }
+    };
 
     const handleCtxLogin = async () => {
         await fetchUser();
-    }
+    };
 
     return (
-        <AuthContext.Provider value={{ isLoggedIn, handleCtxLogout, handleCtxLogin, role, loading }}>
+        <AuthContext.Provider
+            value={{
+                isLoggedIn,
+                handleCtxLogout,
+                handleCtxLogin,
+                role,
+                loading,
+            }}
+        >
             {children}
         </AuthContext.Provider>
     );

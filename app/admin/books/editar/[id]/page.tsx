@@ -1,41 +1,39 @@
 "use client";
 
-import React, { useEffect, useState } from 'react'
-import { useParams } from 'next/navigation';
-import { Author } from '@/types/Author';
-import { Genre } from '@/types/Genre';
-import {Book} from '@/types/Book';
+import React, { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
+import { Author } from "@/types/Author";
+import { Genre } from "@/types/Genre";
+import { Book } from "@/types/Book";
 
 interface FormData {
-    title: string,
-    publishedDate: string,
-    stock: number,
-    price: number,
-    synopsis: string,
-    isbn: string,
-    author?: Author,
-    genre?: Genre,
-    image: string
+    title: string;
+    publishedDate: string;
+    stock: number;
+    price: number;
+    synopsis: string;
+    isbn: string;
+    author?: Author;
+    genre?: Genre;
+    image: string;
 }
 
 export default function EditBook() {
-    const params = useParams(); // Aquí accedemos al parámetro "id" de la URL
-    const id = Number(params.id); // Aquí accedemos al parámetro "id" de la URL
+    const params = useParams();
+    const id = Number(params.id);
 
-    // Estado para el formulario
     const [formData, setFormData] = useState<FormData>({
-        title: '',
-        publishedDate: '',
+        title: "",
+        publishedDate: "",
         stock: 0,
         price: 0,
-        synopsis: '',
-        isbn: '',
+        synopsis: "",
+        isbn: "",
         author: undefined,
         genre: undefined,
-        image: ''
+        image: "",
     });
 
-    //Estados del componente
     const [genres, setGenres] = useState<Genre[]>([]);
     const [authors, setAuthors] = useState<Author[]>([]);
     const [mensaje, setMensaje] = useState<String>("");
@@ -43,22 +41,25 @@ export default function EditBook() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                // Fetch genres
                 const fetchGenres = async (): Promise<Genre[]> => {
-                    const response = await fetch("http://localhost:5141/api/genres");
+                    const response = await fetch(
+                        `${process.env.NEXT_PUBLIC_API_URL}/api/genres`,
+                    );
                     return response.json();
                 };
-    
-                // Fetch authors
+
                 const fetchAuthors = async (): Promise<Author[]> => {
-                    const response = await fetch("http://localhost:5141/api/authors");
+                    const response = await fetch(
+                        `${process.env.NEXT_PUBLIC_API_URL}/api/authors`,
+                    );
                     return response.json();
                 };
-    
-                // Fetch book
+
                 const fetchBook = async (): Promise<Book | undefined> => {
                     try {
-                        const response = await fetch(`http://localhost:5141/api/books/book/${id}`);
+                        const response = await fetch(
+                            `${process.env.NEXT_PUBLIC_API_URL}/api/books/book/${id}`,
+                        );
                         if (!response.ok) {
                             throw new Error("Failed to fetch the book");
                         }
@@ -68,13 +69,11 @@ export default function EditBook() {
                         return undefined;
                     }
                 };
-    
-                // Fetch data
+
                 const genres = await fetchGenres();
                 const authors = await fetchAuthors();
                 const book = await fetchBook();
-    
-                // Set state
+
                 setGenres(genres);
                 setAuthors(authors);
                 if (book) {
@@ -94,14 +93,13 @@ export default function EditBook() {
                 console.error("Error fetching data:", error);
             }
         };
-    
+
         fetchData();
     }, []);
 
-    // Manejar el envío del formulario
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        //Envio de datos
+
         try {
             const book: Book = {
                 id: Number(id),
@@ -111,24 +109,24 @@ export default function EditBook() {
                 price: Number(formData.price),
                 synopsis: formData.synopsis,
                 isbn: formData.isbn,
-                author: authors.find(a => a.id === formData.author?.id),
-                genre: genres.find(g => g.id === formData.genre?.id),
-                image: String(formData.image)
-            }
+                author: authors.find((a) => a.id === formData.author?.id),
+                genre: genres.find((g) => g.id === formData.genre?.id),
+                image: String(formData.image),
+            };
             console.log(book);
-            const response = await fetch(`http://localhost:5141/api/books/${id}`,
+            const response = await fetch(
+                `${process.env.NEXT_PUBLIC_API_URL}/api/books/${id}`,
                 {
-                    method: 'PUT',
+                    method: "PUT",
                     headers: {
-                        'Content-Type': 'application/json',
+                        "Content-Type": "application/json",
                     },
-                    body: JSON.stringify(book)
-                })
+                    body: JSON.stringify(book),
+                },
+            );
             if (response.ok) {
-
                 setMensaje("Libro editado correctamente");
-            }
-            else {
+            } else {
                 setMensaje("Error al editar libro");
             }
         } catch (error) {
@@ -137,8 +135,7 @@ export default function EditBook() {
         }
     };
 
-     // Manejar el cambio en los campos
-     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
@@ -156,7 +153,10 @@ export default function EditBook() {
             <form onSubmit={handleSubmit}>
                 {/* Campo Título */}
                 <div className="mb-4">
-                    <label htmlFor="title" className="block text-sm font-medium text-gray-700 dark:text-gray-400">
+                    <label
+                        htmlFor="title"
+                        className="block text-sm font-medium text-gray-700 dark:text-gray-400"
+                    >
                         Título del libro
                     </label>
                     <input
@@ -172,7 +172,10 @@ export default function EditBook() {
 
                 {/* Campo publishedDate */}
                 <div className="mb-4">
-                    <label htmlFor="publishedDate" className="block text-sm font-medium text-gray-700 dark:text-gray-400">
+                    <label
+                        htmlFor="publishedDate"
+                        className="block text-sm font-medium text-gray-700 dark:text-gray-400"
+                    >
                         Fecha de publicación
                     </label>
                     <input
@@ -188,7 +191,10 @@ export default function EditBook() {
 
                 {/* Campo Stock */}
                 <div className="mb-4">
-                    <label htmlFor="titulo" className="block text-sm font-medium text-gray-700 dark:text-gray-400">
+                    <label
+                        htmlFor="titulo"
+                        className="block text-sm font-medium text-gray-700 dark:text-gray-400"
+                    >
                         Stock
                     </label>
                     <input
@@ -204,7 +210,10 @@ export default function EditBook() {
 
                 {/* Campo Price */}
                 <div className="mb-4">
-                    <label htmlFor="price" className="block text-sm font-medium text-gray-700 dark:text-gray-400">
+                    <label
+                        htmlFor="price"
+                        className="block text-sm font-medium text-gray-700 dark:text-gray-400"
+                    >
                         Precio
                     </label>
                     <input
@@ -220,7 +229,10 @@ export default function EditBook() {
 
                 {/* Campo Synopsis */}
                 <div className="mb-4">
-                    <label htmlFor="synopsis" className="block text-sm font-medium text-gray-700 dark:text-gray-400">
+                    <label
+                        htmlFor="synopsis"
+                        className="block text-sm font-medium text-gray-700 dark:text-gray-400"
+                    >
                         Sinopsis del libro
                     </label>
                     <input
@@ -236,7 +248,10 @@ export default function EditBook() {
 
                 {/* Campo ISBN */}
                 <div className="mb-4">
-                    <label htmlFor="isbn" className="block text-sm font-medium text-gray-700 dark:text-gray-400">
+                    <label
+                        htmlFor="isbn"
+                        className="block text-sm font-medium text-gray-700 dark:text-gray-400"
+                    >
                         ISBN
                     </label>
                     <input
@@ -252,7 +267,10 @@ export default function EditBook() {
 
                 {/* Campo Author */}
                 <div className="mb-4">
-                    <label htmlFor="authorId" className="block text-sm font-medium text-gray-700 dark:text-gray-400">
+                    <label
+                        htmlFor="authorId"
+                        className="block text-sm font-medium text-gray-700 dark:text-gray-400"
+                    >
                         Autor del libro
                     </label>
                     <select
@@ -273,7 +291,10 @@ export default function EditBook() {
 
                 {/* Campo GenreId */}
                 <div className="mb-4">
-                    <label htmlFor="genreId" className="block text-sm font-medium text-gray-700 dark:text-gray-400">
+                    <label
+                        htmlFor="genreId"
+                        className="block text-sm font-medium text-gray-700 dark:text-gray-400"
+                    >
                         Género del libro
                     </label>
                     <select
@@ -294,7 +315,10 @@ export default function EditBook() {
 
                 {/* Ruta imagen */}
                 <div className="mb-4">
-                    <label htmlFor="price" className="block text-sm font-medium text-gray-700 dark:text-gray-400">
+                    <label
+                        htmlFor="price"
+                        className="block text-sm font-medium text-gray-700 dark:text-gray-400"
+                    >
                         Ruta a la imagen
                     </label>
                     <input

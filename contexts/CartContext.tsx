@@ -2,11 +2,20 @@
 
 import { ToastAction } from "@/components/ui/toast";
 import { toast } from "@/hooks/use-toast";
-import { getItemWithExpiry, removeItemFromSessionStorage, setItemWithExpiry } from "@/lib/utils";
+import {
+    getItemWithExpiry,
+    removeItemFromSessionStorage,
+    setItemWithExpiry,
+} from "@/lib/utils";
 import Link from "next/link";
-import React, { createContext, useContext, useState, ReactNode, useEffect } from "react";
+import React, {
+    createContext,
+    ReactNode,
+    useContext,
+    useEffect,
+    useState,
+} from "react";
 
-// Define el contexto
 type CartContextType = {
     cartItems: CartItem[];
     addToCart: (item: CartItem) => void;
@@ -17,37 +26,40 @@ type CartContextType = {
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
-// Crea el proveedor del contexto
 export const CartProvider = ({ children }: { children: ReactNode }) => {
     const [cartItems, setCartItems] = useState<CartItem[]>([]);
 
     useEffect(() => {
         const loadCartItems = () => {
-            const cartItems: CartItem[] | null = getItemWithExpiry('cartItems');
+            const cartItems: CartItem[] | null = getItemWithExpiry("cartItems");
 
             if (!cartItems) {
                 return;
             }
 
             setCartItems(cartItems);
-        }
+        };
 
         loadCartItems();
     }, []);
 
     const addToCart = (item: CartItem) => {
         setCartItems((prev) => {
-            const existingItem = prev.find((cartItem) => cartItem.id === item.id);
+            const existingItem = prev.find((cartItem) =>
+                cartItem.id === item.id
+            );
             const updatedCartItems = existingItem
                 ? prev.map((cartItem) =>
                     cartItem.id === item.id
-                        ? { ...cartItem, quantity: cartItem.quantity + item.quantity }
+                        ? {
+                            ...cartItem,
+                            quantity: cartItem.quantity + item.quantity,
+                        }
                         : cartItem
                 )
                 : [...prev, item];
 
-            // Actualizar sessionStorage dentro del setter de estado
-            setItemWithExpiry('cartItems', updatedCartItems);
+            setItemWithExpiry("cartItems", updatedCartItems);
 
             return updatedCartItems;
         });
@@ -55,10 +67,11 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 
     const removeFromCart = (id: number) => {
         setCartItems((prev) => {
-            const updatedCartItems = prev.filter((cartItem) => cartItem.id !== id);
+            const updatedCartItems = prev.filter((cartItem) =>
+                cartItem.id !== id
+            );
 
-            // Actualizar sessionStorage con los elementos restantes
-            setItemWithExpiry('cartItems', updatedCartItems);
+            setItemWithExpiry("cartItems", updatedCartItems);
 
             return updatedCartItems;
         });
@@ -70,8 +83,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
                 cartItem.id === id ? { ...cartItem, quantity } : cartItem
             );
 
-            // Actualizar sessionStorage con los elementos modificados
-            setItemWithExpiry('cartItems', updatedCartItems);
+            setItemWithExpiry("cartItems", updatedCartItems);
 
             return updatedCartItems;
         });
@@ -79,20 +91,26 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 
     const clearCart = () => {
         setCartItems(() => {
-            // Vaciar el sessionStorage
-            removeItemFromSessionStorage('cartItems');
+            removeItemFromSessionStorage("cartItems");
             return [];
         });
     };
 
     return (
-        <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, updateCartItem, clearCart }}>
+        <CartContext.Provider
+            value={{
+                cartItems,
+                addToCart,
+                removeFromCart,
+                updateCartItem,
+                clearCart,
+            }}
+        >
             {children}
         </CartContext.Provider>
     );
 };
 
-// Hook para usar el contexto
 export const useCart = () => {
     const context = useContext(CartContext);
     if (!context) {

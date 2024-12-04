@@ -13,20 +13,18 @@ export default function BookDetail() {
     const [book, setBook] = useState<GetBookResponse>();
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
-    const params = useParams(); // Aquí accedemos al parámetro "id" de la URL
-    const id = params.id; // Aquí accedemos al parámetro "id" de la URL
+    const params = useParams();
+    const id = params.id;
 
-    // Hook del carrito
-    const { addToCart } = useCart(); // Accede a la función para añadir al carrito
+    const { addToCart } = useCart();
 
-    // Función para manejar la acción de añadir al carrito
     const handleAddToCart = () => {
         if (book) {
             addToCart({
                 id: book.id,
                 title: book.title,
                 price: book.price,
-                quantity: 1, // Agregamos una unidad por defecto
+                quantity: 1,
                 image: book.image,
             });
 
@@ -34,13 +32,15 @@ export default function BookDetail() {
                 variant: "success",
                 title: "¡Añadido!",
                 description: `Has añadido ${book.title} a tu cesta.`,
-                action: <ToastAction altText="Cart link">
-                    <Link
-                        href={'/cart'}
-                    >
-                        Ver mi cesta
-                    </Link>
-                </ToastAction>,
+                action: (
+                    <ToastAction altText="Cart link">
+                        <Link
+                            href={"/cart"}
+                        >
+                            Ver mi cesta
+                        </Link>
+                    </ToastAction>
+                ),
             });
         }
     };
@@ -61,7 +61,7 @@ export default function BookDetail() {
                 setIsLoading(false);
             }
         };
-    
+
         fetchBook();
     }, [id]);
 
@@ -72,9 +72,9 @@ export default function BookDetail() {
                     <Loader className="animate-spin" />
                 </div>
             </div>
-        )
+        );
     }
-    
+
     return (
         <div className="min-h-screen pt-20 bg-gray-50 dark:bg-gray-700">
             <div className="w-full flex items-center justify-center py-12">
@@ -150,7 +150,7 @@ export default function BookDetail() {
 
                             {/* Botón de añadir al carrito */}
                             <button
-                                onClick={handleAddToCart} // Llama a la función para añadir al carrito
+                                onClick={handleAddToCart}
                                 className="px-6 py-3 bg-green-600 text-white rounded-md text-lg font-medium hover:bg-green-700 dark:bg-green-500 dark:hover:bg-green-600"
                             >
                                 Añadir al carrito

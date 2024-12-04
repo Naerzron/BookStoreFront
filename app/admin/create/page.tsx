@@ -1,64 +1,65 @@
-"use client"
+"use client";
 
 import { Author } from "@/types/Author";
-import { PencilIcon, TrashIcon } from "@heroicons/react/16/solid";
-import Link from "next/link";
+import { TrashIcon } from "@heroicons/react/16/solid";
 import { useEffect, useState } from "react";
 
 type AuthorForm = {
     name: string;
     birthday: string;
-}
+};
 
 export default function CreateAuthor() {
-
     const [formData, setFormData] = useState<AuthorForm>({
-        name: '',
-        birthday: ''
+        name: "",
+        birthday: "",
     });
 
     const [authors, setAuthors] = useState<Author[]>([]);
     const [mensaje, setMensaje] = useState("");
     const [isLoading, setIsLoading] = useState<boolean>(true);
-    
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        try{
+        try {
             const author: Author = {
                 id: 0,
                 name: formData.name,
-                birthday: formData.birthday
-            }
-            
-            const response = await fetch('http://localhost:5141/api/authors',
+                birthday: formData.birthday,
+            };
+
+            const response = await fetch(
+                `${process.env.NEXT_PUBLIC_API_URL}/api/authors`,
                 {
-                    method: 'POST',
+                    method: "POST",
                     headers: {
-                        'Content-Type': 'application/json',
+                        "Content-Type": "application/json",
                     },
-                    body: JSON.stringify(author)
-                });
-            if(response.ok) {
+                    body: JSON.stringify(author),
+                },
+            );
+            if (response.ok) {
                 setFormData({
-                    name: '',
-                    birthday: ''
+                    name: "",
+                    birthday: "",
                 });
                 setMensaje("Autor creado correctamente");
-                const responseAuthorsUpdated = await fetch('http://localhost:5141/api/authors');
-                const authorsUpdated: Author[] = await responseAuthorsUpdated.json();
+                const responseAuthorsUpdated = await fetch(
+                    `${process.env.NEXT_PUBLIC_API_URL}/api/authors`,
+                );
+                const authorsUpdated: Author[] = await responseAuthorsUpdated
+                    .json();
                 setAuthors(authorsUpdated);
-            }
-            else{
+            } else {
                 setMensaje("Error al crear el author");
             }
-        } catch(error){
+        } catch (error) {
             console.error("Error");
             setMensaje("Error al crear autor");
         }
     };
 
-    // Manejar el cambio en los campos
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
@@ -66,38 +67,44 @@ export default function CreateAuthor() {
     useEffect(() => {
         const fetchAuthors = async () => {
             try {
-                const response = await fetch('http://localhost:5141/api/authors');
+                const response = await fetch(
+                    `${process.env.NEXT_PUBLIC_API_URL}/api/authors`,
+                );
                 const authors: Author[] = await response.json();
                 setAuthors(authors);
             } catch (error) {
-                console.error('Error fetching books: ', error);
-            }
-            finally {
+                console.error("Error fetching books: ", error);
+            } finally {
                 setIsLoading(false);
             }
         };
         fetchAuthors();
-    }, [])
+    }, []);
 
-    //Borrar autor
     const deleteAuthor = async (id: Number) => {
-        try{
-            const response = await fetch(`http://localhost:5141/api/authors/${id}`, {
-                method: 'DELETE'
-            })
+        try {
+            const response = await fetch(
+                `${process.env.NEXT_PUBLIC_API_URL}/api/authors/${id}`,
+                {
+                    method: "DELETE",
+                },
+            );
 
             if (response.ok) {
-                const responseAuthorsUpdated = await fetch('http://localhost:5141/api/authors');
-                const authorsUpdated: Author[] = await responseAuthorsUpdated.json();
+                const responseAuthorsUpdated = await fetch(
+                    `${process.env.NEXT_PUBLIC_API_URL}/api/authors`,
+                );
+                const authorsUpdated: Author[] = await responseAuthorsUpdated
+                    .json();
 
                 setAuthors(authorsUpdated);
             }
         } catch (error) {
-            console.error('Error al borrar el género: ', error);
+            console.error("Error al borrar el género: ", error);
         }
-    }
+    };
 
-    return(
+    return (
         <div className="w-full bg-white dark:bg-gray-800 p-8 shadow-lg rounded-lg dark:text-gray-400 flex flex-col items-center">
             {/* Título del formulario */}
             <h2 className="text-2xl font-bold mb-6 text-center text-gray-800 dark:text-gray-300">
@@ -107,7 +114,10 @@ export default function CreateAuthor() {
             <form onSubmit={handleSubmit} className="w-full max-w-xl">
                 {/* Campo Nombre */}
                 <div className="mb-4 w-full">
-                    <label htmlFor="title" className="block text-sm font-medium text-gray-700 dark:text-gray-400">
+                    <label
+                        htmlFor="title"
+                        className="block text-sm font-medium text-gray-700 dark:text-gray-400"
+                    >
                         Nombre del autor
                     </label>
                     <input
@@ -123,7 +133,10 @@ export default function CreateAuthor() {
 
                 {/* Campo Fecha de Nacimiento */}
                 <div className="mb-4 w-full">
-                    <label htmlFor="genreId" className="block text-sm font-medium text-gray-700 dark:text-gray-400">
+                    <label
+                        htmlFor="genreId"
+                        className="block text-sm font-medium text-gray-700 dark:text-gray-400"
+                    >
                         Fecha de nacimiento
                     </label>
                     <input
@@ -155,47 +168,56 @@ export default function CreateAuthor() {
                     <h1 className="text-5xl font-bold">Panel Autores</h1>
                 </div>
 
-                {isLoading ? (
-                    <h1 className="animate-pulse">Cargando</h1>
-                ) : (
-                    <div className="overflow-x-auto shadow-md sm:rounded-lg">
-                        <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                            <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 text-center">
-                                <tr>
-                                    <th scope="col" className="px-6 py-3">
-                                        Nombre
-                                    </th>
-                                    <th scope="col" className="px-6 py-3">
-                                        Fecha Nacimiento
-                                    </th>
-                                    <th scope="col" className="px-6 py-3">
-                                        Action
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody className="text-center">
-                                {authors.map((author) => (
-                                    <tr key={author.id} className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
-                                        <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                            {author.name}
+                {isLoading
+                    ? <h1 className="animate-pulse">Cargando</h1>
+                    : (
+                        <div className="overflow-x-auto shadow-md sm:rounded-lg">
+                            <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 text-center">
+                                    <tr>
+                                        <th scope="col" className="px-6 py-3">
+                                            Nombre
                                         </th>
-                                        <td className="px-6 py-4">
-                                            {author.birthday}
-                                        </td>
-                                        <td className="px-6 py-4 flex space-x-4">
-                                            <button onClick={() => deleteAuthor(author.id)} className="flex items-center font-medium text-blue-600 dark:text-blue-500 hover:underline">
-                                                <TrashIcon className="w-5 h-5 mr-1" />
-                                                Delete
-                                            </button>
-                                        </td>
+                                        <th scope="col" className="px-6 py-3">
+                                            Fecha Nacimiento
+                                        </th>
+                                        <th scope="col" className="px-6 py-3">
+                                            Action
+                                        </th>
                                     </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
-                )}
+                                </thead>
+                                <tbody className="text-center">
+                                    {authors.map((author) => (
+                                        <tr
+                                            key={author.id}
+                                            className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700"
+                                        >
+                                            <th
+                                                scope="row"
+                                                className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                                            >
+                                                {author.name}
+                                            </th>
+                                            <td className="px-6 py-4">
+                                                {author.birthday}
+                                            </td>
+                                            <td className="px-6 py-4 flex space-x-4">
+                                                <button
+                                                    onClick={() =>
+                                                        deleteAuthor(author.id)}
+                                                    className="flex items-center font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                                                >
+                                                    <TrashIcon className="w-5 h-5 mr-1" />
+                                                    Delete
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    )}
             </div>
         </div>
     );
-
 }

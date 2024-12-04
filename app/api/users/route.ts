@@ -12,7 +12,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
             );
         }
 
-        const response = await fetch("http://localhost:5141/api/account/all", {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/account/all`, {
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${token}` 

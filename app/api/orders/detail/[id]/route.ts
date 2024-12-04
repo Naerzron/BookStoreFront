@@ -14,7 +14,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
             );
         }
 
-        const response = await fetch(`http://localhost:5141/api/orders/user/${userId}`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/orders/user/${userId}`, {
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${token}`, 
@@ -54,7 +54,7 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: s
             );
         }
 
-        const response = await fetch(`http://localhost:5141/api/orders/${orderId}`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/orders/${orderId}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",

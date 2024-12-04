@@ -4,7 +4,7 @@ export async function POST(request: Request): Promise<NextResponse> {
     try {
         const { currentPassword, newPassword } = await request.json();
 
-        const response = await fetch("http://localhost:5141/api/auth/change-password", {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/change-password`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

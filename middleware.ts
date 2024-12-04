@@ -11,8 +11,8 @@ export function middleware(request: NextRequest) {
 
     const userLogged = request.cookies.get("jwt");
     const token = userLogged?.value;
-    
-    let userRole: UserRole = 'Default';
+
+    let userRole: UserRole = "Default";
 
     if (token) {
         const decoded: UserToken = jwtDecode(token);
@@ -20,7 +20,6 @@ export function middleware(request: NextRequest) {
         userRole = decoded.role ?? userRole;
     }
 
-    // Definir las rutas restringidas para usuarios y administradores
     const userRestrictedRoutes = ["/account"];
     const adminRestrictedRoutes = ["/admin"];
 
@@ -37,15 +36,15 @@ export function middleware(request: NextRequest) {
         return NextResponse.redirect(url);
     }
 
-    if (isAdminRestrictedRoute && userRole !== 'Administrador') {
+    if (isAdminRestrictedRoute && userRole !== "Administrador") {
         return NextResponse.redirect(new URL("/", request.url));
     }
 
-    if (pathname.startsWith('/books') && userRole === 'Administrador') {
+    if (pathname.startsWith("/books") && userRole === "Administrador") {
         return NextResponse.redirect(new URL("/admin/books", request.url));
     }
 
-    if (isUserRestrictedRoute && userRole !== 'Usuario') {
+    if (isUserRestrictedRoute && userRole !== "Usuario") {
         return NextResponse.redirect(new URL("/", request.url));
     }
 

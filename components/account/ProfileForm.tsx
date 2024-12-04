@@ -39,14 +39,17 @@ export const ProfileForm = () => {
 
     const handleSaveChanges = async () => {
         try {
-            const response = await fetch(`http://localhost:5141/api/account`, {
-                method: "POST",
-                credentials: "include", //Incluye las cookies del token de autenticacion
-                headers: {
-                    "Content-Type": "application/json",
+            const response = await fetch(
+                `${process.env.NEXT_PUBLIC_API_URL}/api/account`,
+                {
+                    method: "POST",
+                    credentials: "include",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(profileForm),
                 },
-                body: JSON.stringify(profileForm),
-            });
+            );
 
             if (!response.ok) {
                 toast({
@@ -70,11 +73,11 @@ export const ProfileForm = () => {
         const fetchUserAccount = async () => {
             try {
                 const response = await fetch(
-                    `http://localhost:5141/api/account`,
+                    `${process.env.NEXT_PUBLIC_API_URL}/api/account`,
                     {
                         method: "GET",
-                        credentials: "include", //Incluye las cookies del token de autenticacion
-                    }
+                        credentials: "include",
+                    },
                 );
                 const data: ProfileForm = await response.json();
                 setProfileForm({
@@ -227,9 +230,8 @@ export const ProfileForm = () => {
                     className="w-full px-4 py-2 rounded-md font-medium"
                     hidden={isEditing}
                     onClick={() =>
-                        isEditing ? handleSaveChanges() : setisEditing(true)
-                    }
-                    variant={isEditing ? 'success' : 'secondary'}
+                        isEditing ? handleSaveChanges() : setisEditing(true)}
+                    variant={isEditing ? "success" : "secondary"}
                 >
                     {isEditing ? "Guardar Cambios" : "Editar Datos"}
                 </Button>

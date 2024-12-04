@@ -4,16 +4,15 @@ import { useParams } from "next/navigation";
 
 export default function BookDetail() {
     const [book, setBook] = useState<GetBookResponse>();
-    const [isLoading, setIsLoading] = useState<boolean>(true);
 
-    const params = useParams(); // Aquí accedemos al parámetro "id" de la URL
-    const id = params.id; // Aquí accedemos al parámetro "id" de la URL
+    const params = useParams();
+    const id = params.id;
 
     useEffect(() => {
         const fetchBook = async () => {
             try {
                 const response = await fetch(
-                    `http://localhost:5141/api/books/${id}`
+                    `${process.env.NEXT_PUBLIC_API_URL}/api/books/${id}`,
                 );
                 const book: GetBookResponse = await response.json();
                 setBook(book);
