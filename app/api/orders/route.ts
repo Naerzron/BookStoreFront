@@ -21,12 +21,11 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
         const cookieToken = req.cookies.get("jwt");
         const token = cookieToken?.value;
 
-        // Realiza la solicitud POST al endpoint
         const response = await fetch("http://localhost:5141/api/orders", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`, // Incluye el token si tu API lo requiere
+                "Authorization": `Bearer ${token}`,
             },
             body: JSON.stringify(orderRequest),
         });
@@ -44,13 +43,11 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
             );
         }
 
-        // Responder con éxito
         return NextResponse.json(
             { success: true, message: "Order processed successfully" },
             { status: 200 }
         );
     } catch (error) {
-        // Responder con un error si ocurre algo inesperado
         return NextResponse.json(
             { success: false, message: "Failed to process the order" },
             { status: 500 }
