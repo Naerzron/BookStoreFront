@@ -1,64 +1,51 @@
 "use client";
 
-import { useParams } from 'next/navigation';  // Importa useParams desde next/navigation
-import { useEffect, useState } from 'react';
+import { OrderDetails } from "@/components/admin/users/OrderDetails";
+import { UserDetails } from "@/components/admin/users/UserDetails";
+import { useState } from "react";
 
 export default function AdminUserDetail() {
-    const { userId } = useParams();  // Obtén los parámetros de la ruta, como userId
-    const [user, setUser] = useState<User | null>(null);
-    const [isLoading, setIsLoading] = useState<boolean>(true);
-    const [error, setError] = useState<string | null>(null);
-
-    useEffect(() => {
-        if (userId) {
-            const fetchUserDetails = async () => {
-                try {
-                    // Obtén el token desde las cookies o almacenamiento local
-                    const token = localStorage.getItem("authToken");  // O usa cookies si es el caso
-
-                    const response = await fetch(`http://localhost:5141/api/account/detail/${userId}`, {
-                        method: 'GET',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': `Bearer ${token}`,  // Agrega el token al encabezado
-                        },
-                        credentials: 'include',  // Si usas cookies
-                    });
-
-                    if (!response.ok) {
-                        throw new Error('Failed to fetch user details');
-                    }
-
-                    const data = await response.json();
-                    setUser(data);  // Guardamos los detalles del usuario en el estado
-                } catch (err: any) {
-                    setError(err.message || 'An unexpected error occurred');
-                } finally {
-                    setIsLoading(false);
-                }
-            };
-
-            fetchUserDetails();
-        }
-    }, [userId]);
-
-    if (isLoading) return <p>Cargando...</p>;
-    if (error) return <p>{error}</p>;
+    
+    const [activeTab, setActiveTab] = useState<"profile" | "orders">("profile");
 
     return (
-        <div>
-            <h1>Detalles del Usuario</h1>
-            {user && (
-                <div>
-                    <p>Nombre: {user.name} {user.lastName}</p>
-                    <p>Email: {user.email}</p>
-                    <p>Teléfono: {user.phoneNumber}</p>
-                    <p>Dirección: {user.address}</p>
-                    <p>Fecha de nacimiento: {user.birthdate}</p>
-                    <p>País: {user.country}</p>
-                    <p>DNI: {user.dni}</p>
-                </div>
-            )}
+        <div className="min-h-screen bg-gray-50 dark:bg-gray-700 flex flex-col">
+
+            {/* Main Content */}
+            <div className="flex flex-1 flex-col md:flex-row items-start px-12 pt-32 pb-12 gap-4 md:gap-12">
+                {/* Sidebar */}
+                <aside className="w-full md:w-1/4 bg-white dark:bg-gray-800 shadow-md p-6 md:sticky md:top-3 border border-gray-2002">
+                    <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-300 mb-6">Panel de usuario</h1>
+                    <nav className="space-y-4">
+                        <button
+                            onClick={() => setActiveTab("profile")}
+                            className={`w-full text-left px-4 py-2 rounded-md font-medium ${
+                                activeTab === "profile"
+                                    ? "bg-blue-500 text-white"
+                                    : "bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-300"
+                            }`}
+                        >
+                            Datos
+                        </button>
+                        <button
+                            onClick={() => setActiveTab("orders")}
+                            className={`w-full text-left px-4 py-2 rounded-md font-medium ${
+                                activeTab === "orders"
+                                    ? "bg-blue-500 text-white"
+                                    : "bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-300"
+                            }`}
+                        >
+                            Pedidos
+                        </button>
+                    </nav>
+                </aside>
+
+                {/* Content */}
+                <main className="w-full border border-gray-200 bg-white dark:bg-gray-700 p-6 md:p-12 rounded-lg shadow-md overflow-auto">
+                    {activeTab === "profile" && <UserDetails />}
+                    {activeTab === "orders" && <OrderDetails />}
+                </main>
+            </div>
         </div>
-    );
+    )
 }

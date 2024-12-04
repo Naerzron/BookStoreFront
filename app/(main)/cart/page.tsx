@@ -57,7 +57,6 @@ export default function CartPage() {
             }
 
             const data = await response.json();
-            console.log("Order created successfully:", data);
 
             clearCart(); // Vaciar el carrito después de confirmar
             setIsModalOpen(false); // Cerrar el modal

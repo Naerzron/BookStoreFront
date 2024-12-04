@@ -31,10 +31,7 @@ export function middleware(request: NextRequest) {
         pathname.startsWith(route)
     );
 
-    console.log(isAdminRestrictedRoute, isUserRestrictedRoute, userRole, userLogged);
-
     if ((isUserRestrictedRoute || isAdminRestrictedRoute) && !token) {
-        console.log('entro');
         const url = request.nextUrl.clone();
         url.pathname = LOGIN_PAGE;
         return NextResponse.redirect(url);
@@ -52,7 +49,6 @@ export function middleware(request: NextRequest) {
         return NextResponse.redirect(new URL("/", request.url));
     }
 
-    console.log('paso: ', pathname);
     return NextResponse.next();
 }
 

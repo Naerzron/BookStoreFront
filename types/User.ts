@@ -1,7 +1,7 @@
 type User = {
     id: string,
     address: string,
-    birthdate: string,
+    birthDate: string,
     country: string,
     dni: string,
     lastName: string,
