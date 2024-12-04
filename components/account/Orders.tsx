@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { Button } from "../ui/button";
 import { formatDate } from "@/lib/utils";
 
 import {
@@ -12,6 +11,7 @@ import { Separator } from "../ui/separator";
 import Image from "next/image";
 import Link from "next/link";
 import { Loader } from "lucide-react";
+import { Order } from "@/types/Order";
 
 export const Orders = () => {
     const [orders, setOrders] = useState<Order[]>([]);

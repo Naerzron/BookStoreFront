@@ -4,12 +4,10 @@ import { useAuth } from "@/contexts/AuthContext";
 import { CircleUserRound, LibraryBig, LogIn, LogOut, ShoppingBag } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
 
 const MainNavbar = () => {
     const { isLoggedIn, handleCtxLogout } = useAuth();
     const router = useRouter();
-    const [errorMessage, setErrorMessage] = useState<string>("");
 
     const handleLogout = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -25,17 +23,11 @@ const MainNavbar = () => {
             const data: ApiResponse = await response.json();
 
             if (data.success) {
-                setErrorMessage("");
                 router.replace("/");
                 handleCtxLogout();
-            } else {
-                setErrorMessage(
-                    "Error de autenticación. Verifica tus credenciales."
-                );
             }
         } catch (error) {
             console.error("Error en la autenticación:", error);
-            setErrorMessage("Ocurrió un error, intenta de nuevo.");
         }
     };
 

@@ -13,8 +13,6 @@ export async function POST(request: Request): Promise<NextResponse> {
             body: JSON.stringify(registerData),
         });
 
-        const data = await response.json();
-
         if (response.ok) {
             
                 return NextResponse.json(

@@ -36,7 +36,7 @@ export default function EditBook() {
 
     const [genres, setGenres] = useState<Genre[]>([]);
     const [authors, setAuthors] = useState<Author[]>([]);
-    const [mensaje, setMensaje] = useState<String>("");
+    const [mensaje, setMensaje] = useState<string>("");
 
     useEffect(() => {
         const fetchData = async () => {
@@ -130,8 +130,7 @@ export default function EditBook() {
                 setMensaje("Error al editar libro");
             }
         } catch (error) {
-            console.error("Error");
-            setMensaje("Error al editar libro");
+            setMensaje("Error al editar libro: " + error);
         }
     };
 
@@ -275,7 +274,7 @@ export default function EditBook() {
                     </label>
                     <select
                         name="authorId"
-                        value={formData.authorId}
+                        value={formData.author?.id}
                         onChange={handleSelectChange}
                         className="mt-1 block w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-300"
                         required
@@ -299,7 +298,7 @@ export default function EditBook() {
                     </label>
                     <select
                         name="genreId"
-                        value={formData.genreId}
+                        value={formData.genre?.id}
                         onChange={handleSelectChange}
                         className="mt-1 block w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-300"
                         required

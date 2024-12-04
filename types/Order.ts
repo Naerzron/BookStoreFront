@@ -1,4 +1,6 @@
-type Order = {
+import { Book } from "./Book"
+
+export type Order = {
     id: number,
     createdDate: string,
     status: string,

@@ -55,8 +55,7 @@ export default function CreateAuthor() {
                 setMensaje("Error al crear el author");
             }
         } catch (error) {
-            console.error("Error");
-            setMensaje("Error al crear autor");
+            setMensaje("Error al crear autor: " + error);
         }
     };
 
@@ -81,7 +80,7 @@ export default function CreateAuthor() {
         fetchAuthors();
     }, []);
 
-    const deleteAuthor = async (id: Number) => {
+    const deleteAuthor = async (id: number) => {
         try {
             const response = await fetch(
                 `${process.env.NEXT_PUBLIC_API_URL}/api/authors/${id}`,

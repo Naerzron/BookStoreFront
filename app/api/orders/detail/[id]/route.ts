@@ -73,7 +73,7 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: s
         );
     } catch (error) {
         return NextResponse.json(
-            { success: false, message: "Failed to delete order" },
+            { success: false, message: "Failed to delete order", error: error },
             { status: 500 }
         );
     }

@@ -30,7 +30,7 @@ export default function Books() {
         fetchBooks();
     }, []);
 
-    const deleteBook = async (id: Number) => {
+    const deleteBook = async (id: number) => {
         try {
             await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/books/${id}`, {
                 method: "DELETE",

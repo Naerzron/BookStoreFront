@@ -1,6 +1,6 @@
 "use client";
 
-import { DocumentMagnifyingGlassIcon, PencilIcon, TrashIcon } from "@heroicons/react/24/solid";
+import { DocumentMagnifyingGlassIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
@@ -19,13 +19,13 @@ interface User {
 export default function AdminUsers() {
     const [users, setUsers] = useState<User[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
-    const [error, setError] = useState<string | null>(null);
+    const [error, setError] = useState<string>("");
 
     useEffect(() => {
         const fetchUsers = async () => {
             try {
                 setIsLoading(true);
-                setError(null);
+                setError("");
 
                 const response = await fetch("/api/users", {
                     method: "GET",
@@ -38,8 +38,8 @@ export default function AdminUsers() {
 
                 const data = await response.json();
                 setUsers(data.users);
-            } catch (err: any) {
-                setError(err.message || "An unexpected error occurred");
+            } catch (error) {
+                setError(`${error}`);
             } finally {
                 setIsLoading(false);
             }

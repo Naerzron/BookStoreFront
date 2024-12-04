@@ -1,8 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { Genre } from "@/types/Genre";
-import Link from "next/link";
-import { PencilIcon, TrashIcon } from "@heroicons/react/16/solid";
+import { TrashIcon } from "@heroicons/react/16/solid";
 
 interface FormGenreData {
     name: string;
@@ -48,8 +47,7 @@ export default function CreateGenre() {
                 setMensaje("Error al crear género");
             }
         } catch (error) {
-            console.error("Error");
-            setMensaje("Error al crear género");
+            setMensaje("Error al crear género: " + error);
         }
     };
 
@@ -74,7 +72,7 @@ export default function CreateGenre() {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    const deleteGenre = async (id: Number) => {
+    const deleteGenre = async (id: number) => {
         try {
             const response = await fetch(
                 `${process.env.NEXT_PUBLIC_API_URL}/api/genres/${id}`,

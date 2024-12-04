@@ -74,8 +74,7 @@ export default function CreateBook() {
                 setMensaje("Error al crear libro");
             }
         } catch (error) {
-            console.error("Error");
-            setMensaje("Error al crear libro");
+            setMensaje("Error al crear libro: " + error);
         }
     };
 

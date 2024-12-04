@@ -13,6 +13,7 @@ import { Loader } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { useParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import { Order } from "@/types/Order";
 
 export const OrderDetails = () => {
     const [orders, setOrders] = useState<Order[]>([]);

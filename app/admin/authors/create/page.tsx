@@ -1,8 +1,7 @@
 "use client";
 
 import { Author } from "@/types/Author";
-import { PencilIcon, TrashIcon } from "@heroicons/react/16/solid";
-import Link from "next/link";
+import { TrashIcon } from "@heroicons/react/16/solid";
 import { useEffect, useState } from "react";
 
 type AuthorForm = {
@@ -56,8 +55,7 @@ export default function CreateAuthor() {
                 setMensaje("Error al crear el author");
             }
         } catch (error) {
-            console.error("Error");
-            setMensaje("Error al crear autor");
+            setMensaje("Error al crear autor:" + error);
         }
     };
 
@@ -82,7 +80,7 @@ export default function CreateAuthor() {
         fetchAuthors();
     }, []);
 
-    const deleteAuthor = async (id: Number) => {
+    const deleteAuthor = async (id: number) => {
         try {
             const response = await fetch(
                 `${process.env.NEXT_PUBLIC_API_URL}/api/authors/${id}`,

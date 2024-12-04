@@ -53,8 +53,6 @@ export default function CartPage() {
                 throw new Error("Failed to create the order");
             }
 
-            const data = await response.json();
-
             clearCart();
             setIsModalOpen(false);
 

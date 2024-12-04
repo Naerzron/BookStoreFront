@@ -2,7 +2,7 @@ import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export const UserDetails: React.FC = () => {
-    const [error, setError] = useState<string | null>(null);
+    const [error, setError] = useState<string>("");
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const { id } = useParams();
     const [user, setUser] = useState<User>({
@@ -39,8 +39,8 @@ export const UserDetails: React.FC = () => {
                 const data = await response.json();
                 const userDetails = data.userDetails;
                 setUser(userDetails);
-            } catch (err: any) {
-                setError(err.message || "An unexpected error occurred");
+            } catch (error) {
+                setError(`${error}`);
             } finally {
                 setIsLoading(false);
             }

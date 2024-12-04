@@ -1,13 +1,12 @@
 "use client";
 
 import { useAuth } from "@/contexts/AuthContext";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 export default function Login() {
     const { handleCtxLogin } = useAuth();
     const router = useRouter();
-    const searchParams = useSearchParams();
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");

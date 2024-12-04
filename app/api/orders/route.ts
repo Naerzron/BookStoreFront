@@ -49,7 +49,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
         );
     } catch (error) {
         return NextResponse.json(
-            { success: false, message: "Failed to process the order" },
+            { success: false, message: "Failed to process the order", error },
             { status: 500 }
         );
     }
@@ -96,7 +96,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
         );
     } catch (error) {
         return NextResponse.json(
-            { success: false, message: "Failed to fetch the orders" },
+            { success: false, message: "Failed to fetch the orders", error },
             { status: 500 }
         );
     }

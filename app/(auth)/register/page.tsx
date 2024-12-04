@@ -1,13 +1,12 @@
 "use client";
 
 import Input from "@/components/ui/input";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 
 export default function Register() {
     const router = useRouter();
-    const searchParams = useSearchParams();
 
     const [userName, setUserName] = useState<string>("");
     const [email, setEmail] = useState<string>("");
