@@ -40,7 +40,7 @@ export const ProfileForm = () => {
     const handleSaveChanges = async () => {
         try {
             const response = await fetch(
-                `${process.env.NEXT_PUBLIC_API_URL}/api/account`,
+                `/api/account`,
                 {
                     method: "POST",
                     credentials: "include",
@@ -54,7 +54,7 @@ export const ProfileForm = () => {
             if (!response.ok) {
                 toast({
                     variant: "destructive",
-                    title: "No se han podido actualizar los dagos",
+                    title: "No se han podido actualizar los datos",
                 });
                 return;
             }
@@ -73,7 +73,7 @@ export const ProfileForm = () => {
         const fetchUserAccount = async () => {
             try {
                 const response = await fetch(
-                    `${process.env.NEXT_PUBLIC_API_URL}/api/account`,
+                    `/api/account`,
                     {
                         method: "GET",
                         credentials: "include",
