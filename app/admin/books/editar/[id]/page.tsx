@@ -113,7 +113,6 @@ export default function EditBook() {
                 genre: genres.find((g) => g.id === formData.genre?.id),
                 image: String(formData.image),
             };
-            console.log(book);
             const response = await fetch(
                 `${process.env.NEXT_PUBLIC_API_URL}/api/books/${id}`,
                 {

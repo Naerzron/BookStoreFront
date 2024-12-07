@@ -23,8 +23,8 @@ const MainNavbar = () => {
             const data: ApiResponse = await response.json();
 
             if (data.success) {
-                router.replace("/");
                 handleCtxLogout();
+                router.replace("/");
             }
         } catch (error) {
             console.error("Error en la autenticación:", error);
@@ -41,7 +41,7 @@ const MainNavbar = () => {
                     </Link>
                 </li>
                 <li>
-                    <Link href="/account" className="flex items-center gap-2">
+                    <Link href="/account" prefetch={false} className="flex items-center gap-2">
                         <CircleUserRound strokeWidth={1} className="w-6 h-6" />
                         <p>Mi cuenta</p>
                     </Link>
@@ -63,7 +63,7 @@ const MainNavbar = () => {
                             Cerrar sesión
                         </button>
                     ) : (
-                        <Link href="/login">
+                        <Link href="/login" prefetch={false}>
                             <button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md transition flex items-center gap-4">
                                 <LogIn strokeWidth={1} className="w-6 h-6" />
                                 Iniciar sesión

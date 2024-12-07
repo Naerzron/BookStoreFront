@@ -5,10 +5,16 @@ import Navbar from "@/components/main-navbar";
 import ChangePassword from "@/components/account/ChangePassword";
 import { ProfileForm } from "@/components/account/ProfileForm";
 import { Orders } from "@/components/account/Orders";
+import { useAuth } from "@/contexts/AuthContext";
+import Login from "@/app/(auth)/login/page";
 
 export default function Account() {
     const [activeTab, setActiveTab] = useState<"profile" | "orders" | "changePassword">("profile");
+    const { isLoggedIn } = useAuth();
 
+    if( !isLoggedIn )
+        return <Login />;
+    
     return (
         <div className="min-h-screen bg-gray-50 dark:bg-gray-700 flex flex-col">
             {/* Navbar */}

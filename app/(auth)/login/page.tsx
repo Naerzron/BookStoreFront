@@ -27,7 +27,6 @@ export default function Login() {
             const data: LoginResponse = await response.json();
             if (data.success) {
                 setErrorMessage("");
-                
                 handleCtxLogin();
                 
                 if (data.userRole === 'Administrador') {
@@ -35,6 +34,7 @@ export default function Login() {
                 } else {
                     router.replace('/');
                 }
+                router.refresh();
             } else {
                 setErrorMessage(
                     "Error de autenticación. Verifica tus credenciales."

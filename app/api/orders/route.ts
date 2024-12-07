@@ -34,8 +34,6 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
             throw new Error("Failed to create the order");
         }
 
-        const data = await response.json();
-        console.log("Order created successfully:", data);
         if (!response.ok) {
             return NextResponse.json(
                 { message: "Error fetching book" },
@@ -75,14 +73,11 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
             credentials: "include",
         });
 
-        console.log(response);
-
         if (!response.ok) {
             throw new Error("Failed to fetch the orders");
         }
 
         const data = await response.json();
-        console.log("Orders fetched successfully:", data);
         if (!response.ok) {
             return NextResponse.json(
                 { message: "Error fetching orders" },

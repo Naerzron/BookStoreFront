@@ -4,10 +4,12 @@ import Cookies from "js-cookie";
 import React from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/contexts/AuthContext";
 
 const Navbar = () => {
   const router = useRouter();
-
+  const {handleCtxLogout} = useAuth();
+  
   const handleLogout = async (e: React.FormEvent) => {
     e.preventDefault();
     const response = await fetch("/api/logout", {
@@ -22,6 +24,7 @@ const Navbar = () => {
     if (data.success) {
       Cookies.remove("jwt");
       router.replace("/");
+      handleCtxLogout();
     }
   };
 

@@ -15,7 +15,6 @@ export default function Books() {
     useEffect(() => {
         const fetchBooks = async () => {
             try {
-                console.log(process.env.NEXT_PUBLIC_API_URL);
                 const response = await fetch(
                     `${process.env.NEXT_PUBLIC_API_URL}/api/books`,
                 );

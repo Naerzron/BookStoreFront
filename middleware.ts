@@ -33,7 +33,11 @@ export function middleware(request: NextRequest) {
     if ((isUserRestrictedRoute || isAdminRestrictedRoute) && !token) {
         const url = request.nextUrl.clone();
         url.pathname = LOGIN_PAGE;
-        return NextResponse.redirect(url);
+        const response = NextResponse.redirect(url);
+        response.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+        response.headers.set('Pragma', 'no-cache');
+        response.headers.set('Expires', '0');
+        return response;
     }
 
     if (isAdminRestrictedRoute && userRole !== "Administrador") {
