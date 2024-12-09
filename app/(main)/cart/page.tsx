@@ -39,6 +39,17 @@ export default function CartPage() {
         });
     };
 
+    const handleDeleteCart = () => {
+
+        clearCart()
+
+        toast({
+            variant: "destructive",
+            title: "Carrito actualizado",
+            description: "Has vaciado el carrito.",
+        });
+    };
+
     const handleConfirmOrder = async () => {
         try {
             const response = await fetch("/api/orders", {
@@ -149,7 +160,7 @@ export default function CartPage() {
                                         </p>
                                     </div>
                                     <button
-                                        onClick={() => clearCart()}
+                                        onClick={() => handleDeleteCart()}
                                         className="bg-red-600 text-white px-6 py-3 rounded-md text-lg font-medium hover:bg-red-700 dark:bg-red-500 dark:hover:bg-red-600"
                                     >
                                         Vaciar carrito
