@@ -1,3 +1,4 @@
+import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 
 interface AdminPanelLayoutProps {
@@ -9,6 +10,7 @@ export default function AdminPanelLayout({ children }: AdminPanelLayoutProps) {
         <>
             <Navbar />
             {children}
+            <Footer />
         </>
     )
 }

@@ -24,14 +24,13 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
         }
 
         const users = await response.json();
-        console.log("Users fetched successfully:", users);
 
         return NextResponse.json(
             { success: true, users },
             { status: 200 }
         );
     } catch (error) {
-        console.error("Error fetching users:", error);
+        //console.error("Error fetching users:", error);
         return NextResponse.json(
             { success: false, message: "Failed to fetch users" },
             { status: 500 }

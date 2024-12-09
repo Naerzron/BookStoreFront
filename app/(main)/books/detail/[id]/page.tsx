@@ -56,7 +56,7 @@ export default function BookDetail() {
                 const book: GetBookResponse = await response.json();
                 setBook(book);
             } catch (error) {
-                console.error("Error fetching book: ", error);
+                //console.error("Error fetching book: ", error);
             } finally {
                 setIsLoading(false);
             }

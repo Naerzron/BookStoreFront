@@ -59,7 +59,6 @@ export default function Register() {
                 );
             }
         } catch (error) {
-            console.error("Error llamada:", error);
             setErrorMessage("Ocurrió un error, intenta de nuevo.");
         }
     };

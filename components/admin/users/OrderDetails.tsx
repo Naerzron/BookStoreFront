@@ -35,11 +35,9 @@ export const OrderDetails = () => {
             }
 
             const orders: Order[] = data.orders;
-            console.log(orders);
 
             setOrders(orders);
         } catch (error) {
-            console.log(error);
         } finally {
             setIsLoading(false);
         }
@@ -75,7 +73,6 @@ export const OrderDetails = () => {
             setOrders(orders);
             fetchOrders();
         } catch (error) {
-            console.log(error);
         } finally {
             setIsLoading(false);
         }

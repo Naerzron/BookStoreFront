@@ -41,7 +41,6 @@ export default function Login() {
                 );
             }
         } catch (error) {
-            console.error("Error en la autenticación:", error);
             setErrorMessage("Ocurrió un error, intenta de nuevo.");
         }
     };

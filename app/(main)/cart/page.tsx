@@ -5,7 +5,7 @@ import { Separator } from "@/components/ui/separator";
 import { useAuth } from "@/contexts/AuthContext";
 import { useCart } from "@/contexts/CartContext";
 import { toast } from "@/hooks/use-toast";
-import { ShoppingCart, X } from "lucide-react";
+import { ShoppingCart, User, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
@@ -57,11 +57,11 @@ export default function CartPage() {
             setIsModalOpen(false);
 
             toast({
-                variant: "destructive",
-                title: "Has vaciado el carrito",
+                variant: "success",
+                title: "¡Has completado tu pedido!",
             });
         } catch (error) {
-            console.error("Error creating order:", error);
+            //console.error("Error creating order:", error);
         }
     };
 
@@ -171,12 +171,13 @@ export default function CartPage() {
                                     )
                                     : (
                                         <Button
-                                            variant={"outline"}
-                                            className="w-full text-lg"
+                                            className="w-full text-lg h-fit"
                                         >
                                             <Link
                                                 href={"/login"}
+                                                className="w-full flex items-center justify-center gap-2 py-2"
                                             >
+                                                <User className="w-8 h-8" />
                                                 Iniciar sesión para continuar
                                                 con el pedido
                                             </Link>

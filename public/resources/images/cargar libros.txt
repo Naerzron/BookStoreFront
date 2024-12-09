@@ -1,4 +1,4 @@
-INSERT INTO "Authors" ("Name", "BirthDay") VALUES 
+INSERT "Authors" ("Name", "BirthDay") VALUES 
 ('Brandon Sanderson', '1975-12-19'),
 ('Christopher Paolini', '1983-11-17'),
 ('Tsutomu Nihei', '1971-02-21'),

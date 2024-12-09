@@ -25,13 +25,12 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
         }
 
         const userDetails = await response.json();
-        console.log(userDetails);
         return NextResponse.json(
             { success: true, userDetails },
             { status: 200 }
         );
     } catch (error) {
-        console.error("Error fetching users:", error);
+        //console.error("Error fetching users:", error);
         return NextResponse.json(
             { success: false, message: "Failed to fetch users" },
             { status: 500 }

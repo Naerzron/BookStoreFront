@@ -39,7 +39,7 @@ export async function POST(request: Request): Promise<NextResponse> {
             return NextResponse.json({ success: false, message: "Error de autenticación. Verifica tus credenciales." }, { status: 403 });
         }
     } catch (error) {
-        console.error("Error en la autenticación:", error);
+        //console.error("Error en la autenticación:", error);
         return NextResponse.json(
             { success: false, message: "Ocurrió un error, intenta de nuevo." },
             { status: 500 }

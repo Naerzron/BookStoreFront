@@ -34,11 +34,9 @@ export const Orders = () => {
                 }
 
                 const orders: Order[] = data.orders;
-                console.log(orders);
 
                 setOrders(orders);
             } catch (error) {
-                console.log(error);
             } finally {
                 setIsLoading(false);
             }

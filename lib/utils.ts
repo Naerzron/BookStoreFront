@@ -27,10 +27,10 @@ export const setItemWithExpiry = (
             };
             window.sessionStorage.setItem(key, JSON.stringify(item));
         } catch (error) {
-            console.error("Error al guardar en sessionStorage:", error);
+            //console.error("Error al guardar en sessionStorage:", error);
         }
     } else {
-        console.warn("sessionStorage no está disponible en este entorno.");
+        //console.warn("sessionStorage no está disponible en este entorno.");
     }
 };
 
@@ -55,11 +55,11 @@ export const getItemWithExpiry = <T>(key: string): T | null => {
 
             return item.value;
         } catch (error) {
-            console.error("Error al obtener del sessionStorage:", error);
+            //console.error("Error al obtener del sessionStorage:", error);
             return null;
         }
     } else {
-        console.warn("sessionStorage no está disponible en este entorno.");
+        //console.warn("sessionStorage no está disponible en este entorno.");
         return null;
     }
 };
@@ -73,10 +73,10 @@ export const removeItemFromSessionStorage = (key: string): void => {
         try {
             window.sessionStorage.removeItem(key);
         } catch (error) {
-            console.error("Error al eliminar del sessionStorage:", error);
+            //console.error("Error al eliminar del sessionStorage:", error);
         }
     } else {
-        console.warn("sessionStorage no está disponible en este entorno.");
+        //console.warn("sessionStorage no está disponible en este entorno.");
     }
 };
 

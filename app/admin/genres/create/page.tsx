@@ -35,7 +35,7 @@ export default function CreateGenre() {
                         "Content-Type": "application/json",
                     },
                     body: JSON.stringify(genre),
-                },
+                }
             );
             if (response.ok) {
                 setFormData({
@@ -55,12 +55,12 @@ export default function CreateGenre() {
         const fetchGenres = async () => {
             try {
                 const response = await fetch(
-                    `${process.env.NEXT_PUBLIC_API_URL}/api/genres`,
+                    `${process.env.NEXT_PUBLIC_API_URL}/api/genres`
                 );
                 const data: Genre[] = await response.json();
                 setGenres(data);
             } catch (error) {
-                console.error("Error fetching genres: ", error);
+                //console.error("Error fetching genres: ", error);
             } finally {
                 setIsLoading(false);
             }
@@ -78,7 +78,7 @@ export default function CreateGenre() {
                 `${process.env.NEXT_PUBLIC_API_URL}/api/genres/${id}`,
                 {
                     method: "DELETE",
-                },
+                }
             );
 
             if (response.ok) {
@@ -88,79 +88,80 @@ export default function CreateGenre() {
                 setGenres(updatedGenres);
             }
         } catch (error) {
-            console.error("Error al borrar el género: ", error);
+            //console.error("Error al borrar el género: ", error);
         }
     };
 
     return (
-        <div className="w-full bg-white dark:bg-gray-800 p-8 shadow-lg rounded-lg dark:text-gray-400 flex flex-col items-center">
-            {/* Título del formulario */}
-            <h2 className="text-2xl font-bold mb-6 text-center text-gray-800 dark:text-gray-300">
-                Crear Nuevo Género
-            </h2>
+        <section className="min-h-[92vh] py-12">
+            <div className="w-full bg-white dark:bg-gray-800 px-8 rounded-lg dark:text-gray-400 flex flex-col items-center">
+                {/* Título del formulario */}
+                <h2 className="text-2xl font-bold mb-6 text-center text-gray-800 dark:text-gray-300">
+                    Crear Nuevo Género
+                </h2>
 
-            <form onSubmit={handleSubmit} className="w-full max-w-xl">
-                {/* Campo Título */}
-                <div className="mb-4 w-full">
-                    <label
-                        htmlFor="title"
-                        className="block text-sm font-medium text-gray-700 dark:text-gray-400"
-                    >
-                        Nombre del género
-                    </label>
-                    <input
-                        type="text"
-                        name="name"
-                        value={formData.name}
-                        onChange={handleInputChange}
-                        className="mt-1 block w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-300"
-                        placeholder="Nombre del género"
-                        required
-                    />
-                </div>
+                <form onSubmit={handleSubmit} className="w-full max-w-xl">
+                    {/* Campo Título */}
+                    <div className="mb-4 w-full">
+                        <label
+                            htmlFor="title"
+                            className="block text-sm font-medium text-gray-700 dark:text-gray-400"
+                        >
+                            Nombre del género
+                        </label>
+                        <input
+                            type="text"
+                            name="name"
+                            value={formData.name}
+                            onChange={handleInputChange}
+                            className="mt-1 block w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-300"
+                            placeholder="Nombre del género"
+                            required
+                        />
+                    </div>
 
-                {/* Campo Descripción */}
-                <div className="mb-4 w-full">
-                    <label
-                        htmlFor="genreId"
-                        className="block text-sm font-medium text-gray-700 dark:text-gray-400"
-                    >
-                        Descripción del género
-                    </label>
-                    <input
-                        type="text"
-                        name="description"
-                        value={formData.description}
-                        onChange={handleInputChange}
-                        className="mt-1 block w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-300"
-                        placeholder="Descripción del género"
-                        required
-                    />
-                </div>
+                    {/* Campo Descripción */}
+                    <div className="mb-4 w-full">
+                        <label
+                            htmlFor="genreId"
+                            className="block text-sm font-medium text-gray-700 dark:text-gray-400"
+                        >
+                            Descripción del género
+                        </label>
+                        <input
+                            type="text"
+                            name="description"
+                            value={formData.description}
+                            onChange={handleInputChange}
+                            className="mt-1 block w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-300"
+                            placeholder="Descripción del género"
+                            required
+                        />
+                    </div>
 
-                {/* Botón de enviar */}
-                <div className="text-center w-full">
-                    <button
-                        type="submit"
-                        className="w-full bg-blue-500 dark:bg-blue-600 text-white py-2 px-4 rounded-md shadow hover:bg-blue-600 dark:hover:bg-blue-700 focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-gray-800"
-                    >
-                        Crear Género
-                    </button>
-                </div>
-            </form>
+                    {/* Botón de enviar */}
+                    <div className="text-center w-full">
+                        <button
+                            type="submit"
+                            className="w-full bg-blue-500 dark:bg-blue-600 text-white py-2 px-4 rounded-md shadow hover:bg-blue-600 dark:hover:bg-blue-700 focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-gray-800"
+                        >
+                            Crear Género
+                        </button>
+                    </div>
+                </form>
 
-            {/* Mensaje de confirmación */}
-            <p className="mt-4 text-center">{mensaje}</p>
+                {/* Mensaje de confirmación */}
+                <p className="mt-4 text-center">{mensaje}</p>
 
-            <div className="flex flex-col justify-center items-center gap-8 px-44 pt-12">
-                <div className="flex gap-8 items-center content-around">
-                    <h1 className="text-5xl font-bold">Panel Géneros</h1>
-                </div>
+                <div className="w-full max-w-6xl flex flex-col justify-center items-center gap-8 pt-12">
+                    <div className="flex gap-8 items-center content-around">
+                        <h1 className="text-5xl font-bold">Panel Géneros</h1>
+                    </div>
 
-                {isLoading
-                    ? <h1 className="animate-pulse">Cargando</h1>
-                    : (
-                        <div className="overflow-x-auto shadow-md sm:rounded-lg">
+                    {isLoading ? (
+                        <h1 className="animate-pulse">Cargando</h1>
+                    ) : (
+                        <div className="w-full overflow-x-auto md:shadow-md sm:rounded-lg">
                             <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                 <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 text-center">
                                     <tr>
@@ -171,7 +172,7 @@ export default function CreateGenre() {
                                             Descripcion
                                         </th>
                                         <th scope="col" className="px-6 py-3">
-                                            Action
+                                            Acción
                                         </th>
                                     </tr>
                                 </thead>
@@ -193,11 +194,12 @@ export default function CreateGenre() {
                                             <td className="px-6 py-4 flex space-x-4">
                                                 <button
                                                     onClick={() =>
-                                                        deleteGenre(genre.id)}
+                                                        deleteGenre(genre.id)
+                                                    }
                                                     className="flex items-center font-medium text-blue-600 dark:text-blue-500 hover:underline"
                                                 >
                                                     <TrashIcon className="w-5 h-5 mr-1" />
-                                                    Delete
+                                                    Eliminar
                                                 </button>
                                             </td>
                                         </tr>
@@ -206,7 +208,8 @@ export default function CreateGenre() {
                             </table>
                         </div>
                     )}
+                </div>
             </div>
-        </div>
+        </section>
     );
 }

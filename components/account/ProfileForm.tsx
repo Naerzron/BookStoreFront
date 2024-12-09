@@ -65,7 +65,7 @@ export const ProfileForm = () => {
                 title: "Datos actualizados",
             });
         } catch (error) {
-            console.error("Error changing user account", error);
+            //console.error("Error changing user account", error);
         }
     };
 
@@ -92,7 +92,7 @@ export const ProfileForm = () => {
                 });
                 setIsLoading(false);
             } catch (error) {
-                console.error("Error fetching user account", error);
+                //console.error("Error fetching user account", error);
             }
         };
 

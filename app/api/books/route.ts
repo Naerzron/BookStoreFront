@@ -26,7 +26,7 @@ export async function GET(req: Request): Promise<NextResponse> {
 
         return NextResponse.json(book, { status: 200 });
     } catch (error) {
-        console.error("Error fetching book: ", error);
+        //console.error("Error fetching book: ", error);
         return NextResponse.json(
             { message: "Internal Server Error" },
             { status: 500 }

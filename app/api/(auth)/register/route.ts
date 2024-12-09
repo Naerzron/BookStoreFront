@@ -26,7 +26,7 @@ export async function POST(request: Request): Promise<NextResponse> {
             );
         }
     } catch (error) {
-        console.error("Error en el registro:", error);
+        //console.error("Error en el registro:", error);
         return NextResponse.json(
             { success: false, message: "Ocurrió un error, intenta de nuevo." },
             { status: 500 }

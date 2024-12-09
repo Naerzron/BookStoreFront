@@ -60,7 +60,7 @@ export default function CreateGenre() {
                 const data: Genre[] = await response.json();
                 setGenres(data);
             } catch (error) {
-                console.error("Error fetching genres: ", error);
+                //console.error("Error fetching genres: ", error);
             } finally {
                 setIsLoading(false);
             }

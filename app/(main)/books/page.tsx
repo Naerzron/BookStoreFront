@@ -16,7 +16,7 @@ export default function Books() {
                 const books: GetBookResponse[] = await response.json();
                 setBooks(books);
             } catch (error) {
-                console.error("Error fetching books: ", error);
+                //console.error("Error fetching books: ", error);
             } finally {
                 setIsLoading(false);
             }
@@ -25,7 +25,7 @@ export default function Books() {
     }, []);
 
     return (
-        <div className="flex flex-col justify-center items-center gap-8 px-12 pt-32 pb-12">
+        <div className="min-h-screen flex flex-col justify-center items-center gap-8 px-12 pt-32 pb-12">
             {isLoading
                 ? <h1 className="animate-pulse">Cargando</h1>
                 : (

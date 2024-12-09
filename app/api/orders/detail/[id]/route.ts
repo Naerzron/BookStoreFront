@@ -3,7 +3,6 @@ import { NextRequest, NextResponse } from "next/server";
 export async function GET(request: NextRequest, { params }: { params: { id: string } }): Promise<NextResponse> {
     try {
         const userId = params.id;
-        console.log(params);
         const cookieToken = request.cookies.get("jwt");
         const token = cookieToken?.value;
 
@@ -32,7 +31,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
             { status: 200 }
         );
     } catch (error) {
-        console.error("Error fetching orders:", error);
+        //console.error("Error fetching orders:", error);
         return NextResponse.json(
             { success: false, message: "Failed to fetch orders" },
             { status: 500 }
@@ -43,7 +42,6 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
 export async function DELETE(request: NextRequest, { params }: { params: { id: string } }): Promise<NextResponse> {
     try {
         const orderId = params.id;
-        console.log(params);
         const cookieToken = request.cookies.get("jwt");
         const token = cookieToken?.value;
 
@@ -61,8 +59,6 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: s
                 "Authorization": `Bearer ${token}`, 
             },
         });
-        console.log(response);
-        console.log(response.ok)
         if (!response.ok) {
             throw new Error();
         }
