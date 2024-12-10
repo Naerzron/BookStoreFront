@@ -29,13 +29,13 @@ export default function Books() {
             {isLoading
                 ? <h1 className="animate-pulse">Cargando</h1>
                 : (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                    <div className="max-w-lg lg:max-w-3xl xl:max-w-4xl 2xl:max-w-6xl grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
                         {books.map((book) => (
                             <div
                                 key={book.id}
                                 className="bg-white rounded-lg shadow-md overflow-hidden dark:bg-gray-800"
                             >
-                                <div className="w-full overflow-hidden">
+                                <div className="w-100 overflow-hidden">
                                     <Image
                                         src={`/resources/images/${
                                             book.image == ""
@@ -49,12 +49,12 @@ export default function Books() {
                                         priority={false}
                                     />
                                 </div>
-                                <div className="p-4">
-                                    <div className="flex flex-col items-center">
+                                <div className="w-full p-4">
+                                    <div className="w-full flex flex-col items-center">
                                         <h2 className="text-lg font-semibold text-gray-800 dark:text-white text-center">
                                             {book.title}
                                         </h2>
-                                        <div className="mt-4 flex items-center space-x-4">
+                                        <div className="w-full mt-4 flex flex-wrap lg:flex-nowrap items-center justify-center space-x-4">
                                             <p className="text-gray-500 dark:text-gray-400 text-center">
                                                 Precio: ${book.price}
                                             </p>

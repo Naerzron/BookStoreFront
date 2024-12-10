@@ -34,6 +34,9 @@ export default function Books() {
             await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/books/${id}`, {
                 method: "DELETE",
             });
+
+            const updatedBooks = books.filter(books => books.id != id);
+            setBooks(updatedBooks);
         } catch (error) {
             console.error("Error al borrar libro: ", error);
         }

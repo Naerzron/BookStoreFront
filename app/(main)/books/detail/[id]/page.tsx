@@ -1,13 +1,15 @@
 "use client";
 import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useCart } from "@/contexts/CartContext";
 import { Loader } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { ToastAction } from "@/components/ui/toast";
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 export default function BookDetail() {
+    const router = useRouter();
     const [showFullSynopsis, setShowFullSynopsis] = useState(false);
     const toggleSynopsis = () => setShowFullSynopsis(!showFullSynopsis);
     const [book, setBook] = useState<GetBookResponse>();
@@ -45,6 +47,10 @@ export default function BookDetail() {
         }
     };
 
+    const handleBack = () => {
+        router.back();
+    }
+
     useEffect(() => {
         setIsLoading(true);
         const fetchBook = async () => {
@@ -77,14 +83,23 @@ export default function BookDetail() {
 
     return (
         <div className="min-h-screen pt-20 bg-gray-50 dark:bg-gray-700">
-            <div className="w-full flex items-center justify-center py-12">
+
+            <div className="w-full flex flex-col items-center gap-4 py-12">
+                <div className="max-w-6xl w-full">
+                    <Button
+                        variant={'outline'}
+                        onClick={handleBack}
+                        className="self-start"
+                    >
+                        Volver atrás
+                    </Button>
+                </div>
                 <div className="max-w-6xl w-full bg-white dark:bg-gray-800 shadow-md sm:rounded-lg p-6 grid grid-cols-1 md:grid-cols-3 gap-6">
                     {/* Imagen del libro */}
                     <div className="flex-shrink-0 md:col-span-1">
                         <img
-                            src={`/resources/images/${
-                                book?.image === "" ? "default.jpg" : book?.image
-                            }`}
+                            src={`/resources/images/${book?.image === "" ? "default.jpg" : book?.image
+                                }`}
                             alt={`Portada de ${book?.title}`}
                             className="w-full h-full object-cover rounded-lg"
                         />
@@ -164,9 +179,8 @@ export default function BookDetail() {
                             Sinopsis
                         </h2>
                         <p
-                            className={`text-gray-600 dark:text-gray-400 mt-2 ${
-                                showFullSynopsis ? "" : "line-clamp-2"
-                            }`}
+                            className={`text-gray-600 dark:text-gray-400 mt-2 ${showFullSynopsis ? "" : "line-clamp-2"
+                                }`}
                         >
                             {book?.synopsis}
                         </p>

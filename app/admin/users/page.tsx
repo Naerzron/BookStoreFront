@@ -1,5 +1,6 @@
 "use client";
 
+import LoadingSpinner from "@/components/loader";
 import { DocumentMagnifyingGlassIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -56,7 +57,7 @@ export default function AdminUsers() {
                 </h1>
 
                 {isLoading ? (
-                    <h1 className="animate-pulse text-center">Cargando...</h1>
+                    <LoadingSpinner className="bg-transparent" />
                 ) : error ? (
                     <p className="text-red-500 text-center">{error}</p>
                 ) : (

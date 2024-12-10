@@ -12,6 +12,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Loader } from "lucide-react";
 import { Order } from "@/types/Order";
+import LoadingSpinner from "../loader";
 
 export const Orders = () => {
     const [orders, setOrders] = useState<Order[]>([]);
@@ -52,65 +53,69 @@ export const Orders = () => {
                 Mis Pedidos
             </h2>
 
-            <div className="relative shadow-md sm:rounded-lg">
+            <div className="relative">
                 {isLoading ? (
-                    <div className="py-20 bg-gray-50">
-                        <div className="flex h-full items-center justify-center">
-                            <Loader className="animate-spin" />
-                        </div>
-                    </div>
+                    <LoadingSpinner className="shadow-md sm:rounded-lg" />
                 ) : (
-                    <Accordion type="single" collapsible className="w-full">
-                        {orders.map((order) => (
-                            <AccordionItem
-                                key={order.id}
-                                value={`item-${order.id}`}
-                            >
-                                <AccordionTrigger className="w-full flex justify-between items-center p-4 hover:no-underline hover:bg-gray-100">
-                                    <div>
-                                        Realizado el {' '}
-                                        <span className="font-bold">
-                                            {formatDate(order.createdDate)}
-                                        </span>
-                                    </div>
-                                    <Separator orientation="vertical" />
-                                    <div className="font-bold">
-                                        {order.status}
-                                    </div>
-                                    <Separator orientation="vertical" />
-                                    <div className="font-bold">{order.totalAmount} €</div>
-                                </AccordionTrigger>
-                                <AccordionContent className="w-full p-4 bg-gray-50 flex justify-center flex-wrap gap-6">
-                                    {order.details.map((detail) => (
-                                        <div
-                                            key={detail.id}
-                                            className="w-2/12 flex flex-col items-center gap-2"
-                                        >
-                                            <Link
-                                                href={`/books/detail/${detail.book.id}`}
-                                                className="hover:brightness-110 transition-all duration-200"
-                                            >
-                                                <Image
-                                                    src={`/resources/images/${detail.book.image}`}
-                                                    alt={detail.book.title}
-                                                    width={100}
-                                                    height={150}
-                                                    className="object-contain rounded"
-                                                />
-                                            </Link>
-                                            <div className="w-full text-lg text-center">
-                                                {detail.book.title}
-                                            </div>
-                                            <div className="text-md text-center">
-                                                {detail.quantity} x{' '}
-                                                {detail.book.price} €
-                                            </div>
+                    <>
+                        {orders.length > 0 ? (
+                            <Accordion type="single" collapsible className="w-full shadow-md sm:rounded-lg">
+                            {orders.map((order) => (
+                                <AccordionItem
+                                    key={order.id}
+                                    value={`item-${order.id}`}
+                                >
+                                    <AccordionTrigger className="w-full flex flex-col md:flex-row md:justify-between items-center p-4 hover:no-underline hover:bg-gray-100">
+                                        <div>
+                                            Realizado el {' '}
+                                            <span className="font-bold">
+                                                {formatDate(order.createdDate)}
+                                            </span>
                                         </div>
-                                    ))}
-                                </AccordionContent>
-                            </AccordionItem>
-                        ))}
-                    </Accordion>
+                                        <Separator orientation="vertical" className="hidden md:block" />
+                                        <div className="font-bold">
+                                            {order.status}
+                                        </div>
+                                        <Separator orientation="vertical" className="hidden md:block" />
+                                        <div className="font-bold">{order.totalAmount} €</div>
+                                    </AccordionTrigger>
+                                    <AccordionContent className="w-full p-4 bg-gray-50 flex flex-col md:flex-row justify-center flex-wrap gap-6">
+                                        {order.details.map((detail) => (
+                                            <div
+                                                key={detail.id}
+                                                className="w-full md:w-2/12 flex flex-col items-center gap-2"
+                                            >
+                                                <Link
+                                                    href={`/books/detail/${detail.book.id}`}
+                                                    className="hover:brightness-110 transition-all duration-200"
+                                                >
+                                                    <Image
+                                                        src={`/resources/images/${detail.book.image}`}
+                                                        alt={detail.book.title}
+                                                        width={100}
+                                                        height={150}
+                                                        className="object-contain rounded"
+                                                    />
+                                                </Link>
+                                                <div className="w-full text-lg text-center">
+                                                    {detail.book.title}
+                                                </div>
+                                                <div className="text-md text-center">
+                                                    {detail.quantity} x{' '}
+                                                    {detail.book.price} €
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </AccordionContent>
+                                </AccordionItem>
+                            ))}
+                            </Accordion>
+                        ) : (
+                            <div className="py-12">
+                                <p>No hay nigún pedido...</p>
+                            </div>
+                        )}
+                    </>
                 )}
             </div>
         </div>

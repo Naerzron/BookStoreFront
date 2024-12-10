@@ -14,6 +14,7 @@ import { Separator } from "@/components/ui/separator";
 import { useParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Order } from "@/types/Order";
+import LoadingSpinner from "@/components/loader";
 
 export const OrderDetails = () => {
     const [orders, setOrders] = useState<Order[]>([]);
@@ -51,14 +52,12 @@ export const OrderDetails = () => {
 
     const handleDeleteOrder = async (id: number) => {
         try {
-            const response = await fetch(`/api/orders/detail/${id}`,
-                {
-                    method: "DELETE",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                }
-            );
+            const response = await fetch(`/api/orders/detail/${id}`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
 
             if (!response.ok) {
                 return;
@@ -78,7 +77,7 @@ export const OrderDetails = () => {
         } finally {
             setIsLoading(false);
         }
-    }
+    };
 
     return (
         <div>
@@ -86,66 +85,96 @@ export const OrderDetails = () => {
                 Mis Pedidos
             </h2>
 
-            <div className="relative shadow-md sm:rounded-lg">
+            <div className="relative">
                 {isLoading ? (
-                    <div className="py-20 bg-gray-50">
-                        <div className="flex h-full items-center justify-center">
-                            <Loader className="animate-spin" />
-                        </div>
-                    </div>
+                    <LoadingSpinner />
                 ) : (
-                    <Accordion type="single" collapsible className="w-full">
-                        {orders?.map((order) => (
-                            <AccordionItem
-                                key={order.id}
-                                value={`item-${order.id}`}
+                    <>
+                        {orders.length > 0 ? (
+                            <Accordion
+                                type="single"
+                                collapsible
+                                className="w-full shadow-md sm:rounded-lg"
                             >
-                                <AccordionTrigger className="w-full flex justify-between items-center p-4 hover:no-underline hover:bg-gray-100">
-                                    <div>
-                                        Realizado el {' '}
-                                        <span className="font-bold">
-                                            {formatDate(order.createdDate)}
-                                        </span>
-                                    </div>
-                                    <Separator orientation="vertical" />
-                                    <div className="font-bold">
-                                        {order.status}
-                                    </div>
-                                    <Separator orientation="vertical" />
-                                    <div className="font-bold">{order.totalAmount} €</div>
-                                </AccordionTrigger>
-                                <AccordionContent className="w-full p-4 bg-gray-50 flex justify-center flex-wrap gap-6">
-                                    {order.details.map((detail) => (
-                                        <div
-                                            key={detail.id}
-                                            className="w-2/12 flex flex-col items-center gap-2"
-                                        >
-                                            <Link
-                                                href={`/books/detail/${detail.book.id}`}
-                                                className="hover:brightness-110 transition-all duration-200"
+                                {orders?.map((order) => (
+                                    <AccordionItem
+                                        key={order.id}
+                                        value={`item-${order.id}`}
+                                    >
+                                        <AccordionTrigger className="w-full flex flex-col md:flex-row md:justify-between items-center p-4 hover:no-underline hover:bg-gray-100">
+                                            <div>
+                                                Realizado el{" "}
+                                                <span className="font-bold">
+                                                    {formatDate(
+                                                        order.createdDate
+                                                    )}
+                                                </span>
+                                            </div>
+                                            <Separator
+                                                orientation="vertical"
+                                                className="hidden md:block"
+                                            />
+                                            <div className="font-bold">
+                                                {order.status}
+                                            </div>
+                                            <Separator
+                                                orientation="vertical"
+                                                className="hidden md:block"
+                                            />
+                                            <div className="font-bold">
+                                                {order.totalAmount} €
+                                            </div>
+                                        </AccordionTrigger>
+                                        <AccordionContent className="w-full p-4 bg-gray-50 flex gap-6 flex-col">
+                                            <div className="flex flex-col md:flex-row justify-center flex-wrap gap-6">
+                                                {order.details.map((detail) => (
+                                                    <div
+                                                        key={detail.id}
+                                                        className="w-full md:w-2/12 flex flex-col items-center gap-2"
+                                                    >
+                                                        <Link
+                                                            href={`/admin/books/detail/${detail.book.id}`}
+                                                            className="hover:brightness-110 transition-all duration-200"
+                                                        >
+                                                            <Image
+                                                                src={`/resources/images/${detail.book.image}`}
+                                                                alt={
+                                                                    detail.book
+                                                                        .title
+                                                                }
+                                                                width={100}
+                                                                height={150}
+                                                                className="object-contain rounded"
+                                                            />
+                                                        </Link>
+                                                        <div className="w-full text-lg text-center">
+                                                            {detail.book.title}
+                                                        </div>
+                                                        <div className="text-md text-center">
+                                                            {detail.quantity} x{" "}
+                                                            {detail.book.price}{" "}
+                                                            €
+                                                        </div>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                            <Button
+                                                onClick={() =>
+                                                    handleDeleteOrder(order.id)
+                                                }
                                             >
-                                                <Image
-                                                    src={`/resources/images/${detail.book.image}`}
-                                                    alt={detail.book.title}
-                                                    width={100}
-                                                    height={150}
-                                                    className="object-contain rounded"
-                                                />
-                                            </Link>
-                                            <div className="w-full text-lg text-center">
-                                                {detail.book.title}
-                                            </div>
-                                            <div className="text-md text-center">
-                                                {detail.quantity} x{' '}
-                                                {detail.book.price} €
-                                            </div>
-                                            <Button onClick={() => handleDeleteOrder(detail.id)}>Borrar</Button>
-                                        </div>
-                                    ))}
-                                </AccordionContent>
-                            </AccordionItem>
-                        ))}
-                    </Accordion>
+                                                Borrar
+                                            </Button>
+                                        </AccordionContent>
+                                    </AccordionItem>
+                                ))}
+                            </Accordion>
+                        ) : (
+                            <div className="py-12">
+                                <p>No hay nigún pedido...</p>
+                            </div>
+                        )}
+                    </>
                 )}
             </div>
         </div>
