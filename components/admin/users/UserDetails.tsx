@@ -1,5 +1,4 @@
 import LoadingSpinner from "@/components/loader";
-import { Loader } from "lucide-react";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -51,7 +50,7 @@ export const UserDetails: React.FC = () => {
         if (id) {
             fetchUserDetails();
         }
-    }, []);
+    }, [id]);
 
     if (error) return <p>{error}</p>;
 

@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { Loader } from "lucide-react";
+import Image from "next/image";
 
 export default function BookDetail() {
     const [showFullSynopsis, setShowFullSynopsis] = useState(false);
@@ -48,12 +49,14 @@ export default function BookDetail() {
                 <div className="max-w-6xl w-full bg-white dark:bg-gray-800 shadow-md sm:rounded-lg p-6 grid grid-cols-1 md:grid-cols-3 gap-6">
                     {/* Imagen del libro */}
                     <div className="flex-shrink-0 md:col-span-1">
-                        <img
+                        <Image
                             src={`/resources/images/${
                                 book?.image === "" ? "default.jpg" : book?.image
                             }`}
                             alt={`Portada de ${book?.title}`}
                             className="w-full h-full object-cover rounded-lg"
+                            width={400}
+                            height={400}
                         />
                     </div>
 

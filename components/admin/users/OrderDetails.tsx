@@ -9,7 +9,6 @@ import {
 } from "@/components/ui/accordion";
 import Image from "next/image";
 import Link from "next/link";
-import { Loader } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { useParams } from "next/navigation";
 import { Button } from "@/components/ui/button";

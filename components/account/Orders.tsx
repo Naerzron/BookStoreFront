@@ -10,7 +10,6 @@ import {
 import { Separator } from "../ui/separator";
 import Image from "next/image";
 import Link from "next/link";
-import { Loader } from "lucide-react";
 import { Order } from "@/types/Order";
 import LoadingSpinner from "../loader";
 

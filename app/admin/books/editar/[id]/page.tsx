@@ -95,7 +95,7 @@ export default function EditBook() {
         };
 
         fetchData();
-    }, []);
+    }, [id]);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
