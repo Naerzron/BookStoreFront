@@ -15,7 +15,7 @@ export async function POST(): Promise<NextResponse> {
 
         return res;
     } catch (error) {
-        //console.error("Error al cerrar sesión:", error);
+        console.error("Error al cerrar sesión:", error);
         return NextResponse.json(
             {
                 success: false,

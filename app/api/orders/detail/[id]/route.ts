@@ -31,7 +31,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
             { status: 200 }
         );
     } catch (error) {
-        //console.error("Error fetching orders:", error);
+        console.error("Error fetching orders:", error);
         return NextResponse.json(
             { success: false, message: "Failed to fetch orders" },
             { status: 500 }

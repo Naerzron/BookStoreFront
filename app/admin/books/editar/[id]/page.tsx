@@ -65,7 +65,7 @@ export default function EditBook() {
                         }
                         return response.json();
                     } catch (error) {
-                        //console.error("Error fetching books:", error);
+                        console.error("Error fetching books:", error);
                         return undefined;
                     }
                 };
@@ -90,7 +90,7 @@ export default function EditBook() {
                     });
                 }
             } catch (error) {
-                //console.error("Error fetching data:", error);
+                console.error("Error fetching data:", error);
             }
         };
 

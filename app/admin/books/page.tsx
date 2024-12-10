@@ -21,7 +21,7 @@ export default function Books() {
                 const books: GetBookResponse[] = await response.json();
                 setBooks(books);
             } catch (error) {
-                //console.error("Error fetching books: ", error);
+                console.error("Error fetching books: ", error);
             } finally {
                 setIsLoading(false);
             }
@@ -35,7 +35,7 @@ export default function Books() {
                 method: "DELETE",
             });
         } catch (error) {
-            //console.error("Error al borrar libro: ", error);
+            console.error("Error al borrar libro: ", error);
         }
     };
 

@@ -37,6 +37,7 @@ export const Orders = () => {
 
                 setOrders(orders);
             } catch (error) {
+                console.error("Ha habido un error consultando los pedidos", error);
             } finally {
                 setIsLoading(false);
             }

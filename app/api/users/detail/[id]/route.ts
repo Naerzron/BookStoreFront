@@ -30,7 +30,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
             { status: 200 }
         );
     } catch (error) {
-        //console.error("Error fetching users:", error);
+        console.error("Error fetching users:", error);
         return NextResponse.json(
             { success: false, message: "Failed to fetch users" },
             { status: 500 }

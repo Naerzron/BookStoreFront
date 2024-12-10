@@ -38,6 +38,7 @@ export const OrderDetails = () => {
 
             setOrders(orders);
         } catch (error) {
+            console.error("Ha habido un error consultando los pedidos", error);
         } finally {
             setIsLoading(false);
         }
@@ -73,6 +74,7 @@ export const OrderDetails = () => {
             setOrders(orders);
             fetchOrders();
         } catch (error) {
+            console.error("Ha habido un error borrando el pedido", error);
         } finally {
             setIsLoading(false);
         }

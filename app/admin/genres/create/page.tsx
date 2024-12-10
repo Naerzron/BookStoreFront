@@ -60,7 +60,7 @@ export default function CreateGenre() {
                 const data: Genre[] = await response.json();
                 setGenres(data);
             } catch (error) {
-                //console.error("Error fetching genres: ", error);
+                console.error("Error fetching genres: ", error);
             } finally {
                 setIsLoading(false);
             }
@@ -88,7 +88,7 @@ export default function CreateGenre() {
                 setGenres(updatedGenres);
             }
         } catch (error) {
-            //console.error("Error al borrar el género: ", error);
+            console.error("Error al borrar el género: ", error);
         }
     };
 

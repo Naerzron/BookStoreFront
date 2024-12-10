@@ -72,7 +72,7 @@ export default function CreateAuthor() {
                 const authors: Author[] = await response.json();
                 setAuthors(authors);
             } catch (error) {
-                //console.error("Error fetching books: ", error);
+                console.error("Error fetching books: ", error);
             } finally {
                 setIsLoading(false);
             }
@@ -99,7 +99,7 @@ export default function CreateAuthor() {
                 setAuthors(authorsUpdated);
             }
         } catch (error) {
-            //console.error("Error al borrar el género: ", error);
+            console.error("Error al borrar el género: ", error);
         }
     };
 

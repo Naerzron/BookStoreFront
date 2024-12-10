@@ -72,7 +72,7 @@ export default function CartPage() {
                 title: "¡Has completado tu pedido!",
             });
         } catch (error) {
-            //console.error("Error creating order:", error);
+            console.error("Error creating order:", error);
         }
     };
 

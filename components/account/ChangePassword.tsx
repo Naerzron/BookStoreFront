@@ -41,7 +41,7 @@ export default function ChangePassword() {
                 setSuccessMessage("");
             }
         } catch (error) {
-            //console.error("Error al cambiar la contraseña:", error);
+            console.error("Error al cambiar la contraseña:", error);
             setErrorMessage("Error inesperado. Por favor, inténtalo de nuevo.");
             setSuccessMessage("");
         }

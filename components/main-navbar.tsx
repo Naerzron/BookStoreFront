@@ -1,7 +1,7 @@
 "use client";
 
 import { useAuth } from "@/contexts/AuthContext";
-import { CircleUserRound, LibraryBig, LogIn, LogOut, Menu, ShoppingBag, X } from "lucide-react";
+import { CircleUserRound, LibraryBig, LogIn, LogOut, Menu, MessageCircleQuestion, ShoppingBag, X } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -29,7 +29,7 @@ const MainNavbar = () => {
                 router.replace("/");
             }
         } catch (error) {
-            //console.error("Error en la autenticación:", error);
+            console.error("Error en la autenticación:", error);
         }
     };
 
@@ -66,10 +66,16 @@ const MainNavbar = () => {
                         <p>Carrito</p>
                     </Link>
                 </li>
+                <li>
+                    <Link href="/faqs" className="flex items-center gap-2">
+                        <MessageCircleQuestion strokeWidth={1} className="w-6 h-6" />
+                        <p>Ayuda</p>
+                    </Link>
+                </li>
             </ul>
 
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex-grow flex justify-center">
-                <h1 className="text-2xl font-bold text-white dark:text-gray-200">Naher's Vault</h1>
+                <h1 className="text-2xl font-bold text-white dark:text-gray-200">Naher&apos;s Vault</h1>
             </div>
 
             {/* Botón de inicio/cierre de sesión a la derecha */}
@@ -111,6 +117,12 @@ const MainNavbar = () => {
                         <Link href="/cart" className="flex items-center gap-2" onClick={() => setIsMenuOpen(false)}>
                             <ShoppingBag strokeWidth={1} className="w-6 h-6" />
                             <p>Carrito</p>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link href="/faqs" className="flex items-center gap-2" onClick={() => setIsMenuOpen(false)}>
+                            <MessageCircleQuestion strokeWidth={1} className="w-6 h-6" />
+                            <p>Ayuda</p>
                         </Link>
                     </li>
                     <li>
