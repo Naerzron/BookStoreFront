@@ -119,7 +119,7 @@ export default function Books() {
                                             {book.authorName}
                                         </td>
                                         <td className="px-4 py-4 sm:px-6">
-                                            {book.price}
+                                            {book.price} €
                                         </td>
                                         <td className="px-4 py-4 sm:px-6">
                                             {book.genreName}

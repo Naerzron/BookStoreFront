@@ -131,7 +131,7 @@ export default function CartPage() {
                                                     {item.title}
                                                 </h2>
                                                 <p className="text-gray-600 dark:text-gray-400">
-                                                    €{item.price} x{" "}
+                                                    {item.price} € x{" "}
                                                     <input
                                                         type="number"
                                                         value={quantities[
@@ -172,7 +172,7 @@ export default function CartPage() {
                                             Total:
                                         </span>
                                         <p className="text-green-600 font-bold dark:text-green-400 text-2xl mt-2">
-                                            €{total.toFixed(2)}
+                                            {total.toFixed(2)} €
                                         </p>
                                     </div>
                                     <button

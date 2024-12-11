@@ -151,7 +151,7 @@ export default function BookDetail() {
                                         Precio:
                                     </span>
                                     <p className="text-green-600 font-bold dark:text-green-400 text-2xl mt-2">
-                                        €{book?.price}
+                                        {book?.price} €
                                     </p>
                                 </div>
 
