@@ -1,16 +1,19 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function POST(request: Request): Promise<NextResponse> {
+export async function POST(request: NextRequest): Promise<NextResponse> {
     try {
         const { currentPassword, newPassword } = await request.json();
+
+        const cookieToken = request.cookies.get("jwt");
+        const token = cookieToken?.value;
 
         await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/change-password`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`,
             },
             body: JSON.stringify({ currentPassword, newPassword }),
-            credentials: "include",
         });
 
         return NextResponse.json({ success: true, message: "Exito" }, { status: 200 });
