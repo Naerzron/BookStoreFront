@@ -27,6 +27,9 @@ export default function CartPage() {
         0,
     );
 
+    const [isConfirming, setIsConfirming] = useState(false);
+
+
     const handleQuantityChange = (id: number, newQuantity: number) => {
         if (newQuantity < 1) return;
         setQuantities((prev) => ({ ...prev, [id]: newQuantity }));
@@ -51,6 +54,7 @@ export default function CartPage() {
     };
 
     const handleConfirmOrder = async () => {
+        setIsConfirming(true);
         try {
             const response = await fetch("/api/orders", {
                 method: "POST",
@@ -73,6 +77,8 @@ export default function CartPage() {
             });
         } catch (error) {
             console.error("Error creating order:", error);
+        } finally {
+            setIsConfirming(false);
         }
     };
 
@@ -218,8 +224,9 @@ export default function CartPage() {
                                 <Button
                                     variant="success"
                                     onClick={handleConfirmOrder}
+                                    disabled={isConfirming}
                                 >
-                                    Confirmar
+                                    {isConfirming ? "Confirmando..." : "Confirmar"}
                                 </Button>
                             </div>
                         </div>
