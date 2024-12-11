@@ -90,7 +90,7 @@ const MainNavbar = () => {
                     </button>
                 ) : (
                     <Link href="/login" prefetch={false}>
-                        <button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md transition flex items-center gap-2">
+                        <button className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-md transition flex items-center gap-2 w-full">
                             <LogIn strokeWidth={1} className="w-6 h-6" />
                             Iniciar sesión
                         </button>
@@ -139,7 +139,7 @@ const MainNavbar = () => {
                             </button>
                         ) : (
                             <Link href="/login" prefetch={false} onClick={() => setIsMenuOpen(false)}>
-                                <button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md transition flex items-center gap-2 w-full">
+                                <button className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-md transition flex items-center gap-2 w-full">
                                     <LogIn strokeWidth={1} className="w-6 h-6" />
                                     Iniciar sesión
                                 </button>

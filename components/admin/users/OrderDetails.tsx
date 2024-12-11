@@ -39,6 +39,7 @@ export const OrderDetails = () => {
             setOrders(orders);
         } catch (error) {
             console.error("Ha habido un error consultando los pedidos", error);
+            setOrders([]);
         } finally {
             setIsLoading(false);
         }
@@ -68,7 +69,7 @@ export const OrderDetails = () => {
                 return;
             }
 
-            const orders: Order[] = data.orders;
+            const orders: Order[] = data.orders || [];
             setOrders(orders);
             fetchOrders();
         } catch (error) {
