@@ -30,8 +30,12 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
             body: JSON.stringify(orderRequest),
         });
 
-        if (!response.ok) {
-            throw new Error("Failed to create the order");
+        if (response.status === 400) {
+            const errorData = await response.json();
+            return NextResponse.json(
+                { success: false, message: errorData.message || "No hay stock suficiente" },
+                { status: 400 }
+            );
         }
 
         if (!response.ok) {
@@ -52,6 +56,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
         );
     }
 }
+
 
 export async function GET(req: NextRequest): Promise<NextResponse> {
     try {

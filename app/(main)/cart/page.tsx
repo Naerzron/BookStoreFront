@@ -64,6 +64,16 @@ export default function CartPage() {
                 body: JSON.stringify(cartItems),
             });
 
+            if (response.status === 400) {
+                const data = await response.json();
+                setIsModalOpen(false);
+                toast({
+                    variant: "destructive",
+                    title: data.message,
+                });
+                return;
+            }
+
             if (!response.ok) {
                 throw new Error("Failed to create the order");
             }
