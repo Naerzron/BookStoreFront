@@ -72,6 +72,18 @@ const MainNavbar = () => {
                         <p>Ayuda</p>
                     </Link>
                 </li>
+                <li className="relative group">
+                    <div className="flex items-center gap-2 cursor-pointer">
+                        <MessageCircleQuestion strokeWidth={1} className="w-6 h-6" />
+                        <p>Acerca de..</p>
+                    </div>
+                    <div className="absolute left-0 mt-2 hidden w-72 p-3 bg-gray-800 text-white text-sm rounded-lg shadow-md group-hover:block group-focus:block z-50">
+                        <p className="text-center">
+                            Aplicación desarrollada por <strong>Antonio José López Cobo</strong> como proyecto final de DAW para el instituto <strong>IES Trassierra</strong>.
+                        </p>
+                        <div className="absolute left-4 top-[-8px] w-0 h-0 border-l-8 border-l-transparent border-b-8 border-b-gray-800 border-r-8 border-r-transparent"></div>
+                    </div>
+                </li>
             </ul>
 
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex-grow flex justify-center">
