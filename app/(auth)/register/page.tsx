@@ -24,7 +24,7 @@ export default function Register() {
     const handleSubmit = async (e: { preventDefault: () => void; }) => {
         e.preventDefault();
 
-        // Password validation on client side
+        // Validacion de password en el lado del cliente
          const passwordRegex = /^(?=.*[a-z])(?=.*\d).{8,}$/;
          if (!passwordRegex.test(password)) {
             setErrorMessage(
