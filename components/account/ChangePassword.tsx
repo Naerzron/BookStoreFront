@@ -12,6 +12,17 @@ export default function ChangePassword() {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
+
+        const passwordRegex = /^(?=.*[a-z])(?=.*\d).{8,}$/;
+         if (!passwordRegex.test(newPassword)) {
+            setErrorMessage(
+                "La contraseña debe tener al menos 8 caracteres, una minúscula y un número."
+            );
+            setSuccessMessage("");
+            return;
+        }
+
+
         if (newPassword !== confirmNewPassword) {
             setErrorMessage("Las contraseñas no coinciden.");
             setSuccessMessage("");

@@ -4,7 +4,6 @@ import Input from "@/components/ui/input";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-
 export default function Register() {
     const router = useRouter();
 
@@ -24,6 +23,21 @@ export default function Register() {
 
     const handleSubmit = async (e: { preventDefault: () => void; }) => {
         e.preventDefault();
+
+        // Password validation on client side
+         const passwordRegex = /^(?=.*[a-z])(?=.*\d).{8,}$/;
+         if (!passwordRegex.test(password)) {
+            setErrorMessage(
+                "La contraseña debe tener al menos 8 caracteres, una minúscula y un número."
+            );
+            return;
+        }
+         if (password !== confirmPassword) {
+            setErrorMessage("Las contraseñas no coinciden.");
+             return;
+        }
+
+
 
         const registerData: RegisterData = {
             userName: userName,
@@ -158,7 +172,9 @@ export default function Register() {
                     </button>
                 </form>
                 {errorMessage && (
-                    <p className="text-red-500 text-center">{errorMessage}</p>
+                    <p className="text-red-500 text-center">
+                    {errorMessage}
+                    </p>
                 )}
             </div>
         </div>

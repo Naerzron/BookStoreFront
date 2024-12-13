@@ -7,7 +7,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
         const cookieToken = request.cookies.get("jwt");
         const token = cookieToken?.value;
 
-        await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/change-password`, {
+        await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/account/change-password`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
